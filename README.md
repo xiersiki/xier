@@ -1,4 +1,4 @@
-# Noelle
+# Xier
 
 > 基于 Electron + Vue 3 的跨平台 AI 对话桌面应用。
 > 支持整合多家 LLM 服务商，管理本地数据，并可同步至 Supabase。
@@ -142,4 +142,4 @@ MIT © EricWXY & Contributors
 
 ---
 
-欢迎通过 Issue / PR 提交建议或需求，一起完善 Noelle！🚀
+欢迎通过 Issue / PR 提交建议或需求，一起完善 Xier！🚀
