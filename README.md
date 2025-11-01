@@ -136,10 +136,8 @@ Electron Forge 默认目标：
 - 逐步统一 UI（例如引入 shadcn-vue）。
 - 设计离线同步与数据回放机制。
 
-## 📄 License
-
-MIT © EricWXY & Contributors
+## License
+本项目采用 [ISC License](./LICENSE)。
 
 ---
-
-欢迎通过 Issue / PR 提交建议或需求，一起完善 Xier！🚀
+如果你正在使用或二次开发本组件库，欢迎通过 Issue / PR 分享需求与建议，共同完善生态。祝开发顺利！
