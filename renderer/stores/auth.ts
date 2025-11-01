@@ -8,6 +8,7 @@ import {
   signInWithPassword as repoSignInWithPassword,
   signUpWithPassword as repoSignUpWithPassword,
   signOut as repoSignOut,
+  signInWithOAuth as repoSignInWithOAuth,
   type AuthSession,
 } from '@renderer/services/authRepo';
 import { logger } from '@renderer/utils/logger';
@@ -149,6 +150,19 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+  const signInWithOAuth = async (provider: 'google' | 'github'): Promise<void> => {
+    loading.value = true;
+    clearError();
+    try {
+      await repoSignInWithOAuth(provider);
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
   // --- 计算属性 --------------------------------------------------------------
 
   const userId = computed(() => user.value?.id ?? null);
@@ -170,6 +184,7 @@ export const useAuthStore = defineStore('auth', () => {
     signInWithPassword,
     signUpWithPassword,
     signOut,
+    signInWithOAuth,
     clearError,
     dispose,
   };

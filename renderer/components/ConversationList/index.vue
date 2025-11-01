@@ -11,7 +11,10 @@ import { useContextMenu } from './useContextMenu';
 import ListItem from './ListItem.vue';
 import SearchBar from './SearchBar.vue';
 import OperationsBar from './OperationsBar.vue';
-
+import UserBadge from './UserBadge.vue';
+import AuthDialog from '@renderer/components/Auth/AuthDialog.vue';
+import { openWindow } from '@renderer/utils/system';
+import { WINDOW_NAMES } from '@common/constants';
 
 defineOptions({ name: 'ConversationList' });
 
@@ -22,6 +25,7 @@ const checkedIds = ref<number[]>([]);
 const router = useRouter();
 const route = useRoute();
 const conversationsStore = useConversationsStore();
+const showAuthDialog = ref(false);
 
 const { createDialog } = useDialog();
 const { conversations } = useFilter();
@@ -115,9 +119,25 @@ function updateTitle(id: number, title: string) {
   });
   editId.value = void 0;
 }
-
+// ------------用户badge事件处理------------
 function handleAllSelectChange(checked: boolean) {
   checkedIds.value = checked ? conversations.value.map(item => item.id) : [];
+}
+
+function handleBadgeLogin() {
+  showAuthDialog.value = true;
+}
+
+function handleBadgeProfile() {
+  openWindow(WINDOW_NAMES.SETTING);
+}
+
+function handleBadgeSettings() {
+  openWindow(WINDOW_NAMES.SETTING);
+}
+
+function handleAuthSuccess() {
+  showAuthDialog.value = false;
 }
 
 provide(CTX_KEY, {
@@ -144,5 +164,7 @@ provide(CTX_KEY, {
     </ul>
     <operations-bar v-show="isBatchOperate" @select-all="handleAllSelectChange" @cancel="isBatchOperate = false"
       @op="handleBatchOperate" />
+    <user-badge @login="handleBadgeLogin" @profile="handleBadgeProfile" @settings="handleBadgeSettings" />
+    <auth-dialog v-model:show="showAuthDialog" @success="handleAuthSuccess" />
   </div>
 </template>

@@ -119,3 +119,16 @@ export const onAuthStateChange = (
     subscription.unsubscribe();
   };
 };
+
+/**
+ * 使用第三方 OAuth 登录（如 Google、GitHub）。
+ * Supabase 会自动拉起浏览器窗口处理授权。
+ * @param provider OAuth 提供方标识
+ */
+export const signInWithOAuth = async (provider: 'google' | 'github'): Promise<void> => {
+  const { error } = await supabase.auth.signInWithOAuth({ provider });
+  if (error) {
+    logger.error('Failed to sign in with OAuth:', error);
+    throw error;
+  }
+};

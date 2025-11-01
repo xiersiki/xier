@@ -1,126 +1,145 @@
-# Noelle AI 对话应用 - 技术总结
+# Noelle
 
-## 1. 项目概述
+> 基于 Electron + Vue 3 的跨平台 AI 对话桌面应用。
+> 支持整合多家 LLM 服务商，管理本地数据，并可同步至 Supabase。
 
-Noelle 是一款基于 Electron 和 Vue 3 开发的跨平台 AI 对话应用，允许用户集成多种主流 AI 服务提供商，进行智能对话、知识问答和内容生成。项目采用现代前端技术栈，实现了良好的用户体验和高性能的桌面应用功能。
+## ✨ 功能亮点
 
-## 2. 核心技术栈
+- **多服务商整合**：预置 BigModel、DeepSeek、SiliconFlow、千帆等 OpenAI 兼容模型，可自定义扩展。
+- **桌面级体验**：Electron Forge + Vite 构建，macOS / Windows 均可打包发布。
+- **现代前端栈**：Vue 3 + Pinia，Composition API 组织状态，Naive UI 提供基础组件。
+- **云端同步**：可选使用 Supabase 作为 providers / conversations / messages 的后端存储，并集成邮箱密码 + OAuth 登录。
+- **离线优先**：Dexie（IndexedDB）本地缓存，预加载层暴露完整 IPC API。
+- **对话流程完善**：支持流式回复、停止生成、批量操作、置顶等对话管理能力。
 
-### 2.1 前端框架与构建工具
-- **Vue 3 + TypeScript**：采用组合式 API 和 TypeScript 类型系统，确保代码质量和可维护性
-- **Vite**：作为现代化构建工具，提供极速开发体验和优化的生产构建
-- **Electron 37**：最新稳定版 Electron，提供跨平台桌面应用能力
-- **Pinia**：Vue 生态系统中的状态管理方案，替代 Vuex，提供更简洁的 API
-- **Tailwind CSS**：原子化 CSS 框架，快速构建响应式 UI
+## 🧩 项目结构
 
-### 2.2 数据存储与管理
-- **Dexie.js**：基于 IndexedDB 的数据库操作库，提供简洁的 API 用于本地数据持久化
-- **版本控制**：实现了数据库版本升级和数据迁移功能，确保数据结构变更的平滑过渡
+```
+electron/
+├─ main/        # 主进程服务、窗口管理、OpenAI 调用
+├─ preload.ts   # 预加载脚本，暴露 window.api
+└─ renderer/    # Vue 3 SPA（Vite）
+    ├─ components/
+    ├─ stores/      # Pinia（auth / providers / conversations / messages）
+    ├─ services/    # Supabase 客户端与仓库
+    ├─ styles/      # 主题、Tailwind 入口
+    └─ views/       # 对话页、设置页等
+```
 
-### 2.3 UI组件与交互
-- **Naive UI**：基于 Vue 3 的现代组件库，提供丰富的 UI 组件
-- **@vueuse/core**：Vue 组合式 API 的实用工具集，增强开发效率
-- **Iconify**：统一的图标管理方案，支持多种图标集
+- **IPC**：前端通过 `window.api` 与主进程通信（配置、菜单、对话请求等）。
+- **数据层**：Dexie 做本地缓存；Supabase 仓库负责 CRUD（providerRepo、conversationRepo、messageRepo 等）。
+- **认证**：`authRepo` 封装 Supabase Auth（邮箱密码、魔法链接、Google、GitHub），`AuthDialog` 负责 UI 流程。
 
-## 3. 项目架构亮点
+## 🚀 快速开始
 
-### 3.1 主进程与渲染进程分离
+> 依赖：Node 20+、pnpm（或 npm/yarn）、可选 Supabase 项目（用于云端功能）。
 
-项目严格遵循 Electron 的进程模型，实现了清晰的职责分离：
-- **主进程**：负责窗口管理、系统集成（托盘、菜单）、配置管理和 AI 服务通信
-- **渲染进程**：负责用户界面渲染和交互逻辑
-- **预加载脚本**：通过 `contextBridge` 提供安全的 API 桥接，避免直接暴露 Node.js API
+```bash
+pnpm install        # 安装依赖
+pnpm start          # 启动 Electron + Vite 开发环境
+```
 
-### 3.2 模块化设计与依赖注入
+`package.json` 中 `start` 脚本会使用 `dotenv -e .env electron-forge start`，请在根目录准备 `.env` 文件。
 
-项目采用模块化的代码组织结构，通过 TypeScript、Vite 的路径别名简化模块引用：
-- `@main/*`：主进程代码
-- `@renderer/*`：渲染进程代码
-- `@common/*`：共享代码和常量
-- `@locales/*`：国际化资源
+### 环境变量示例
 
-这种结构使得代码高度可组织，模块之间边界清晰，便于团队协作和代码维护。
+```
+# Vite 会自动加载 VITE_ 前缀变量
+VITE_SUPABASE_URL=https://xxx.supabase.co
+VITE_SUPABASE_ANON_KEY=xxxxxxxx
 
-### 3.3 状态管理设计
+# 如需主进程/预加载自定义，可使用 .env.main / .env.preload
+```
 
-使用 Pinia 实现了高效的状态管理，主要包括：
-- **对话管理**：`useConversationsStore` 管理对话列表、排序和置顶功能
-- **消息管理**：`useMessagesStore` 管理消息流、AI 响应和加载状态
-- **提供商管理**：`useProvidersStore` 管理不同 AI 服务提供商的配置
+## 🛠️ 常用脚本
 
-状态管理与数据持久化紧密结合，确保用户数据不会丢失，同时提供响应式的 UI 更新。
+| 命令           | 说明                            |
+|----------------|---------------------------------|
+| `pnpm start`   | 开发模式（Vite + Electron）      |
+| `pnpm package` | 打包应用（Electron Forge）       |
+| `pnpm make`    | 生成安装包                      |
+| `pnpm publish` | 发布到配置的分发渠道             |
 
-## 4. 核心功能实现亮点
+（使用 npm/yarn 时替换相应命令即可。）
 
-### 4.1 多 AI 提供商集成系统
+## 🗄️ Supabase 数据结构
 
-项目实现了灵活的 AI 服务提供商集成框架：
-- **多种提供商支持**：已集成智谱AI、深度求索、硅基流动、百度千帆等主流 AI 服务
-- **流式响应处理**：实现了对 AI 模型流式输出的支持, 打字机效果输出
+### 表规划
 
-这种设计使得添加新的 AI 服务提供商变得简单，只需实现统一接口即可无缝集成。
+- `providers`：服务商信息（id、user_id、name、models jsonb、openai_setting、时间戳）。
+- `conversations`：会话（provider_id、selected_model、pinned、created_at、updated_at）。
+- `messages`：消息（conversation_id、type、content、status、时间戳）。
 
-### 4.2 数据持久化与版本控制
+推荐开启 RLS，策略一般为 `user_id = auth.uid()`。若需保存全局默认服务商，可在 `user_id = null` 时开放只读权限。
 
-使用 Dexie.js 实现了高效的本地数据存储：
-- **结构化数据模型**：设计了清晰的实体关系（Provider, Conversation, Message）
-- **数据库迁移**：实现了版本化的数据库结构管理和数据迁移逻辑
-- **性能优化**：通过索引和查询优化确保大量对话数据的快速访问
+### 默认服务商
 
-### 4.3 高级窗口与菜单管理
+`providerRepo.ensureDefaultProviders(userId)` 会根据当前用户检查缺失的服务商并自动插入（bigmodel、deepseek、siliconflow、qianfan）。建议在 `authStore` 初始化成功后调用一次。
 
-实现了丰富的桌面应用交互体验：
-- **多窗口系统**：主窗口、设置窗口和对话框的管理
-- **自定义托盘**：支持应用最小化到托盘及相关操作
-- **上下文菜单**：针对不同 UI 元素提供定制化的右键菜单
-- **国际化菜单**：支持根据当前语言动态切换菜单内容
+## 🔐 认证流程
 
-### 4.4 主题与配置系统
+- **邮箱密码**：支持注册、登录，注册成功后会提示去邮箱确认。
+- **邮箱 OTP**：Supabase Magic Link。
+- **第三方登录**：Google / GitHub。
+- `AuthDialog`：
+  - 注册模式下禁止点击遮罩关闭，并显示“需邮箱验证”提示。
+  - 所有操作完成后通过 Naive UI `useMessage` 通知成功/失败。
+  - OAuth 按钮互不影响 loading 状态。
 
-提供了灵活的用户定制选项：
-- **主题模式**：支持亮色、暗色和系统主题自动切换
-- **配置持久化**：用户配置自动保存并在应用重启后恢复
-- **配置更改通知**：通过事件系统实现配置变更的实时响应
+## 🎨 主题与样式
 
-## 5. 技术难点与解决方案
+- 自定义主题变量位于 `renderer/styles/theme/light.css` 和 `dark.css`，定义 `--bg-color` / `--text-primary` 等。
+- `renderer/index.css` 负责 Tailwind 插件、全局滚动条、@theme tokens。
+- `useThemeMode` 负责读取/切换系统主题并同步到主进程配置；`useNaiveTheme` 将主题传入 Naive UI。
+- `AuthDialog` 等组件使用 `--bg-color`、`--text-secondary` 等变量，确保深浅色一致。
 
-### 5.1 异步数据流管理
+## 💬 对话流程
 
-AI 对话涉及复杂的异步数据流处理，项目通过以下方式解决：
-- **流式响应处理**：使用 `asyncIterator` 处理 AI 模型的流式输出
-- **状态同步**：结合 Pinia 和事件系统确保 UI 状态与数据流的同步
-- **取消操作支持**：实现了对话中断功能，允许用户随时停止 AI 响应
+- `messagesStore.sendMessage` 在本地插入提问/占位回答，调用 `window.api.startADialogue` 触发主进程流式请求。
+- 流式响应更新消息内容/状态；支持 `stopMessage` 提前结束。
+- `ConversationList` 提供搜索、批量操作、置顶、上下文菜单；底部 `UserBadge` 根据登录态显示提示或打开认证/设置。
 
-### 5.2 性能优化策略
+## 🔄 本地与云同步
 
-针对大型对话和大量数据的性能挑战：
-- **消息延迟加载**：支持按需加载特定对话的消息，避免一次性加载所有数据
-- **防抖处理**：对频繁操作（如配置保存）应用防抖优化
+1. 未登录或离线：默认使用 Dexie（IndexedDB）存储。
+2. 登录后：Supabase 仓库负责远程数据，Dexie 可作为缓存层（可按需求实现同步策略）。
+3. 如需迁移旧数据，可编写脚本将 Dexie 数据导入 Supabase。
 
-## 6. 代码质量与开发体验
+## 📦 打包发布
 
-### 6.1 类型安全
+Electron Forge 默认目标：
 
-全面采用 TypeScript 确保类型安全：
-- **完整的类型定义**：为所有组件、接口和数据模型提供类型定义
-- **严格模式配置**：启用严格类型检查和最佳实践配置
-- **类型工具函数**：提供实用的类型工具函数，如 `cloneDeep`、`debounce` 等
+- Windows：Squirrel / ZIP
+- macOS：DMG
+- Linux：deb / rpm
 
-### 6.2 开发体验
+构建入口为 Vite 输出的 `.vite/build/index.js`，应用图标位于 `public/noel_icon.ico`。
 
-利用现代工具链提升开发效率：
-- **自动导入**：使用 `unplugin-auto-import` 自动导入常用 API
+## 🤝 贡献指南
 
-## 7. 未来扩展方向
+1. Fork & Clone 仓库。
+2. 新建分支 `feature/xxx`。
+3. 完成开发并确保 lint/测试通过（可自行配置 `pnpm lint`）。
+4. 提交 PR：说明改动、验证方式、附截图（建议提供浅色/深色主题效果）。
 
-基于当前架构，项目有多个可扩展方向：
-- **更多 AI 服务集成**：可以轻松添加新的 AI 服务提供商
-- **多模态支持**：扩展以支持图像、语音等多模态交互
-- **云同步功能**：添加用户账户系统和云同步能力
-- **插件系统**：设计插件架构，允许第三方扩展功能
-- **协作功能**：添加多用户协作编辑和共享对话的能力
+### 开发约定
 
-## 8. 总结
+- 全部使用 TypeScript。
+- Store 与 Service 保持单一职责；复用逻辑抽离为 composable。
+- 修改会话/消息逻辑时，注意保持 Dexie 与 Supabase 状态一致。
+- UI 需适配 light/dark 主题，避免写死颜色。
 
-Noelle AI 对话应用展示了如何利用现代前端技术和 Electron 构建功能丰富、性能优良的桌面应用。项目的核心技术亮点包括灵活的 AI 服务集成框架、高效的数据持久化方案、清晰的模块化架构和优秀的用户体验设计。这些技术选择和实现方式不仅确保了当前应用的功能完整性，也为未来的功能扩展和性能优化提供了坚实基础。
-        
+## 📌 未来规划
+
+- 完成会话/消息的云同步与冲突解决。
+- 引入自动化测试（Vitest / Playwright）。
+- 逐步统一 UI（例如引入 shadcn-vue）。
+- 设计离线同步与数据回放机制。
+
+## 📄 License
+
+MIT © EricWXY & Contributors
+
+---
+
+欢迎通过 Issue / PR 提交建议或需求，一起完善 Noelle！🚀
