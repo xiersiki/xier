@@ -1,6 +1,6 @@
 import type { Provider } from "@common/types";
 import { defineStore } from "pinia";
-import { deepMerge, parseOpenAISetting, debounce } from "@common/utils";
+import { deepMerge, parseOpenAISetting } from "@common/utils";
 import { encode } from "js-base64";
 import { dataBase } from "../dataBase";
 import { useConfig } from "@renderer/hooks/useConfig";
