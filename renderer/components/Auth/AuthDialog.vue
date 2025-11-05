@@ -15,6 +15,7 @@ import {
 } from 'naive-ui';
 import { Icon as IconifyIcon } from '@iconify/vue';
 import { useAuthStore } from '@renderer/stores/auth';
+import { notify } from '@renderer/utils/notify';
 
 type Mode = 'login' | 'register';
 
@@ -32,8 +33,8 @@ const message = useMessage();
 
 const mode = ref<Mode>('login');
 const form = reactive({
-  email: '',
-  password: '',
+  email: '1072742518@qq.com',
+  password: 'gcyhs20020202',
   confirmPassword: '',
 });
 const localError = ref<string | null>(null);
@@ -87,10 +88,10 @@ async function handleSubmit() {
     emailSubmitting.value = true;
     if (isLoginMode.value) {
       await authStore.signInWithPassword(form.email, form.password);
-      message.success('Signed in successfully.');
+      notify.success('欢迎回来', '您已成功登录');
     } else {
       await authStore.signUpWithPassword(form.email, form.password);
-      message.success('Sign up successful. Please check your email to confirm your account.');
+      notify.info('Email Verification', 'A verification email has been sent to your email address. Please confirm to activate your account.');
     }
     emit('success');
     close();
@@ -121,9 +122,9 @@ function handleTabChange(value: string) {
   mode.value = value as Mode;
   localError.value = null;
   authStore.clearError();
-  if (value === 'register') {
-    message.info('Sign up requires email verification. Please check your inbox after submitting.');
-  }
+  // if (value === 'register') {
+  //   notify.info('创建用户', '请确保您的电子邮件有效，以接收验证电子邮件。');
+  // }
 }
 
 watch(
@@ -137,14 +138,8 @@ watch(
 </script>
 
 <template>
-  <n-modal
-    :show="props.show"
-    transform-origin="center"
-    :mask-closable="maskClosable"
-    class="auth-modal"
-    @update:show="(val) => (val ? emit('update:show', val) : close())"
-    @after-leave="resetForm"
-  >
+  <n-modal :show="props.show" transform-origin="center" :mask-closable="maskClosable" class="auth-modal"
+    @update:show="(val) => (val ? emit('update:show', val) : close())" @after-leave="resetForm">
     <div class="auth-card relative px-8 py-6">
       <button type="button" class="auth-close" @click="close">
         <iconify-icon icon="lucide:x" width="18" height="18" />
@@ -152,45 +147,37 @@ watch(
 
       <header class="auth-header mb-3 pr-8">
         <h3 class="auth-title text-base font-medium leading-6">
-          {{ isLoginMode ? 'Sign In' : 'Create Account' }}
+          {{ isLoginMode ? $t('auth.signIn.title') : $t('auth.signUp.title') }}
         </h3>
         <p class="auth-subtitle mt-2 text-xs leading-5">
-          Use email/password or third-party providers to continue.
+          {{ isLoginMode ? $t('auth.signIn.subtitle') : $t('auth.signUp.subtitle') }}
         </p>
       </header>
 
       <n-tabs type="line" size="small" :value="mode" animated @update:value="handleTabChange">
-        <n-tab-pane name="login" tab="Sign In" />
-        <n-tab-pane name="register" tab="Sign Up" />
+        <n-tab-pane name="login" :tab="$t('auth.signIn.title')" />
+        <n-tab-pane name="register" :tab="$t('auth.signUp.title')" />
       </n-tabs>
 
       <n-alert v-if="!isLoginMode" type="info" class="auth-info" :show-icon="false">
-        A verification email will be sent after sign up. Please confirm it to activate your account.
+        {{ $t('auth.signUp.notify') }}
       </n-alert>
 
       <n-form class="auth-form" @submit.prevent="handleSubmit">
-        <n-form-item label="Email">
-          <n-input v-model:value="form.email" placeholder="Enter email" type="text" />
+        <n-form-item :label="isLoginMode ? $t('auth.signIn.email') : $t('auth.signUp.email')">
+          <n-input v-model:value="form.email"
+            :placeholder="isLoginMode ? $t('auth.signIn.emailPlaceholder') : $t('auth.signUp.emailPlaceholder')"
+            type="text" />
         </n-form-item>
-        <n-form-item label="Password">
-          <n-input
-            v-model:value="form.password"
-            placeholder="Enter password"
-            type="password"
-            show-password-on="mousedown"
-          />
+        <n-form-item :label="isLoginMode ? $t('auth.signIn.password') : $t('auth.signUp.password')">
+          <n-input v-model:value="form.password"
+            :placeholder="isLoginMode ? $t('auth.signIn.passwordPlaceholder') : $t('auth.signUp.passwordPlaceholder')"
+            type="password" show-password-on="mousedown" />
         </n-form-item>
-        <n-form-item
-          label="Confirm Password"
-          :class="['auth-confirm', { 'auth-confirm--hidden': isLoginMode }]"
-        >
-          <n-input
-            v-model:value="form.confirmPassword"
-            placeholder="Re-enter password"
-            type="password"
-            show-password-on="mousedown"
-            :disabled="isLoginMode"
-          />
+        <n-form-item :label="$t('auth.signUp.confirmPassword')"
+          :class="['auth-confirm', { 'auth-confirm--hidden': isLoginMode }]">
+          <n-input v-model:value="form.confirmPassword" :placeholder="$t('auth.signUp.confirmPasswordPlaceholder')"
+            type="password" show-password-on="mousedown" :disabled="isLoginMode" />
         </n-form-item>
 
         <n-alert v-if="mergedError" type="error" :show-icon="false" class="auth-error">
@@ -198,29 +185,29 @@ watch(
         </n-alert>
 
         <n-button type="primary" block class="auth-submit" :loading="emailSubmitting" @click="handleSubmit">
-          {{ isLoginMode ? 'Sign In' : 'Sign Up' }}
+          {{ isLoginMode ? $t('auth.signIn.title') : $t('auth.signUp.title') }}
         </n-button>
       </n-form>
 
-      <n-divider dashed class="auth-divider">Or continue with</n-divider>
+      <n-divider dashed class="auth-divider">{{ $t('auth.signIn.orContinueWith') }}</n-divider>
 
       <n-space vertical size="small">
         <n-button block secondary class="auth-social" :loading="oauthLoading.google" @click="handleOAuth('google')">
           <span class="auth-social__content">
             <iconify-icon icon="logos:google-icon" width="18" height="18" />
-            <span>Continue with Google</span>
+            <span>{{ $t('auth.signIn.continueWithGoogle') }}</span>
           </span>
         </n-button>
         <n-button block secondary class="auth-social" :loading="oauthLoading.github" @click="handleOAuth('github')">
           <span class="auth-social__content">
             <iconify-icon icon="mdi:github" width="18" height="18" />
-            <span>Continue with GitHub</span>
+            <span>{{ $t('auth.signIn.continueWithGitHub') }}</span>
           </span>
         </n-button>
       </n-space>
 
       <n-button tertiary block class="auth-cancel" @click="close">
-        Cancel
+        {{ $t('auth.signIn.cancel') }}
       </n-button>
     </div>
   </n-modal>

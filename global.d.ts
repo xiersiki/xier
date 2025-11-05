@@ -9,7 +9,7 @@ interface CreateDialogProps {
   onCancel?: () => void;
 }
 
-type DialogueMessageRole = 'user' | 'assistant'
+type DialogueMessageRole = "user" | "assistant";
 
 interface DialogueMessageProps {
   role: DialogueMessageRole;
@@ -20,8 +20,8 @@ interface CreateDialogueProps {
   messages: DialogueMessageProps[];
   providerName: string;
   selectedModel: string;
-  messageId: number;
-  conversationId: number;
+  messageId: string;
+  conversationId: string;
 }
 
 interface UniversalChunk {
@@ -30,14 +30,12 @@ interface UniversalChunk {
 }
 
 interface DialogueBackStream {
-  messageId: number;
+  messageId: string;
   data: UniversalChunk & { isError?: boolean };
 }
 
-
-type WindowNames = 'main' | 'setting' | 'dialog'
-type ThemeMode = 'light' | 'dark' | 'system'
-
+type WindowNames = "main" | "setting" | "dialog";
+type ThemeMode = "light" | "dark" | "system";
 
 interface WindowApi {
   createDialog: (params: CreateDialogProps) => Promise<string>;
@@ -54,40 +52,42 @@ interface WindowApi {
   platform: () => string;
   isMac: () => boolean;
   isWin: () => boolean;
-  viewIsReady: () => void
-  getConfig: (key: string) => Promise<any>
-  setConfig: (key: string, value: any) => void
-  updateConfig: (value: any) => void
+  viewIsReady: () => void;
+  getConfig: (key: string) => Promise<any>;
+  setConfig: (key: string, value: any) => void;
+  updateConfig: (value: any) => void;
 
   showContextMenu: (menuId: string, dynamicLabels?: string) => Promise<any>;
   removeContextMenuListener: (menuId: string) => void;
   contextMenuItemClick: (menuId: string, cb: (id: string) => void) => void;
 
-  onConfigChange: (cb: (config: any) => void) => () => void
-  removeConfigChangeListener: (cb: (config: any) => void) => void
+  onConfigChange: (cb: (config: any) => void) => () => void;
+  removeConfigChangeListener: (cb: (config: any) => void) => void;
 
-  _dialogFeedback: (val: 'cancel' | 'confirm', winId: number) => void;
-  _dialogGetParams: () => Promise<any>
-
+  _dialogFeedback: (val: "cancel" | "confirm", winId: number) => void;
+  _dialogGetParams: () => Promise<any>;
 
   startADialogue: (params: CreateDialogueProps) => void;
-  onDialogueBack: (cb: (data: DialogueBackStream) => void, messageId: number) => () => void;
+  onDialogueBack: (
+    cb: (data: DialogueBackStream) => void,
+    messageId: string
+  ) => () => void;
 
   onShortcutCalled: (key: string, cb: () => void) => () => void;
 
   logger: {
-    debug: (message: string, ...meta?: any[]) => void;
-    info: (message: string, ...meta?: any[]) => void;
-    warn: (message: string, ...meta?: any[]) => void;
-    error: (message: string, ...meta?: any[]) => void;
-    fatal: (message: string, ...meta?: any[]) => void;
-  }
+    debug: (message: string, ...meta: any[]) => void;
+    info: (message: string, ...meta: any[]) => void;
+    warn: (message: string, ...meta: any[]) => void;
+    error: (message: string, ...meta: any[]) => void;
+    fatal: (message: string, ...meta: any[]) => void;
+  };
 
   events: {
     on: (eventName: string, cb: (...args: any[]) => void) => () => void;
     once: (eventName: string, cb: (...args: any[]) => void) => void;
     emit: (eventName: string, ...args: any[]) => void;
-  }
+  };
 }
 
 declare interface Window {

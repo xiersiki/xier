@@ -7,7 +7,7 @@
   },
   "main": {
     "welcome": {
-      "helloMessage": "Hello, I'm Noelle"
+      "helloMessage": "Hello, I'm Xier"
     },
     "conversation": {
       "placeholder": "Type a message...",
@@ -50,6 +50,45 @@
       "sending": "Sending",
       "stopGeneration": "Stop generating",
       "send": "Send"
+    },
+    "loginDialog": {
+      "title": "Sign In",
+      "message": "Please log in to sync your data across devices and access cloud features.",
+      "loginButton": "Sign In",
+      "continueWithoutLogin": "Continue without logging in"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Use email/password or third-party providers to continue.",
+      "email": "Email",
+      "password": "Password",
+      "signInButton": "Sign In",
+      "signUp": "Sign Up",
+      "orContinueWith": "Or continue with",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGitHub": "Continue with GitHub",
+      "cancel": "Cancel",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Use email/password or third-party providers to continue.",
+      "notify": "A verification email will be sent to your email after signing up. Please confirm it to activate your account.",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "signUpButton": "Sign Up",
+      "signUp": "Sign Up",
+      "orContinueWith": "Or continue with",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGitHub": "Continue with GitHub",
+      "cancel": "Cancel",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordPlaceholder": "Confirm your password"
     }
   },
   "dialog": {
@@ -116,7 +155,7 @@
     }
   },
   "tray": {
-    "tooltip": "Noelle Application",
+    "tooltip": "Xier Application",
     "showWindow": "Show Window",
     "exit": "Exit"
   },
@@ -138,6 +177,6 @@
     }
   },
   "app": {
-    "title": "Noelle Application"
+    "title": "Xier Application"
   }
 }

@@ -34,7 +34,7 @@ const providersStore = useProvidersStore();
 
 const providerId = computed(() => ((provider.value as string)?.split(':')[0]) ?? '');
 const selectedModel = computed(() => ((provider.value as string)?.split(':')[1]) ?? '');
-const conversationId = computed(() => Number(route.params.id) as number | undefined);
+const conversationId = computed(() => String(route.params.id) as string | undefined);
 const defaultModel = computed(() => {
   const vals: string[] = [];
   providersStore.allProviders.forEach(provider => {
@@ -49,7 +49,7 @@ const defaultModel = computed(() => {
 
 const messageInputStatus = computed(() => {
   if (isStoping.value) return 'loading';
-  const messages = messagesStore.messagesByConversationId(conversationId.value ?? -1);
+  const messages = messagesStore.messagesByConversationId(conversationId.value ?? '-1');
   const lastMessage = messages[messages.length - 1];
   if (lastMessage?.status === 'streaming' && lastMessage?.content?.length === 0) return 'loading';
   if (lastMessage?.status === 'loading' || lastMessage?.status === 'streaming') return lastMessage.status
@@ -57,12 +57,12 @@ const messageInputStatus = computed(() => {
 })
 
 
-async function handleCreateConversation(create: (title: string) => Promise<number | void>, _message: string) {
+async function handleCreateConversation(create: (title: string) => Promise<string | void>, _message: string) {
   const id = await create(_message);
   if (!id) return;
   afterCreateConversation(id, _message);
 }
-function afterCreateConversation(id: number | void, firstMsg: string) {
+function afterCreateConversation(id: string | void, firstMsg: string) {
   if (!id) return;
   router.push(`/conversation/${id}`);
   messagesStore.sendMessage({
@@ -76,11 +76,11 @@ function afterCreateConversation(id: number | void, firstMsg: string) {
 
 const canUpdateConversationTime = ref(true);
 function handleProviderSelect() {
-  const current = conversationsStore.getConversationById(conversationId.value as number)
+  const current = conversationsStore.getConversationById(conversationId.value as string)
   if (!conversationId.value || !current) return;
   conversationsStore.updateConversation({
     ...current,
-    providerId: Number(providerId.value),
+    providerId: String(providerId.value),
     selectedModel: selectedModel.value,
   }, canUpdateConversationTime.value)
 }
@@ -102,7 +102,7 @@ async function handleSendMessage() {
 
 async function handleStopMessage() {
   isStoping.value = true;
-  const msgIds = messagesStore.loadingMsgIdsByConversationId(conversationId.value ?? -1);
+  const msgIds = messagesStore.loadingMsgIdsByConversationId(conversationId.value ?? '-1');
   for (const id of msgIds) {
     await messagesStore.stopMessage(id);
   }
@@ -126,7 +126,7 @@ onMounted(async () => {
 
 onBeforeRouteUpdate(async (to, from, next) => {
   if (to.params.id === from.params.id) return next();
-  await messagesStore.initialize(Number(to.params.id));
+  await messagesStore.initialize(String(to.params.id));
   next();
 })
 
@@ -177,9 +177,9 @@ watch([() => conversationId.value, () => msgInputRef.value], async ([id, msgInpu
     <div class="input-container bg-bubble-others flex-auto w-[calc(100% + 10px)] ml-[-5px] ">
       <resize-divider direction="horizontal" v-model:size="listHeight" :max-size="maxListHeight" :min-size="100" />
       <message-input class="p-2 pt-0" ref="msgInputRef"
-        :message="conversationsStore.messageInputValueById(conversationId ?? -1)" v-model:provider="provider"
+        :message="conversationsStore.messageInputValueById(conversationId ?? '-1')" v-model:provider="provider"
         :placeholder="t('main.conversation.placeholder')" :status="messageInputStatus"
-        @update:message="(val) => conversationsStore.setMessageInputValue(conversationId ?? -1, val)"
+        @update:message="(val) => conversationsStore.setMessageInputValue(conversationId ?? '-1', val)"
         @send="handleSendMessage" @stop="handleStopMessage" @select="handleProviderSelect" />
     </div>
   </div>

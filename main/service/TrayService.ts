@@ -1,10 +1,15 @@
-import { Tray, Menu, ipcMain, app } from 'electron';
-import { createTranslator, createLogo } from '../utils';
-import { MAIN_WIN_SIZE, IPC_EVENTS, WINDOW_NAMES, CONFIG_KEYS } from '@common/constants';
-import logManager from './LogService';
-import shortcutManager from './ShortcutService';
-import windowManager from './WindowService';
-import configManager from './ConfigService';
+import { Tray, Menu, ipcMain, app } from "electron";
+import { createTranslator, createLogo } from "../utils";
+import {
+  MAIN_WIN_SIZE,
+  IPC_EVENTS,
+  WINDOW_NAMES,
+  CONFIG_KEYS,
+} from "@common/constants";
+import logManager from "./LogService";
+import shortcutManager from "./ShortcutService";
+import windowManager from "./WindowService";
+import configManager from "./ConfigService";
 
 let t: ReturnType<typeof createTranslator> = createTranslator();
 
@@ -15,15 +20,14 @@ class TrayService {
 
   private constructor() {
     this._setupLanguageChangeListener();
-    logManager.info('Tray service initialized');
+    logManager.info("Tray service initialized");
   }
 
   /**
    * 创建或获取TrayService实例
    */
   public static getInstance() {
-    if (!this._instance)
-      this._instance = new TrayService();
+    if (!this._instance) this._instance = new TrayService();
     return this._instance;
   }
 
@@ -33,10 +37,10 @@ class TrayService {
   public create() {
     if (this._tray) return;
     this._updateTray();
-    app.on('quit', () => {
+    app.on("quit", () => {
       this.destroy();
-      shortcutManager.unregister('tray.showWindow');
-    })
+      shortcutManager.unregister("tray.showWindow");
+    });
   }
 
   /**
@@ -49,28 +53,42 @@ class TrayService {
 
     const showWindow = () => {
       const mainWindow = windowManager.get(WINDOW_NAMES.MAIN);
-      if (mainWindow && !mainWindow?.isDestroyed() && mainWindow?.isVisible() && !mainWindow?.isFocused())
+      if (
+        mainWindow &&
+        !mainWindow?.isDestroyed() &&
+        mainWindow?.isVisible() &&
+        !mainWindow?.isFocused()
+      )
         return mainWindow?.focus();
-      if (mainWindow?.isMinimized())
-        return mainWindow?.restore();
+      if (mainWindow?.isMinimized()) return mainWindow?.restore();
       if (mainWindow?.isVisible() && mainWindow?.isFocused()) return;
       windowManager.create(WINDOW_NAMES.MAIN, MAIN_WIN_SIZE);
     };
 
-    this._tray.setToolTip(t('tray.tooltip') ?? 'Noelle Application');
+    this._tray.setToolTip(t("tray.tooltip") ?? "Xier Application");
 
-    shortcutManager.register('CmdOrCtrl+N', 'tray.showWindow', showWindow);
+    shortcutManager.register("CmdOrCtrl+N", "tray.showWindow", showWindow);
 
-    this._tray.setContextMenu(Menu.buildFromTemplate([
-      { label: t('tray.showWindow'), accelerator: 'CmdOrCtrl+N', click: showWindow },
-      { type: 'separator' },
-      { label: t('settings.title'), click: () => ipcMain.emit(`${IPC_EVENTS.OPEN_WINDOW}:${WINDOW_NAMES.SETTING}`) },
-      { role: 'quit', label: t('tray.exit') }
-    ]));
+    this._tray.setContextMenu(
+      Menu.buildFromTemplate([
+        {
+          label: t("tray.showWindow"),
+          accelerator: "CmdOrCtrl+N",
+          click: showWindow,
+        },
+        { type: "separator" },
+        {
+          label: t("settings.title"),
+          click: () =>
+            ipcMain.emit(`${IPC_EVENTS.OPEN_WINDOW}:${WINDOW_NAMES.SETTING}`),
+        },
+        { role: "quit", label: t("tray.exit") },
+      ])
+    );
 
     // 移除旧的点击监听器，避免重复添加导致内存泄漏警告
-    this._tray.removeAllListeners('click');
-    this._tray.on('click', showWindow)
+    this._tray.removeAllListeners("click");
+    this._tray.on("click", showWindow);
   }
 
   /**
@@ -99,7 +117,7 @@ class TrayService {
     this._tray?.destroy();
     this._tray = null;
 
-    shortcutManager.unregister('tray.showWindow');
+    shortcutManager.unregister("tray.showWindow");
 
     // 移除语言变化监听器
     if (this._removeLanguageListener) {

@@ -1,0 +1,59 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auth Redirect</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:24px;color:#111}
+  pre{background:#f6f8fa;padding:12px;border-radius:8px;overflow:auto}
+  .hint{margin-top:12px;color:#444}
+</style>
+<h2>Completing authentication…</h2>
+<p class="hint">This page captures the OAuth result and forwards it to your desktop app.</p>
+<div id="status">Processing...</div>
+<pre id="deeplink" style="display:none"></pre>
+<script>
+  (function(){
+    // NOTE: replace `myapp` with your app's custom protocol if different.
+    const CUSTOM_PROTOCOL = 'myapp';
+
+    const hash = window.location.hash || '';
+    const query = window.location.search || '';
+    const payload = hash || query || '';
+
+    const deepLink = `${CUSTOM_PROTOCOL}://auth-callback${payload}`;
+
+    // 1) If opened as a popup from a window (window.opener), postMessage back
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage({ type: 'oauth-callback', payload }, '*');
+        document.getElementById('status').textContent = 'Sent authentication result to the opener window.';
+        // also try to close the popup after a short delay
+        setTimeout(()=> window.close(), 800);
+        return;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // 2) Try to open the custom protocol to wake the desktop app
+    try {
+      // This will attempt to open the app if installed
+      window.location.href = deepLink;
+      // show fallback UI after a moment
+      setTimeout(()=>{
+        document.getElementById('status').textContent = 'If your desktop app did not open automatically, use the link below to open it or copy it manually.';
+        const p = document.getElementById('deeplink');
+        p.textContent = deepLink;
+        p.style.display = 'block';
+      }, 800);
+    } catch (err) {
+      document.getElementById('status').textContent = 'Failed to open the desktop app automatically.';
+      const p = document.getElementById('deeplink');
+      p.textContent = deepLink;
+      p.style.display = 'block';
+    }
+  })();
+</script>
+
+<hr />
+<p class="hint">If you don't have a custom protocol registered yet, see the project README for Electron deep link setup, or use a hosted callback + polling approach.</p>

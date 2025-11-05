@@ -52,6 +52,39 @@
       "send": "发送"
     }
   },
+  "auth": {
+    "signIn": {
+      "title": "登录",
+      "subtitle": "使用邮箱/密码或第三方服务提供商继续。",
+      "email": "邮箱",
+      "password": "密码",
+      "signInButton": "登录",
+      "signUp": "注册",
+      "orContinueWith": "或使用以下方式继续",
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithGitHub": "使用 GitHub 继续",
+      "cancel": "取消",
+      "emailPlaceholder": "请输入邮箱",
+      "passwordPlaceholder": "请输入密码"
+    },
+    "signUp": {
+      "title": "注册",
+      "subtitle": "使用邮箱/密码或第三方服务提供商继续。",
+      "notify": "注册后将向您的邮箱发送验证邮件，请确认以激活您的账户。",
+      "email": "邮箱",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "signUpButton": "注册",
+      "signUp": "注册",
+      "orContinueWith": "或使用以下方式继续",
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithGitHub": "使用 GitHub 继续",
+      "cancel": "取消",
+      "emailPlaceholder": "请输入邮箱",
+      "passwordPlaceholder": "请输入密码",
+      "confirmPasswordPlaceholder": "请再次输入密码"
+    }
+  },
   "dialog": {
     "cancel": "取消",
     "confirm": "确认"
@@ -116,7 +149,7 @@
     }
   },
   "tray": {
-    "tooltip": "诺艾尔",
+    "tooltip": "希尔",
     "showWindow": "显示窗口",
     "exit": "退出"
   },

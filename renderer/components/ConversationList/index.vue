@@ -19,8 +19,8 @@ import { WINDOW_NAMES } from '@common/constants';
 defineOptions({ name: 'ConversationList' });
 
 const props = defineProps<{ width: number }>();
-const editId = ref<number | void>();
-const checkedIds = ref<number[]>([]);
+const editId = ref<string | void>();
+const checkedIds = ref<string[]>([]);
 
 const router = useRouter();
 const route = useRoute();
@@ -32,7 +32,7 @@ const { conversations } = useFilter();
 
 const { handle: handleListContexMenu, isBatchOperate } = useContextMenu();
 
-const currentId = computed(() => Number(route.params.id));
+const currentId = computed(() => String(route.params.id));
 
 const conversationActionPolicy = new Map([
   [CONVERSATION_ITEM_MENU_IDS.DEL, async (_item: Conversation) => {
@@ -110,7 +110,7 @@ function handleClickOutItem() {
   router.push('/conversation')
 }
 
-function updateTitle(id: number, title: string) {
+function updateTitle(id: string, title: string) {
   const target = conversationsStore.conversations.find(item => item.id === id);
   if (!target) return
   conversationsStore.updateConversation({

@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import type { Session, User } from '@supabase/supabase-js';
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
+import type { Session, User } from "@supabase/supabase-js";
 import {
   getCurrentSession,
   onAuthStateChange,
@@ -10,14 +10,15 @@ import {
   signOut as repoSignOut,
   signInWithOAuth as repoSignInWithOAuth,
   type AuthSession,
-} from '@renderer/services/authRepo';
-import { logger } from '@renderer/utils/logger';
+} from "@renderer/services/authRepo";
+import { logger } from "@renderer/utils/logger";
+import { notify } from "@renderer/utils/notify";
 
 /**
  * Supabase 认证状态的 Pinia Store。
  * 维护当前 session/user，提供登录登出方法，衔接 authRepo 与界面层。
  */
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore("auth", () => {
   // --- 响应式状态 ------------------------------------------------------------
 
   const user = ref<User | null>(null);
@@ -39,11 +40,11 @@ export const useAuthStore = defineStore('auth', () => {
       errorMessage.value = err.message;
       return;
     }
-    if (typeof err === 'string') {
+    if (typeof err === "string") {
       errorMessage.value = err;
       return;
     }
-    errorMessage.value = 'Unexpected authentication error';
+    errorMessage.value = "Unexpected authentication error";
   };
 
   const clearError = () => {
@@ -65,16 +66,58 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const current = await getCurrentSession();
       setAuthState(current.session);
+      if (current.session) {
+        notify.info("正在获取用户数据", "欢迎回来");
+      } else {
+        notify.warning("所有数据仅保存在本地", "请先登录以同步数据");
+      }
     } catch (err) {
-      logger.error('Auth initialization failed:', err);
+      logger.error("Auth initialization failed:", err);
+      notify.error("认证初始化失败");
       setError(err);
     } finally {
       loading.value = false;
     }
 
-    unsubscribeAuthListener = onAuthStateChange((_event, nextSession) => {
+    unsubscribeAuthListener = onAuthStateChange(async (_event, nextSession) => {
+      const wasAuthenticated = Boolean(session.value);
+      const isNowAuthenticated = Boolean(nextSession);
+
       setAuthState(nextSession);
+
+      // ✅ 当用户从未登录 → 已登录时，触发数据同步
+      if (!wasAuthenticated && isNowAuthenticated) {
+        logger.info("用户登录成功，开始同步数据...");
+        await syncUserData();
+      }
     });
+  };
+
+  /**
+   * 同步用户数据（Providers 和 Conversations）
+   * ✅ 仅在运行时登录时触发，应用启动时的同步由 AppInitializer 处理
+   */
+  const syncUserData = async () => {
+    try {
+      // ✅ 动态导入避免循环依赖
+      const { useProvidersStore } = await import("./providers");
+      const { useConversationsStore } = await import("./conversations");
+
+      const providersStore = useProvidersStore();
+      const conversationsStore = useConversationsStore();
+
+      logger.info("开始同步 Providers 和 Conversations...");
+
+      // ✅ 重新初始化（包含云端同步）
+      await Promise.all([
+        providersStore.initialize(),
+        conversationsStore.initialize(),
+      ]);
+
+      logger.info("数据同步完成");
+    } catch (err) {
+      logger.error("数据同步失败:", err);
+    }
   };
 
   /**
@@ -102,7 +145,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const signInWithPassword = async (
     email: string,
-    password: string,
+    password: string
   ): Promise<AuthSession> => {
     loading.value = true;
     clearError();
@@ -120,7 +163,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const signUpWithPassword = async (
     email: string,
-    password: string,
+    password: string
   ): Promise<AuthSession> => {
     loading.value = true;
     clearError();
@@ -150,7 +193,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  const signInWithOAuth = async (provider: 'google' | 'github'): Promise<void> => {
+  const signInWithOAuth = async (
+    provider: "google" | "github"
+  ): Promise<void> => {
     loading.value = true;
     clearError();
     try {

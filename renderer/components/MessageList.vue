@@ -20,9 +20,9 @@ const props = defineProps<{
 }>();
 
 const isBatchMode = ref(false);
-const checkedIds = ref<number[]>([]);
+const checkedIds = ref<string[]>([]);
 
-const itemChecked = computed(() => (id: number) => checkedIds.value.includes(id));
+const itemChecked = computed(() => (id: string) => checkedIds.value.includes(id));
 
 const route = useRoute();
 const message = useMessage();
@@ -30,22 +30,22 @@ const { createDialog } = useDialog();
 const { deleteMessage } = useMessagesStore();
 const { t } = useI18n();
 
-const messageActionPolicy = new Map<MESSAGE_ITEM_MENU_IDS, (msgId: number) => Promise<void>>([
-  [MESSAGE_ITEM_MENU_IDS.COPY, async (msgId: number) => {
+const messageActionPolicy = new Map<MESSAGE_ITEM_MENU_IDS, (msgId: string) => Promise<void>>([
+  [MESSAGE_ITEM_MENU_IDS.COPY, async (msgId: string) => {
     const msg = props.messages.find((msg) => msg.id === msgId);
     if (!msg) return;
     navigator.clipboard.writeText(msg.content).then(() => {
       message.success(t('main.message.dialog.copySuccess'));
     });
   }],
-  [MESSAGE_ITEM_MENU_IDS.DELETE, async (msgId: number) => {
+  [MESSAGE_ITEM_MENU_IDS.DELETE, async (msgId: string) => {
     const res = await createDialog({
       title: 'main.message.dialog.title',
       content: 'main.message.dialog.messageDelete',
     })
     if (res === 'confirm') deleteMessage(msgId);
   }],
-  [MESSAGE_ITEM_MENU_IDS.SELECT, async (msgId: number) => {
+  [MESSAGE_ITEM_MENU_IDS.SELECT, async (msgId: string) => {
     checkedIds.value = [...checkedIds.value, msgId]
     isBatchMode.value = true;
   }],
@@ -56,13 +56,13 @@ const messageActionPolicy = new Map<MESSAGE_ITEM_MENU_IDS, (msgId: number) => Pr
  */
 const { formatTimeAgo } = useBatchTimeAgo();
 
-async function handleContextMenu(msgId: number) {
+async function handleContextMenu(msgId: string) {
   const clickItem = await createContextMenu(MENU_IDS.MSSAGE_ITEM);
   const action = messageActionPolicy.get(clickItem as MESSAGE_ITEM_MENU_IDS);
   action && await action(msgId);
 }
 
-function handleCheckItem(id: number, val: boolean) {
+function handleCheckItem(id: string, val: boolean) {
   if (val && !checkedIds.value.includes(id)) {
     checkedIds.value = [...checkedIds.value, id]
   } else {
