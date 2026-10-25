@@ -9,6 +9,6 @@ test('desktop package ships the loading page requested at startup', () => {
   const resources = process.platform === 'darwin'
     ? join(appDirectory, 'Xier.app', 'Contents', 'Resources')
     : join(appDirectory, 'resources');
-  const actual = asar.extractFile(join(resources, 'app.asar'), '.vite/build/loading.html');
+  const actual = asar.extractFile(join(resources, 'app.asar'), join('.vite', 'build', 'loading.html'));
   assert.deepEqual(actual, readFileSync('public/loading.html'));
 });

@@ -27,7 +27,7 @@
         "command": "node --test tests/packaged/loading-asset.mjs",
         "exitCode": 0,
         "evidence": "evidence/01-refactor.txt",
-        "summary": "仅一项显式配置，无需额外重构；复核真实归档测试再次通过"
+        "summary": "测试归档内部路径改用原生 path.join，修正 Windows asar 分隔符；本机产物回归通过，Windows 最终结果另见 PR CI。"
       }
     }
   ]
