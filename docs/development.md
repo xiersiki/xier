@@ -33,6 +33,16 @@ main 保护目标：必须 PR、必须 `required` 成功、分支保持最新、
 
 完成意味着验收条件实现、适用检查通过、评审问题解决、文档一致；发布任务还要求产物与提交可追溯、校验和正确、安装/启动验收有记录。PR 合并、Pages 上线、Release 发布分别记录，不混为“已完成”。
 
+## 通知与依赖更新
+
+维护者采用低频通知：在 [GitHub 通知设置](https://github.com/settings/notifications) 中，Watching 和 Participating、@mentions、custom 只选 On GitHub；Actions 保留 Email 和 Only notify for failed workflows。这是个人账号级偏好，会影响该账号其他仓库；仓库配置不会替协作者更改个人设置。安全漏洞与账号安全提醒单独管理，不属于日常 PR 降噪范围。
+
+Dependabot 常规版本更新按月检查，应用、站点、GitHub Actions 各合并为一组，每组最多同时打开 1 个版本更新 PR，三组配置上限合计 3 个。分组仅适用于 version-updates，不改变安全更新的调度与独立限制，也不自动合并升级。已有 PR 不会因调低上限自动变成已处理；等待机器人重新分组或人工评审。分组含大版本更新时仍须检查兼容性，失败时按依赖拆分处理。
+
+Agent 在 PR 描述中维护当前验证与交接摘要；评论用于评审问题、阻断和最终交付，不逐条发送提交、轮询或无变化进度。CI 结果由 checks 展示，避免用重复评论再通知一次。
+
+规则依据：[GitHub 通知](https://docs.github.com/en/subscriptions-and-notifications/get-started/configuring-notifications)、[Actions 失败通知](https://docs.github.com/en/subscriptions-and-notifications/how-tos/managing-github-actions-notifications)、[Dependabot 分组与上限](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)。
+
 ## 官网开发
 
 ```bash
