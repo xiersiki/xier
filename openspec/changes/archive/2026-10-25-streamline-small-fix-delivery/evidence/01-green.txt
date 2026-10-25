@@ -1,0 +1,16 @@
+$ npm test -- tests/ci-scope.test.ts
+
+> xier@1.0.0 test
+> vitest run tests/ci-scope.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/scoped-ci
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:16:46
+   Duration  433ms (tests 85%, setup 12%, transform 2%, worker 1%, import 1%)
+
+
+exitCode: 0

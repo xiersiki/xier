@@ -1,0 +1,42 @@
+$ npm test -- tests/ci-scope.test.ts
+
+> xier@1.0.0 test
+> vitest run tests/ci-scope.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/scoped-ci
+
+ ❯ tests/ci-scope.test.ts (4 tests | 1 failed) 970ms
+   × 显式完整运行不能因文档差异而跳过检查 222ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ci-scope.test.ts > 显式完整运行不能因文档差异而跳过检查
+AssertionError: CI scope failed: Usage: node scripts/ci-scope.mjs --base <git-ref>
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ selection tests/ci-scope.test.ts:35:40
+     33| function selection(r: ReturnType<typeof repo>, args?: string[]) {
+     34|   const result = r.run(args);
+     35|   expect(result.status, result.output).toBe(0);
+       |                                        ^
+     36|   return JSON.parse(result.stdout);
+     37| }
+ ❯ tests/ci-scope.test.ts:65:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  20:17:25
+   Duration  1.11s (tests 94%, transform 2%, setup 2%, import 1%)
+
+
+exitCode: 1

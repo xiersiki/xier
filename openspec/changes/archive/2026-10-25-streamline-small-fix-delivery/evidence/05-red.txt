@@ -1,0 +1,41 @@
+$ npm test -- tests/ci-scope.test.ts
+
+> xier@1.0.0 test
+> vitest run tests/ci-scope.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/scoped-ci
+
+ ❯ tests/ci-scope.test.ts (5 tests | 1 failed) 820ms
+   × required 允许明确无需运行的检查跳过 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ci-scope.test.ts > required 允许明确无需运行的检查跳过
+AssertionError: CI results rejected: scoped results are not yet supported
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/ci-scope.test.ts:83:40
+     81| test('required 允许明确无需运行的检查跳过', () => {
+     82|   const result = checkResults(siteResults());
+     83|   expect(result.status, result.output).toBe(0);
+       |                                        ^
+     84| });
+     85|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:17:46
+   Duration  940ms (tests 94%, transform 3%, setup 2%, import 1%)
+
+
+exitCode: 1

@@ -46,7 +46,7 @@ npm run spec -- instructions proposal --change add-example
 
 1. **RED**：编写一个会失败的测试，运行并确认失败来自缺失/错误行为，而非依赖、语法或环境问题；保存实际输出。
 2. **GREEN**：只实现让这个场景通过的必要代码，运行并记录结果。
-3. **REFACTOR**：需要时消除重复、改善结构，再运行测试；无需重构则如实说明理由并保留验证记录。
+3. **REFACTOR**：需要时消除重复、改善结构，再运行受影响测试；无需重构则说明具体理由，直接引用刚通过的 GREEN 记录，不制造重复日志。
 4. 再进入下一个场景，完成后执行当前任务的全量适用检查。
 
 测试通过公共 API、组件用户行为或 CLI 验证结果，不绑内部实现。不提前批量写全部测试，不为文案修改制造测试，不将真实模型/生产库加入默认离线回归。
@@ -92,6 +92,25 @@ npm run spec -- instructions proposal --change add-example
 }
 ```
 
+## 小修快速通道与验证范围
+
+局部、契约不扩展且可回退的小修，使用同一 Issue/change/PR：四份 SDD 各写必要的几段，保留行为场景与公开测试边界；一个场景 RED → GREEN → 按需重构，默认一次独立评审。无需新的 lite schema、独立验收页或重复交接文件。认证、IPC、数据/迁移、打包、主要依赖与跨模块风险走完整设计和验证。
+
+| 改动范围 | CI 选择（所有行均运行 scope + spec） |
+|---|---|
+| 根 README/AGENTS/CONTRIBUTING/CHANGELOG/SECURITY/LICENSE、docs 的 Markdown、OpenSpec 资料、生成 skills 文档 | 不触发应用、站点或打包；人工检查内容/链接 |
+| `site/**`（含 Markdown、配置和独立依赖） | site：站点构建 |
+| `renderer/components/` 的 Vue/TS/CSS、六个展示 hooks（FontSize/NaiveLocale/ThemeMode/PrimaryColor/TimeAgo/NaiveTheme）、renderer/index.css、locales 的 JSON/TS、普通顶层测试 | app：类型 + 全量离线测试 + renderer 构建 |
+| 主进程/preload/common、服务/stores/数据库/认证、打包/根依赖、CI 脚本与其测试、历史 OAuth 回调及其他未知路径 | app + site + desktop（三平台 make 和产物检查） |
+| 混合范围 | 并集；删除和重命名同时考虑原路径 |
+| 手动 CI、PR `ci:full` 标签 | 全部检查；标签只增加检查，不提供豁免 |
+
+实际白名单在 `scripts/ci-scope.mjs`。普通 UI 路径中若引入认证、IPC、数据等风险，作者/评审必须加 `ci:full`；文件少或行数少不是低风险证明。新增路径默认完整检查，扩展白名单需规格、测试和评审。
+
+本地先用公开 CLI 查看范围；app 对应 `npm run check && npm run build`，site 对应 `npm run site:build`，desktop 由 CI 三平台验证。未修改桌面代码时不在本机重复打包同一输入；涉及安装/运行行为仍补实际验收。发布保留现有应用及三平台验证。合并后 CI 检查最终 main，不能把 PR 结果冒充 main 结果。
+
+重复运行只由新代码/配置/依赖/环境变化、失败或未解决风险触发。评审后变动按增量复核，记录实际 SHA 和沿用的证据。PR 保存逐任务事实；普通修复在发布/迭代时汇总飞书，契约、接口、架构、数据、安全和开发规则变化立即同步受影响主题页。批量摘要由该发布/迭代的交付会话负责，引用自上次汇总后的已合并 PR，不复制全部日志。
+
 ## GitHub 检查与交付
 
 ```bash
@@ -99,14 +118,13 @@ git fetch origin
 git add <本任务新增和修改的文件>   # 新文件先纳入跟踪；只暂存本任务内容
 npm run spec:validate
 npm run spec:gate -- --base origin/main
-npm run check
-npm run build
-# 站点改动另运行 npm ci --prefix site && npm run site:build
+node scripts/ci-scope.mjs --base origin/main
+# 根据返回范围执行下表检查；相关输入未变不机械重跑
 ```
 
 范围门禁检查指定 base 到**当前已跟踪工作树**的差异，包含已暂存和未暂存修改，未暂存的新文件不在 Git diff 中。CI checkout 是完整提交：PR 取 base SHA，main push 取 before，手动运行取 HEAD 的父提交；base 缺失/无效时失败，不猜测为无改动。
 
-`OpenSpec and TDD` job 执行官方严格语法校验、归档任务校验与范围门禁。应用 job 实际运行全量离线测试（包括门禁 CLI 回归），`required` 同时依赖 spec/app/site/desktop 全部成功。检查结果只在 checks/summary 展示，不逐次发表评论，沿用日常通知降噪约定。
+`OpenSpec and TDD` job 执行官方严格语法校验、归档任务校验与范围门禁。范围分类 job 输出 app/site/desktop；应用 job 运行全量离线测试（包括 CLI 回归）、类型检查和 renderer 构建。`required` 用 always 始终执行，要求 scope/spec 成功且选中 job 成功；只有明确未选中的 job 可以 skipped，缺失输出、失败或取消都不能当作无需运行。检查结果只在 checks/summary 展示，不逐次发表评论，沿用日常通知降噪约定。
 
 任务完成且适用验证通过后同步并归档：
 

@@ -3,6 +3,13 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'site/**'
+      - 'docs/auth-redirect.html'
+      - '.github/workflows/docs.yml'
+      - '.nvmrc'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
