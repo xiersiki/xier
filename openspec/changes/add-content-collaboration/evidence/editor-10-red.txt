@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (15 tests | 1 failed) 9ms
+   × locks a running workspace and keeps unknown pending until refresh confirms completion 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > locks a running workspace and keeps unknown pending until refresh confirms completion
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/content-controller.test.ts:166:18
+    164|   editor.importText('one', new TextEncoder().encode('原始内容')); editor.s…
+    165|   await editor.generate('精简'); await editor.generate('再来');
+    166|   expect(starts).toBe(1);
+       |                  ^
+    167|   await editor.cancel();
+    168|   expect(editor.status).toBe('unknown');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  20:45:35
+   Duration  579ms (environment 71%, import 12%, setup 7%, transform 7%, tests 2%, worker 1%)

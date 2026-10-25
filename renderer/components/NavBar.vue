@@ -7,6 +7,7 @@ const { t } = useI18n();
 </script>
 <template>
   <nav class="sidebar-tools">
+    <RouterLink class="settings-link" to="/content">内容工作台</RouterLink>
     <button class="settings-link" @click="openWindow(WINDOW_NAMES.SETTING)"><Settings2 :size="16" :stroke-width="1.6" />{{ t('main.sidebar.settings') }}</button>
     <ThemeSwitcher />
   </nav>

@@ -1,0 +1,48 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (6 tests | 1 failed) 8ms
+   × attaches late completion to the original draft and restores its editor history when switching back 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > attaches late completion to the original draft and restores its editor history when switching back
+AssertionError: expected { …(9) } to be undefined
+
+- Expected:
+undefined
+
++ Received:
+{
+  "before": "第一份内容",
+  "draftId": "36be609e-714c-43e9-a4c2-5fd415e136b9",
+  "from": 0,
+  "requestId": "60638f83-72fb-4f5b-bdf2-069f5a81e93b",
+  "result": {
+    "replacement": "第一份建议",
+  },
+  "revision": 0,
+  "scopeId": "guest",
+  "status": "reviewable",
+  "to": 5,
+}
+
+ ❯ tests/content-controller.test.ts:96:29
+     94|   complete({ requestId, sequence: 2, status: 'completed', result: { re…
+     95|   await generating;
+     96|   expect(editor.suggestion).toBeUndefined();
+       |                             ^
+     97|   expect(editor.accept()).toBe(false);
+     98|   expect(editor.state.doc.toString()).toBe('第二份内容');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  20:39:41
+   Duration  537ms (environment 68%, import 12%, transform 10%, setup 6%, tests 2%, worker 1%)

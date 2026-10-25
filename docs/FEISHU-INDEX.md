@@ -21,7 +21,9 @@
 
 | 资料 | 飞书页面 | 本地来源与同步规则 |
 |---|---|---|
-| Agent 工作台第一版提案 | [03.1](https://pcn11w88fq9h.feishu.cn/wiki/V7cgwjqTTi7XnHkxbj4cFPyKnws) | 原“个人项目”工作区 `docs/Agent第一版功能与架构方案.md`；后续需求/设计讨论以飞书此页为主要位置，实施规格再与提交关联 |
+| Agent 工作台第一版提案 | [03.1](https://pcn11w88fq9h.feishu.cn/wiki/V7cgwjqTTi7XnHkxbj4cFPyKnws) | 原“个人项目”工作区 `docs/Agent第一版功能与架构方案.md`；历史提案，已停止推进；当前内容协作方向见 03.5/04.2 |
+| 内容协作一期 PRD | [03.5](https://pcn11w88fq9h.feishu.cn/wiki/Jf43wDrZ7iT6PbkvjvucOHIanIb) | 前端编辑、差异审阅和组件复用的评审稿；[选型边界](https://pcn11w88fq9h.feishu.cn/wiki/WN35wSU2nilCIFk30qxcFEXgneg)，不自研 Agent 内核 |
+| 内容协作技术方案与接入验证 | [04.2](https://pcn11w88fq9h.feishu.cn/wiki/YNVXwcj0Vij6hhk2u57csEGXnMf) | [版本化设计与任务](../openspec/changes/add-content-collaboration/design.md)、[隔离实验](../openspec/changes/add-content-collaboration/evidence/integration.md)；飞书维护解释和导航，产品尚未实施 |
 | 桌面对话界面设计记录 | [03.2](https://pcn11w88fq9h.feishu.cn/wiki/EBnIwdQ5qiYXoCkQSnxcuCpznbg) | [UI-DESIGN.md](UI-DESIGN.md)；随版本维护仓库说明，并同步飞书状态与变化 |
 | 模型适配与数据迁移记录 | [04.1](https://pcn11w88fq9h.feishu.cn/wiki/ARCkw5dU5i4VnIkCe3ecZfVPnXd) | [MODEL-ADAPTER.md](MODEL-ADAPTER.md)；代码/迁移以仓库为准，飞书维护对应设计和验收记录 |
 | 恢复与验收记录 | [06.1](https://pcn11w88fq9h.feishu.cn/wiki/J8u0w6VqwiTCojkLrhrcammLnKd) | [RECOVERY.md](RECOVERY.md)；保留 2026-10-23 历史事实，新验收追加独立带时间记录 |
@@ -30,7 +32,7 @@
 | OpenSpec 与 SDD/TDD 开发规范 | [05.2](https://pcn11w88fq9h.feishu.cn/wiki/UC9GwJwXyi6ozSkgCG7c0uFYnof) | [版本化执行规则](spec-driven-development.md) 与 `openspec/` 保存规格/证据；飞书保存目的、决策与验收链接 |
 | 开源方案调研 | [08](https://pcn11w88fq9h.feishu.cn/wiki/SN3zwGPoxiQzmAkzKh1cm3ImnJf) | 原“个人项目”工作区 `docs/research/2026-10-25-agent-oss-landscape.md`；保留来源日期，复核后记录增量结论 |
 
-飞书迁入页开头注明来源、时间与状态。历史 GUI/真实服务验证没有因迁入而重新执行；产品 Agent 工作台仍是提案。不要将历史来源中的“本轮”“已验证”自动理解为当前会话或当前提交。
+飞书迁入页开头注明来源、时间与状态。历史 GUI/真实服务验证没有因迁入而重新执行；早期产品 Agent 工作台提案已停止推进，当前内容协作方向见 03.5/04.2。不要将历史来源中的“本轮”“已验证”自动理解为当前会话或当前提交。
 
 ## 信息一致性
 

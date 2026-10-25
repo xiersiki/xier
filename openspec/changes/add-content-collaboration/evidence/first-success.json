@@ -1,0 +1,112 @@
+{
+  "versions": {
+    "opencode": "1.19.4",
+    "sdk": "1.19.4"
+  },
+  "startedAt": "2026-10-25T12:10:42.429Z",
+  "checks": [
+    {
+      "name": "health",
+      "passed": true,
+      "response": {
+        "healthy": true,
+        "version": "1.19.4"
+      }
+    },
+    {
+      "name": "authentication",
+      "passed": true
+    },
+    {
+      "name": "openapi",
+      "passed": true,
+      "pathCount": 162
+    },
+    {
+      "name": "live-structured-rewrite",
+      "passed": true,
+      "elapsedMs": 1363,
+      "syntheticInput": "本功能可以让用户快速地完成文本的修改操作。",
+      "structured": {
+        "replacement": "本功能让用户快速修改文本。",
+        "explanation": "保留\"让用户快速修改文本\"的核心意思，删去\"可以\"\"地\"\"完成……的操作\"等冗余表达，由19字精简为10字。"
+      },
+      "errorName": null,
+      "partTypes": [
+        "step-start",
+        "tool",
+        "step-finish"
+      ]
+    },
+    {
+      "name": "session-readback",
+      "passed": false,
+      "error": "Expected OutputFormatJsonSchema, got {\"type\":\"json_schema\",\"schema\":{\"type\":\"object\",\"properties\":{\"replacement\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"}},\"required\":[\"replacement\",\"explanation\"],\"additionalProperties\":false},\"retryCount\":2}\n  at [0][\"info\"][\"format\"]"
+    },
+    {
+      "name": "server-abort",
+      "passed": true,
+      "abortAcknowledged": true,
+      "elapsedMs": 9,
+      "status": "absent-idle",
+      "scope": "deterministic held upstream; not live model billing proof"
+    },
+    {
+      "name": "exposed-tools",
+      "passed": true,
+      "tools": [
+        "StructuredOutput"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "mode": "live",
+      "model": "deepseek-flash",
+      "stream": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "tools": [
+        "StructuredOutput"
+      ],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "status": 200
+    },
+    {
+      "mode": "hold",
+      "model": "deepseek-flash",
+      "stream": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "tools": [],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "connectionClosed": true
+    }
+  ],
+  "events": {
+    "server.connected": 1,
+    "session.created": 2,
+    "session.updated": 7,
+    "message.updated": 9,
+    "message.part.updated": 7,
+    "session.status": 7,
+    "session.diff": 3,
+    "plugin.added": 45,
+    "catalog.updated": 2,
+    "reference.updated": 1,
+    "integration.updated": 1,
+    "session.idle": 3,
+    "session.error": 1
+  },
+  "finishedAt": "2026-10-25T12:10:44.859Z"
+}

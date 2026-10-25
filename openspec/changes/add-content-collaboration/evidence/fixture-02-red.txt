@@ -1,0 +1,41 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-fixture.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-fixture.test.ts (2 tests | 1 failed) 6ms
+   × detachment does not cancel, cancellation prevents late completion, and request IDs are immutable 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-fixture.test.ts > detachment does not cancel, cancellation prevents late completion, and request IDs are immutable
+AssertionError: promise resolved "{ requestId: 'one', sequence: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "requestId": "one",
++   "sequence": 1,
++   "status": "running",
+  }
+
+ ❯ tests/content-fixture.test.ts:22:64
+     20|   await port.start(request); detach();
+     21|   expect((await port.get('one')).status).toBe('running');
+     22|   await expect(port.start({ ...request, selectedText: '不同输入' })).rejec…
+       |                                                                ^
+     23|   await expect(port.start({ ...request, requestId: 'two' })).rejects.t…
+     24|   expect((await port.cancel('one')).status).toBe('cancelled');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:47:54
+   Duration  443ms (environment 77%, import 7%, setup 7%, transform 6%, tests 1%, worker 1%)

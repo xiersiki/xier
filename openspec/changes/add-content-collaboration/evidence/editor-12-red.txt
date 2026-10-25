@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (17 tests | 1 failed) 11ms
+   × rejects oversized typing and handles transport loss without treating it as stopped 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > rejects oversized typing and handles transport loss without treating it as stopped
+AssertionError: expected 20001 to be 20000 // Object.is equality
+
+- Expected
++ Received
+
+- 20000
++ 20001
+
+ ❯ tests/content-controller.test.ts:197:35
+    195|   editor.importText('limit', new TextEncoder().encode('字'.repeat(20000…
+    196|   editor.dispatch(editor.state.update({ changes: { from: 20000, insert…
+    197|   expect(editor.state.doc.length).toBe(20000);
+       |                                   ^
+    198|   editor.select(0, 4000);
+    199|   await editor.generate('精简');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  20:46:18
+   Duration  521ms (environment 74%, import 10%, transform 7%, setup 6%, tests 2%, worker 1%)

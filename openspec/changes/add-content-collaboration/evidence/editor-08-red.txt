@@ -1,0 +1,39 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (13 tests | 4 failed) 11ms
+   × rejects incomplete or invalid results without offering acceptance 3ms
+   × rejects incomplete or invalid results without offering acceptance 0ms
+   × rejects incomplete or invalid results without offering acceptance 0ms
+   × rejects incomplete or invalid results without offering acceptance 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > rejects incomplete or invalid results without offering acceptance
+ FAIL  tests/content-controller.test.ts > rejects incomplete or invalid results without offering acceptance
+ FAIL  tests/content-controller.test.ts > rejects incomplete or invalid results without offering acceptance
+ FAIL  tests/content-controller.test.ts > rejects incomplete or invalid results without offering acceptance
+AssertionError: expected 'completed' to be 'failed' // Object.is equality
+
+Expected: "failed"
+Received: "completed"
+
+ ❯ tests/content-controller.test.ts:129:25
+    127|   editor.select(0, 4);
+    128|   await editor.generate('精简');
+    129|   expect(editor.status).toBe('failed');
+       |                         ^
+    130|   expect(editor.accept()).toBe(false);
+    131|   expect(editor.state.doc.toString()).toBe('原始内容');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 9 passed (13)
+   Start at  20:41:13
+   Duration  563ms (environment 80%, import 8%, transform 5%, setup 5%, tests 2%)

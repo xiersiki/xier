@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (4 tests | 1 failed) 7ms
+   × accepts at the captured range only once and undoes subsequent typing before the suggestion 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > accepts at the captured range only once and undoes subsequent typing before the suggestion
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/content-controller.test.ts:54:27
+     52|   await editor.generate('精简');
+     53|   editor.select(0, 2);
+     54|   expect(editor.accept()).toBe(true);
+       |                           ^
+     55|   expect(editor.accept()).toBe(false);
+     56|   expect(editor.state.doc.toString()).toBe('前文。简洁文本。后文。');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  20:38:44
+   Duration  379ms (environment 68%, import 14%, setup 8%, transform 7%, tests 2%, worker 1%)

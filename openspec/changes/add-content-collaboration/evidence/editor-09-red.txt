@@ -1,0 +1,38 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (14 tests | 1 failed) 10ms
+   × observes before start, ignores old snapshots and rejects without changing text 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > observes before start, ignores old snapshots and rejects without changing text
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ Object.start tests/content-controller.test.ts:140:48
+    138|   const editor = new ContentController({
+    139|     observe: (_, callback) => { observed = true; listener = callback; …
+    140|     start: async request => { expect(observed).toBe(true); id = reques…
+       |                                                ^
+    141|     get: async () => ({ requestId: id, sequence: 0, status: 'unknown' …
+    142|     cancel: async () => ({ requestId: id, sequence: 3, status: 'cancel…
+ ❯ ContentController.generate renderer/features/content/controller.ts:69:38
+ ❯ tests/content-controller.test.ts:145:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  20:45:10
+   Duration  551ms (environment 71%, import 11%, setup 8%, transform 7%, tests 2%, worker 1%)

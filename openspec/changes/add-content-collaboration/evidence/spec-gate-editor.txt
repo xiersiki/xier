@@ -1,0 +1,5 @@
+
+> xier@1.0.0 spec:gate
+> node scripts/check-sdd.mjs --base origin/main
+
+SDD/TDD gate failed: Incomplete openspec/changes/add-content-collaboration/tasks.md

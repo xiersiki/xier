@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-components.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-components.test.ts (1 test | 1 failed) 8ms
+   × submits a preset or a custom requirement through its public event 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-components.test.ts > submits a preset or a custom requirement through its public event
+AssertionError: expected '选区' to contain '待改写'
+
+Expected: "待改写"
+Received: "选区"
+
+ ❯ tests/content-components.test.ts:6:26
+      4| it('submits a preset or a custom requirement through its public event'…
+      5|   const wrapper = mount(ContextSelection, { props: { selectedText: '待改…
+      6|   expect(wrapper.text()).toContain('待改写');
+       |                          ^
+      7|   await wrapper.get('form').trigger('submit');
+      8|   expect(wrapper.emitted('submit')?.[0]).toEqual(['让表达更清晰，保留原意']);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:23:14
+   Duration  1.07s (environment 44%, transform 39%, import 13%, setup 3%, tests 1%)
