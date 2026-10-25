@@ -1,0 +1,46 @@
+$ npm test -- tests/ci-scope.test.ts
+
+> xier@1.0.0 test
+> vitest run tests/ci-scope.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/scoped-ci
+
+ ❯ tests/ci-scope.test.ts (1 test | 1 failed) 248ms
+   × 文档与规格证据不触发应用、站点或桌面构建 247ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ci-scope.test.ts > 文档与规格证据不触发应用、站点或桌面构建
+AssertionError: expected { Object (app, site, ...) } to deeply equal { app: false, site: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "app": false,
+-   "desktop": false,
+-   "site": false,
++   "app": true,
++   "desktop": true,
++   "site": true,
+  }
+
+ ❯ tests/ci-scope.test.ts:43:24
+     41|   r.put('README.md');
+     42|   r.put('openspec/changes/fix/evidence/red.txt');
+     43|   expect(selection(r)).toEqual({ app: false, site: false, desktop: fal…
+       |                        ^
+     44| });
+     45|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:16:35
+   Duration  781ms (tests 46%, setup 41%, transform 9%, worker 3%, import 1%)
+
+
+exitCode: 1

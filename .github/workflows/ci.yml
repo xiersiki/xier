@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
   push:
     branches: [main]
   workflow_dispatch:
@@ -14,7 +15,43 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  scope:
+    name: Changed scope
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      app: ${{ steps.select.outputs.app }}
+      site: ${{ steps.select.outputs.site }}
+      desktop: ${{ steps.select.outputs.desktop }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - id: select
+        env:
+          CI_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          FORCE_FULL: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'ci:full') }}
+        run: |
+          if [ -z "$CI_BASE" ]; then CI_BASE="$(git rev-parse HEAD^)"; fi
+          args=(--base "$CI_BASE")
+          if [ "$FORCE_FULL" = true ]; then args+=(--full); fi
+          node scripts/ci-scope.mjs "${args[@]}" > "$RUNNER_TEMP/ci-scope.json"
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const scope = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/ci-scope.json`, 'utf8'));
+          for (const job of ['app', 'site', 'desktop']) {
+            if (typeof scope[job] !== 'boolean') throw new Error(`Invalid scope: ${job}`);
+            appendFileSync(process.env.GITHUB_OUTPUT, `${job}=${scope[job]}\n`);
+          }
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `OpenSpec always runs. Selected checks: ${JSON.stringify(scope)}\n`);
+          JS
   app:
+    needs: scope
+    if: ${{ needs.scope.outputs.app == 'true' }}
     name: Application checks
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -59,6 +96,8 @@ jobs:
         run: |
           echo 'OpenSpec syntax, completed tasks and delivery evidence passed. Current tests run in Application checks. Review the saved logs and PR commits for historical red/green order.' >> "$GITHUB_STEP_SUMMARY"
   site:
+    needs: scope
+    if: ${{ needs.scope.outputs.site == 'true' }}
     name: Site checks
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -74,23 +113,24 @@ jobs:
       - run: npm ci --prefix site
       - run: npm run site:build
   desktop:
+    needs: scope
+    if: ${{ needs.scope.outputs.desktop == 'true' }}
     name: Desktop
     uses: ./.github/workflows/desktop.yml
   required:
     name: required
     if: ${{ always() }}
-    needs: [app, spec, site, desktop]
+    needs: [scope, app, spec, site, desktop]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Require every check to succeed
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Require selected checks to succeed
         env:
-          APP: ${{ needs.app.result }}
-          SPEC: ${{ needs.spec.result }}
-          SITE: ${{ needs.site.result }}
-          DESKTOP: ${{ needs.desktop.result }}
-        run: |
-          test "$APP" = success
-          test "$SPEC" = success
-          test "$SITE" = success
-          test "$DESKTOP" = success
+          CI_NEEDS: ${{ toJSON(needs) }}
+        run: node scripts/check-ci-results.mjs

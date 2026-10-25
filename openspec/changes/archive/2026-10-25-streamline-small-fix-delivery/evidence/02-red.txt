@@ -1,0 +1,45 @@
+$ npm test -- tests/ci-scope.test.ts
+
+> xier@1.0.0 test
+> vitest run tests/ci-scope.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/scoped-ci
+
+ ❯ tests/ci-scope.test.ts (2 tests | 1 failed) 465ms
+   × 站点页面与构建配置仅选择站点检查 189ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ci-scope.test.ts > 站点页面与构建配置仅选择站点检查
+AssertionError: expected { Object (app, site, ...) } to deeply equal { app: false, site: true, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "app": false,
+-   "desktop": false,
++   "app": true,
++   "desktop": true,
+    "site": true,
+  }
+
+ ❯ tests/ci-scope.test.ts:50:24
+     48|   r.put('site/guide/getting-started.md');
+     49|   r.put('site/.vitepress/config.mts');
+     50|   expect(selection(r)).toEqual({ app: false, site: true, desktop: fals…
+       |                        ^
+     51| });
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:16:47
+   Duration  614ms (tests 88%, setup 5%, transform 4%, import 2%)
+
+
+exitCode: 1

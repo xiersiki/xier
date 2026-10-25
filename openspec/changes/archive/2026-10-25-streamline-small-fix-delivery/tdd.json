@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "files": [
+    "scripts/ci-scope.mjs",
+    "scripts/check-ci-results.mjs",
+    "tests/ci-scope.test.ts",
+    ".github/workflows/ci.yml",
+    ".github/workflows/docs.yml",
+    ".github/pull_request_template.md",
+    "openspec/config.yaml",
+    "openspec/specs/delivery-workflow/spec.md"
+  ],
+  "seam": "公开 CLI；沿用用户认可的门禁命令行边界，输入 Git 差异/needs JSON，观察范围、退出码与错误提示。",
+  "cycles": [
+    {
+      "scenario": "文档与规格证据不触发构建",
+      "red": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/01-red.txt",
+        "summary": "新增场景断言失败，实际输出与规格不符"
+      },
+      "green": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "最小实现后场景及已有测试通过"
+      },
+      "refactor": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "分支与校验逻辑已足够简短，本轮无需重构，复用同一次 GREEN 验证"
+      }
+    },
+    {
+      "scenario": "站点只选择 site",
+      "red": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/02-red.txt",
+        "summary": "新增场景断言失败，实际输出与规格不符"
+      },
+      "green": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/02-green.txt",
+        "summary": "最小实现后场景及已有测试通过"
+      },
+      "refactor": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/02-green.txt",
+        "summary": "分支与校验逻辑已足够简短，本轮无需重构，复用同一次 GREEN 验证"
+      }
+    },
+    {
+      "scenario": "普通 UI 只选择 app",
+      "red": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/03-red.txt",
+        "summary": "新增场景断言失败，实际输出与规格不符"
+      },
+      "green": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/03-green.txt",
+        "summary": "最小实现后场景及已有测试通过"
+      },
+      "refactor": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/03-green.txt",
+        "summary": "分支与校验逻辑已足够简短，本轮无需重构，复用同一次 GREEN 验证"
+      }
+    },
+    {
+      "scenario": "显式 --full 全部检查",
+      "red": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/04-red.txt",
+        "summary": "新增场景断言失败，实际输出与规格不符"
+      },
+      "green": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/04-green.txt",
+        "summary": "最小实现后场景及已有测试通过"
+      },
+      "refactor": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/04-green.txt",
+        "summary": "分支与校验逻辑已足够简短，本轮无需重构，复用同一次 GREEN 验证"
+      }
+    },
+    {
+      "scenario": "required 允许明确未选中的跳过",
+      "red": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/05-red.txt",
+        "summary": "新增场景断言失败，实际输出与规格不符"
+      },
+      "green": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/05-green.txt",
+        "summary": "最小实现后场景及已有测试通过"
+      },
+      "refactor": {
+        "command": "npm test -- tests/ci-scope.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/05-green.txt",
+        "summary": "分支与校验逻辑已足够简短，本轮无需重构，复用同一次 GREEN 验证"
+      }
+    }
+  ]
+}
