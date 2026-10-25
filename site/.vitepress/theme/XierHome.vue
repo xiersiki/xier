@@ -17,8 +17,8 @@ const capabilities = [
         <h1 id="hero-title" class="hero-title">给想法，<br>留一张安静的桌面。</h1>
         <p class="hero-description">连接自己的模型，接着上一次的思考。<br>从一个问题开始，让对话自然展开。</p>
         <div class="hero-actions">
-          <a class="primary-link" :href="withBase('/download')">查看下载与版本 <span aria-hidden="true">↗</span></a>
-          <a class="text-link" :href="withBase('/guide/getting-started')">从源码开始 →</a>
+          <a class="primary-link" :href="withBase('/download.html')">查看下载与版本 <span aria-hidden="true">↗</span></a>
+          <a class="text-link" :href="withBase('/guide/getting-started.html')">从源码开始 →</a>
         </div>
         <p class="release-note">开发阶段 · macOS 优先验证 · 自备模型服务</p>
       </div>
@@ -45,7 +45,7 @@ const capabilities = [
         <h2 id="build-title">每一步，都留下来路。</h2>
         <p class="build-description">在 GitHub 上记录问题、讨论改动和交付版本。<br>无论是开发者还是 Agent，会话结束，工作仍然可以继续。</p>
       </div>
-      <a class="text-link" :href="withBase('/guide/development')">了解开发方式 →</a>
+      <a class="text-link" :href="withBase('/guide/development.html')">了解开发方式 →</a>
     </section>
   </div>
 </template>

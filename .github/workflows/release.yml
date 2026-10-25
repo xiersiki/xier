@@ -70,14 +70,14 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import hashlib, shutil, json, os
+          import hashlib, shutil, json, os, re
           destination = Path('release-assets')
           destination.mkdir()
           files = sorted(p for p in Path('artifacts').rglob('*') if p.is_file())
           if not files:
               raise SystemExit('No desktop artifacts downloaded')
           for p in files:
-              target = destination / p.name
+              target = destination / re.sub(r'[^A-Za-z0-9._-]', '.', p.name)
               if target.exists():
                   raise SystemExit(f'Duplicate artifact filename: {p.name}')
               shutil.copyfile(p, target)

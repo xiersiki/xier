@@ -23,21 +23,11 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
+      config: { options: { bin: "Xier" } },
     },
     {
       name: "@electron-forge/maker-rpm",
-      config: {},
-    },
-  ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
-      config: {
-        repository: { owner: "xiersiki", name: "xier" },
-        draft: true,
-        prerelease: true,
-      },
+      config: { options: { bin: "Xier" } },
     },
   ],
   plugins: [

@@ -17,11 +17,11 @@
 
 如果失败发生在创建草稿之后，先查看该 draft 与已有资产，再在同一草稿补交缺失文件；工作流默认拒绝重复 tag，避免误覆盖。不要删除历史 Release 来规避版本管理。
 
-## Forge publisher
+## 发布入口
 
-`forge.config.ts` 也配置了 `@electron-forge/publisher-github`，固定 `draft: true` 与 `prerelease: true`。维护者可在版本、目标 tag 和产物已核验时用 `npm run publish` 上传当前平台产物；凭据由授权环境提供，不写入仓库。
+`npm run publish` 通过已授权的 GitHub CLI 触发 main 上的 `release.yml`，使用本地 package.json 的版本作为请求参数；工作流会再次验证可信 main 的版本。命令不会上传本地工作树或直接修改既有 Release。
 
-常规 Actions 采用先只读构建、后汇总上传的方式，只有最后的发布 job 拥有 `contents: write`。PR 构建没有发布凭据。手工 publisher 操作需明确检查目标提交，不能将未合并的本地源码当成 main 发布。
+所有产物均由 Forge make 生成，之后先统一为安全文件名，再生成校验和；只有最后的发布 job 拥有 `contents: write`。PR 构建没有发布凭据。原生 Forge publisher 不能保证已存在的公开 Release 保持草稿，因此不提供第二个可绕过验收的发布入口。
 
 ## 签名策略
 
