@@ -1,0 +1,100 @@
+{
+  "versions": {
+    "opencode": "1.19.4",
+    "sdk": "1.19.4"
+  },
+  "startedAt": "2026-10-25T12:10:16.358Z",
+  "checks": [
+    {
+      "name": "health",
+      "passed": true,
+      "response": {
+        "healthy": true,
+        "version": "1.19.4"
+      }
+    },
+    {
+      "name": "authentication",
+      "passed": true
+    },
+    {
+      "name": "openapi",
+      "passed": true,
+      "pathCount": 162
+    },
+    {
+      "name": "live-structured-rewrite",
+      "passed": false,
+      "elapsedMs": 667,
+      "syntheticInput": "本功能可以让用户快速地完成文本的修改操作。",
+      "structured": null,
+      "errorName": "APIError",
+      "partTypes": []
+    },
+    {
+      "name": "session-readback",
+      "passed": false,
+      "error": "Expected OutputFormatJsonSchema, got {\"type\":\"json_schema\",\"schema\":{\"type\":\"object\",\"properties\":{\"replacement\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"}},\"required\":[\"replacement\",\"explanation\"],\"additionalProperties\":false},\"retryCount\":1}\n  at [0][\"info\"][\"format\"]"
+    },
+    {
+      "name": "server-abort",
+      "passed": true,
+      "abortAcknowledged": true,
+      "elapsedMs": 7,
+      "status": "absent-idle",
+      "scope": "deterministic held upstream; not live model billing proof"
+    },
+    {
+      "name": "exposed-tools",
+      "passed": true,
+      "tools": [
+        "StructuredOutput"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "mode": "live",
+      "model": "deepseek-flash",
+      "stream": true,
+      "tools": [
+        "StructuredOutput"
+      ],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "status": 400,
+      "errorMessage": "Thinking mode does not support this tool_choice (request_id: 204d1543-89c5-462c-8519-7522966ddf00)"
+    },
+    {
+      "mode": "hold",
+      "model": "deepseek-flash",
+      "stream": true,
+      "tools": [],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "connectionClosed": true
+    }
+  ],
+  "events": {
+    "server.connected": 1,
+    "session.created": 2,
+    "session.updated": 6,
+    "message.updated": 7,
+    "message.part.updated": 2,
+    "session.status": 8,
+    "session.diff": 2,
+    "plugin.added": 45,
+    "catalog.updated": 2,
+    "reference.updated": 1,
+    "integration.updated": 1,
+    "session.error": 2,
+    "session.idle": 4
+  },
+  "finishedAt": "2026-10-25T12:10:18.441Z"
+}

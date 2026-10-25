@@ -1,0 +1,130 @@
+{
+  "versions": {
+    "opencode": "1.19.4",
+    "sdk": "1.19.4"
+  },
+  "startedAt": "2026-10-25T12:11:46.236Z",
+  "checks": [
+    {
+      "name": "health",
+      "passed": true,
+      "response": {
+        "healthy": true,
+        "version": "1.19.4"
+      }
+    },
+    {
+      "name": "authentication",
+      "passed": true
+    },
+    {
+      "name": "openapi",
+      "passed": true,
+      "pathCount": 162
+    },
+    {
+      "name": "live-structured-rewrite",
+      "passed": true,
+      "elapsedMs": 1665,
+      "syntheticInput": "本功能可以让用户快速地完成文本的修改操作。",
+      "structured": {
+        "replacement": "本功能可让用户快速修改文本。",
+        "explanation": "删去冗余的“以”“地”“的……操作”等成分，压缩为12字，原意（用户能快速完成文本修改）不变。"
+      },
+      "errorName": null,
+      "partTypes": [
+        "step-start",
+        "tool",
+        "step-finish"
+      ]
+    },
+    {
+      "name": "single-message-readback",
+      "passed": true
+    },
+    {
+      "name": "latest-message-readback",
+      "passed": true
+    },
+    {
+      "name": "ag-ui-http-client",
+      "passed": true,
+      "events": [
+        "RUN_STARTED",
+        "STATE_SNAPSHOT",
+        "RUN_FINISHED"
+      ],
+      "scope": "real OpenCode result replayed through minimal local SSE bridge; not production UI"
+    },
+    {
+      "name": "session-readback",
+      "passed": false,
+      "error": "Expected OutputFormatJsonSchema, got {\"type\":\"json_schema\",\"schema\":{\"type\":\"object\",\"properties\":{\"replacement\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"}},\"required\":[\"replacement\",\"explanation\"],\"additionalProperties\":false},\"retryCount\":2}\n  at [0][\"info\"][\"format\"]"
+    },
+    {
+      "name": "server-abort",
+      "passed": true,
+      "abortAcknowledged": true,
+      "elapsedMs": 7,
+      "status": "absent-idle",
+      "scope": "deterministic held upstream; not live model billing proof"
+    },
+    {
+      "name": "exposed-tools",
+      "passed": true,
+      "tools": [
+        "StructuredOutput"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "mode": "live",
+      "model": "deepseek-flash",
+      "stream": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "tools": [
+        "StructuredOutput"
+      ],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "status": 200
+    },
+    {
+      "mode": "hold",
+      "model": "deepseek-flash",
+      "stream": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "tools": [],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "connectionClosed": true
+    }
+  ],
+  "events": {
+    "server.connected": 1,
+    "session.created": 2,
+    "session.updated": 7,
+    "message.updated": 9,
+    "message.part.updated": 7,
+    "session.status": 7,
+    "session.diff": 3,
+    "plugin.added": 45,
+    "catalog.updated": 2,
+    "reference.updated": 1,
+    "integration.updated": 1,
+    "session.idle": 3,
+    "session.error": 1
+  },
+  "finishedAt": "2026-10-25T12:11:49.313Z"
+}

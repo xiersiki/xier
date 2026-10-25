@@ -1,0 +1,76 @@
+{
+  "versions": {
+    "opencode": "1.19.4",
+    "sdk": "1.19.4"
+  },
+  "startedAt": "2026-10-25T12:08:44.389Z",
+  "checks": [
+    {
+      "name": "health",
+      "passed": true,
+      "response": {
+        "healthy": true,
+        "version": "1.19.4"
+      }
+    },
+    {
+      "name": "authentication",
+      "passed": true
+    },
+    {
+      "name": "openapi",
+      "passed": true,
+      "pathCount": 162
+    },
+    {
+      "name": "live-structured-rewrite",
+      "passed": false,
+      "elapsedMs": 1744,
+      "syntheticInput": "本功能可以让用户快速地完成文本的修改操作。",
+      "structured": null,
+      "errorName": "StructuredOutputError",
+      "partTypes": [
+        "step-start",
+        "reasoning",
+        "text",
+        "step-finish"
+      ]
+    },
+    {
+      "name": "probe-fatal",
+      "passed": false,
+      "errorType": "Error",
+      "message": "Expected OutputFormatJsonSchema, got {\"type\":\"json_schema\",\"schema\":{\"type\":\"object\",\"properties\":{\"replacement\":{\"type\":\"string\"},\"explanation\":{\"type\":\"string\"}},\"required\":[\"replacement\",\"explanation\"],\"additionalProperties\":false},\"retryCount\":0}\n  at [0][\"info\"][\"format\"]"
+    }
+  ],
+  "requests": [
+    {
+      "mode": "live",
+      "model": "deepseek-flash",
+      "stream": true,
+      "tools": [],
+      "roles": [
+        "system",
+        "user"
+      ],
+      "messageCount": 2,
+      "status": 200
+    }
+  ],
+  "events": {
+    "server.connected": 1,
+    "session.created": 1,
+    "session.updated": 4,
+    "message.updated": 5,
+    "message.part.updated": 7,
+    "session.status": 3,
+    "session.diff": 2,
+    "plugin.added": 45,
+    "catalog.updated": 2,
+    "reference.updated": 1,
+    "integration.updated": 1,
+    "message.part.delta": 80,
+    "session.idle": 1
+  },
+  "finishedAt": "2026-10-25T12:08:47.395Z"
+}
