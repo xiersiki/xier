@@ -20,7 +20,7 @@
       "summary": "类型检查、VitePress构建与认证回调复制成功"
     },
     {
-      "command": "node --input-type=module -e <site output assertions>",
+      "command": "node --input-type=module -e 'import {readFileSync,statSync} from \"node:fs\"; import assert from \"node:assert/strict\"; const base=\"site/.vitepress/dist/\"; for(const file of [\"index.html\",\"guide/development.html\",\"guide/getting-started.html\"]){assert(statSync(base+file).size>0); console.log(file+\": present\");} assert.deepEqual(readFileSync(base+\"auth-redirect.html\"),readFileSync(\"docs/auth-redirect.html\")); console.log(\"auth-redirect.html: byte-identical to source\");'",
       "exitCode": 0,
       "evidence": "evidence/site-output.txt",
       "summary": "3个HTML入口存在，回调与源文件逐字节一致"
