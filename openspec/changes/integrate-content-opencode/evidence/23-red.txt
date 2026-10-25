@@ -31,4 +31,3 @@ Error: RUNTIME_NOT_IMPLEMENTED
       Tests  1 failed (1)
    Start at  01:04:19
    Duration  225ms (import 40%, setup 28%, transform 25%, tests 5%, worker 2%)
-

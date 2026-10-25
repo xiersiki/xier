@@ -39,4 +39,3 @@ AssertionError: promise resolved "{ requestId: 'req-1', …(2) }" instead of rej
       Tests  1 failed | 9 passed (10)
    Start at  00:50:23
    Duration  697ms (tests 84%, import 7%, transform 4%, setup 4%)
-

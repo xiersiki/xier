@@ -33,4 +33,3 @@ AssertionError: expected 200 to be 403 // Object.is equality
       Tests  1 failed | 3 passed (4)
    Start at  01:00:09
    Duration  435ms (import 44%, tests 40%, transform 8%, setup 7%, worker 1%)
-

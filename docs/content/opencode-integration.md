@@ -2,7 +2,7 @@
 
 接入模块已实现，当前产品页面仍使用固定响应。此分支提供可独立评审的 OpenCode gateway、AG-UI HTTP handler、AgentPort 客户端和隔离 CLI 生命周期；不包含 IPC 注册、正式 Web host、持久化或真实 UI 验收。
 
-适用：2026-10-26，`codex/content-opencode-port`，基线 `8b37a36`，关联 [Issue #23](https://github.com/xiersiki/xier/issues/23) 与父 [PR #25](https://github.com/xiersiki/xier/pull/25)。本切片 change 为 [integrate-content-opencode](../../openspec/changes/integrate-content-opencode/)。父任务仍由主会话维护，不能据此把一期标记完成。
+适用：2026-10-26，`codex/content-opencode-port`，基线 `8b37a36`，[Draft PR #27](https://github.com/xiersiki/xier/pull/27)，关联 [Issue #23](https://github.com/xiersiki/xier/issues/23) 与父 [PR #25](https://github.com/xiersiki/xier/pull/25)。本切片 change 为 [integrate-content-opencode](../../openspec/changes/integrate-content-opencode/)。父任务仍由主会话维护，不能据此把一期标记完成。
 
 ## 已提供的边界
 

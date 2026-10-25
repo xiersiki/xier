@@ -6,6 +6,7 @@
 
 - 工作区：`/Users/gongchenyu/code/xier-worktrees/content-opencode-port`。
 - 分支：`codex/content-opencode-port`；基线 `8b37a36`；SDD 先行提交 `5bfe218`。
+- 本切片 [Draft PR #27](https://github.com/xiersiki/xier/pull/27)，实现提交 `2181b930ad5541e94769ea4d136f553254ce26e7`；PR 保持 Draft，未合并。
 - 依赖父 PR：[内容协作固定响应闭环 #25](https://github.com/xiersiki/xier/pull/25)，关联 [Issue #23](https://github.com/xiersiki/xier/issues/23)。
 - 详细模块、HTTP 契约和逐步操作：[接线说明](./opencode-integration.md)。
 - 验证与探索失败：[本轮证据](../../openspec/changes/integrate-content-opencode/evidence/verification.md)。

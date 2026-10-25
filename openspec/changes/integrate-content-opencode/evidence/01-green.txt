@@ -14,4 +14,3 @@ Exit: 0
       Tests  1 passed (1)
    Start at  00:48:31
    Duration  334ms (import 52%, tests 23%, setup 14%, transform 11%, worker 1%)
-

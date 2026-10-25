@@ -39,4 +39,3 @@ Caused by: Error: Matcher did not succeed in time.
       Tests  1 failed | 18 passed (19)
    Start at  00:56:56
    Duration  1.58s (tests 92%, import 3%, transform 2%, setup 2%)
-

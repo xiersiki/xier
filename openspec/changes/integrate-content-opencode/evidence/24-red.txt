@@ -31,4 +31,3 @@ AssertionError: expected undefined to be an instance of Error
       Tests  1 failed | 1 passed (2)
    Start at  01:05:30
    Duration  418ms (tests 65%, import 14%, setup 10%, transform 10%, worker 1%)
-

@@ -14,4 +14,3 @@ Exit: 0
       Tests  5 passed (5)
    Start at  01:00:55
    Duration  404ms (import 42%, tests 38%, setup 10%, transform 9%, worker 1%)
-

@@ -39,4 +39,3 @@ AssertionError: expected [ { path: '/session', …(2) }, …(1) ] to have a leng
       Tests  1 failed | 7 passed (8)
    Start at  00:49:36
    Duration  579ms (tests 79%, import 10%, setup 6%, transform 5%, worker 1%)
-

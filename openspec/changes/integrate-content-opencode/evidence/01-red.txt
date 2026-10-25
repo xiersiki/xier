@@ -44,4 +44,3 @@ AssertionError: expected { requestId: 'req-1', …(2) } to match object { status
       Tests  1 failed (1)
    Start at  00:48:16
    Duration  515ms (setup 66%, transform 21%, import 6%, worker 4%, tests 2%)
-
