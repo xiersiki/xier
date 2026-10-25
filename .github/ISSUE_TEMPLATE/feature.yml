@@ -1,0 +1,31 @@
+name: 功能或工程任务
+description: 定义问题、范围和可验证的交付
+title: "[Task] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题与目标
+      description: 谁遇到了什么问题？完成后有什么变化？
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 范围与依赖
+      description: 涉及模块、不做的内容、前置 Issue/PR、相关飞书或规格链接。
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收条件
+      description: 写成可观察的行为或可以执行的检查。
+      placeholder: "- [ ] 在……条件下，……结果正确"
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: 执行与交接
+      description: 会话、分支、worktree、依赖任务；未认领可留空。

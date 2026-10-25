@@ -40,6 +40,7 @@
 			]
 		}
 	},
+	"exclude": ["site", "node_modules", "out", "dist"],
 	"include": [
 		"renderer/**/*.tsx",
 		"renderer/**/*.vue",

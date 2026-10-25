@@ -12,7 +12,10 @@
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit -p tsconfig.app.json",
     "check": "npm run typecheck && npm test",
-    "build": "vite build --config vite.renderer.config.ts"
+    "build": "vite build --config vite.renderer.config.ts",
+    "site:dev": "npm --prefix site run dev --",
+    "site:build": "npm --prefix site run build",
+    "site:preview": "npm --prefix site run preview --"
   },
   "keywords": [],
   "author": {
@@ -33,6 +36,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "7.8.1",
     "@electron-forge/plugin-fuses": "7.8.1",
     "@electron-forge/plugin-vite": "7.8.1",
+    "@electron-forge/publisher-github": "7.8.1",
     "@electron/fuses": "^1.8.0",
     "@iconify-json/material-symbols": "^1.2.29",
     "@iconify/vue": "^5.0.0",

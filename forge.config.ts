@@ -30,6 +30,16 @@ module.exports = {
       config: {},
     },
   ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: { owner: "xiersiki", name: "xier" },
+        draft: true,
+        prerelease: true,
+      },
+    },
+  ],
   plugins: [
     {
       name: "@electron-forge/plugin-vite",

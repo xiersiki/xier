@@ -1,0 +1,18 @@
+{
+  "name": "xier-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vue-tsc --noEmit && vitepress build && node scripts/preserve-redirect.mjs",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.17",
+    "typescript": "5.8.3",
+    "vue-tsc": "3.3.13",
+    "@types/node": "22.19.7"
+  }
+}

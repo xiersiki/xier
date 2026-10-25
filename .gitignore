@@ -99,3 +99,6 @@ out/
 
 # Supabase CLI cache
 supabase/.temp/
+
+# VitePress
+site/.vitepress/cache/
