@@ -22,6 +22,7 @@
 
 - 飞书：项目知识、设计意图、已确认需求/决策、验证摘要与导航。
 - GitHub Issue/PR：任务状态、变更讨论、评审和代码交付；Actions/Release：检查与发布证据。
+- `openspec/specs/`：与代码同版本的行为契约；`openspec/changes/`：需求增量、设计、任务与测试证据。飞书引用这些文件，不另存一份独立推进的规格。
 - 仓库代码、类型、迁移和脚本：实际实现；README/docs 保存版本相关说明与必要离线入口。
 - 聊天：执行过程；影响后续工作的结论需要沉淀，不要求复制聊天全文。
 
@@ -51,6 +52,16 @@
 - 内容变更：`manage_doc_block`；表格使用其 `table` 参数，不手工构造 table/cell blocks。
 - 根节点 token：`G2JDw4BdBiLEygkzVxKcYjx3nRb`；Wiki space：`7513874167735271452`。
 - 登录失效时使用 `keepalive` 后重试。其他环境使用已有授权的飞书工具，不复制本机凭据。
+
+## OpenSpec、SDD 与 TDD（必需）
+
+- 新需求和缺陷修复按 [SDD/TDD 开发规范](docs/spec-driven-development.md) 执行。先读相关主规格，关联 Issue，建立 change，完成 proposal → specs → design → tasks，再开始行为实现。
+- 测试通过已确认的公开边界逐项执行：一个场景的失败测试（RED）→ 最小实现通过（GREEN）→ 保持绿色的重构（REFACTOR）。保存真实命令、退出码和脱敏日志到 change 的 `tdd.json` / `evidence/`，禁止事后编造失败结果。
+- 使用项目锁定版本：`npm run spec -- <command>`。Codex 项目 skills 在 `.agents/skills/`；不要用旧全局版本生成此仓库资料。用户只要求方案时停在 SDD；已明确授权实施时按现有授权推进，不凭工具模板重复索要许可。
+- 行为改动必须覆盖在本次 change 的 `tdd.json.files` 精确路径中；配置/依赖可用说明理由和成功检查的 verification-only，不能给业务代码豁免。纯文档按内容/链接验证。
+- 评审前执行 `npm run spec:validate`、`npm run spec:gate -- --base origin/main` 和适用测试；新增文件先 `git add`。Draft 阶段允许检查未通过，合并前必须完成任务及证据。
+- 完成实施和验证后同步主规格并归档，保留所有证据；归档不代表已合并或发布。更新 PR 与飞书 [05.2](https://pcn11w88fq9h.feishu.cn/wiki/UC9GwJwXyi6ozSkgCG7c0uFYnof) 的索引/验收摘要。
+- CI 检查资料和当前测试，不能证明历史红绿顺序、测试充分性或规格与实现的语义一致；独立会话评审必须核对这些内容。共用 GitHub 账号仍不是独立审批身份。
 
 ## 工程入口与验证
 

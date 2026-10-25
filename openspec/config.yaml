@@ -1,0 +1,30 @@
+schema: spec-driven
+context: |
+  Language: zh-CN. Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+  Xier is an Electron + Vue 3 + TypeScript desktop app. Node 22; npm ci.
+  GitHub Issue -> OpenSpec SDD -> TDD red/green/refactor -> PR -> required CI -> squash merge.
+  Read AGENTS.md and docs/spec-driven-development.md. Use the project-pinned npm run spec CLI.
+  openspec/specs is the versioned behavior contract; openspec/changes holds proposed deltas and evidence.
+  Feishu is the knowledge/decision/navigation home, not a second copy of versioned specs.
+  Offline tests only by default; no real model or production database calls.
+rules:
+  proposal:
+    - Link the GitHub Issue and relevant Feishu context; define scope and non-goals.
+  specs:
+    - Write observable behavior using SHALL/MUST and WHEN/THEN scenarios, including failures.
+    - Pure docs/dependency/config work without behavior changes may use skip_specs in .openspec.yaml; explain why.
+  design:
+    - Record the public testing boundary, scenarios, compatibility, risks and rollback before implementation.
+  tasks:
+    - Plan vertical slices; for each behavior write one failing test, minimal implementation, then refactor with green tests.
+    - Include current validation, evidence, documentation and spec sync/archive; do not mark deferred work complete.
+operations:
+  apply:
+    guidance:
+      - Follow user-authorized scope. Before behavior code, complete proposal, specs, design and tasks.
+      - Use the agreed public test boundary. Record actual RED failure, GREEN pass and refactor verification in tdd.json and evidence text files; never fabricate results.
+      - Run npm run spec:validate and npm run spec:gate -- --base origin/main before ready for review.
+  archive:
+    guidance:
+      - Finish applicable tests and task checkboxes; preserve tdd.json/evidence and synchronize delta specs into openspec/specs.
+      - Update GitHub links and Feishu knowledge/decision summaries. Archive is spec bookkeeping, not proof of merge or deployment.

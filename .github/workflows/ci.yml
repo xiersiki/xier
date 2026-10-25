@@ -29,6 +29,35 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build
+  spec:
+    name: OpenSpec and TDD
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OPENSPEC_TELEMETRY: '0'
+      OPENSPEC_NO_UPDATE_CHECK: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run spec:validate
+      - name: Check changed scope and delivery evidence
+        env:
+          SPEC_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$SPEC_BASE" ]; then
+            SPEC_BASE="$(git rev-parse HEAD^)"
+          fi
+          npm run spec:gate -- --base "$SPEC_BASE"
+      - name: Record validation boundary
+        run: |
+          echo 'OpenSpec syntax, completed tasks and delivery evidence passed. Current tests run in Application checks. Review the saved logs and PR commits for historical red/green order.' >> "$GITHUB_STEP_SUMMARY"
   site:
     name: Site checks
     runs-on: ubuntu-24.04
@@ -50,16 +79,18 @@ jobs:
   required:
     name: required
     if: ${{ always() }}
-    needs: [app, site, desktop]
+    needs: [app, spec, site, desktop]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Require every check to succeed
         env:
           APP: ${{ needs.app.result }}
+          SPEC: ${{ needs.spec.result }}
           SITE: ${{ needs.site.result }}
           DESKTOP: ${{ needs.desktop.result }}
         run: |
           test "$APP" = success
+          test "$SPEC" = success
           test "$SITE" = success
           test "$DESKTOP" = success

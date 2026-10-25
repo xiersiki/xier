@@ -1,0 +1,309 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "files": [
+    ".agents/skills/.openspec-target",
+    ".agents/skills/openspec-apply-change/SKILL.md",
+    ".agents/skills/openspec-archive-change/SKILL.md",
+    ".agents/skills/openspec-explore/SKILL.md",
+    ".agents/skills/openspec-propose/SKILL.md",
+    ".agents/skills/openspec-sync-specs/SKILL.md",
+    ".agents/skills/openspec-update-change/SKILL.md",
+    ".github/ISSUE_TEMPLATE/bug.yml",
+    ".github/ISSUE_TEMPLATE/feature.yml",
+    ".github/pull_request_template.md",
+    ".github/workflows/ci.yml",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "README.md",
+    "docs/FEISHU-INDEX.md",
+    "docs/development.md",
+    "docs/spec-driven-development.md",
+    "docs/templates/handoff.md",
+    "docs/templates/spec.md",
+    "openspec/config.yaml",
+    "openspec/specs/.gitkeep",
+    "openspec/specs/delivery-workflow/spec.md",
+    "package-lock.json",
+    "package.json",
+    "scripts/check-sdd.mjs",
+    "site/guide/development.md",
+    "tests/spec-workflow.test.ts"
+  ],
+  "seam": "用户于2026-10-25确认公开命令行边界：真实Git差异、OpenSpec文件和Node子进程的退出码与诊断。",
+  "cycles": [
+    {
+      "scenario": "完整行为交付",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/01-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "缺少本次change",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/02-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/02-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "缺少设计或行为规格",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/03-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/03-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "任务未完成或没有任务",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/04-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/04-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "红绿重构阶段缺失或结果错误",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/05-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/05-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "证据缺失、空白或路径逃逸",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/06-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/06-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "纯文档适用验证",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/07-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/07-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "无行为变化的依赖更新",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/08-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/08-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "行为不能借验证模式豁免",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/09-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/09-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "归档继续检查证据",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/10-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/10-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "无效base和参数",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/11-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/11-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "范围文件必须精确相对路径",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/12-red.txt",
+        "summary": "新增公开CLI行为断言失败；依赖和进程正常运行。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/12-green.txt",
+        "summary": "实现本场景并保持此前回归通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/refactor-green.txt",
+        "summary": "各纵向切片完成后，提取validateChange与文件分类逻辑，14项测试保持通过；十二个周期共用这次真实重构验证。"
+      }
+    },
+    {
+      "scenario": "独立评审发现 CommonMark 未完成任务标记漏检；编号完成任务不应误阻断",
+      "red": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/13-red.txt",
+        "summary": "+ [ ] Pending 被错误放行，行为断言实际失败。"
+      },
+      "green": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/13-green.txt",
+        "summary": "统一 CommonMark checkbox 语义，未完成标记阻断。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/spec-workflow.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/review-green.txt",
+        "summary": "解析保持局部纯逻辑，无需额外结构调整；补编号完成与链接回归后16项通过。"
+      }
+    }
+  ]
+}
