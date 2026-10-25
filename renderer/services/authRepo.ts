@@ -1,5 +1,6 @@
+import { OAUTH_REDIRECT_URL } from '@common/oauth';
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
-import supabase from "./client";
+import supabase, { requireSupabase } from "./client";
 import { logger } from "../utils/logger";
 
 /**
@@ -18,6 +19,7 @@ export interface AuthSession {
  * @throws Supabase 底层返回错误时向外抛出，交由调用方处理。
  */
 export const getCurrentSession = async (): Promise<AuthSession> => {
+  if (!supabase) return { user: null, session: null };
   const { data, error } = await supabase.auth.getSession();
   if (error) {
     logger.error("Failed to get Supabase session:", error);
@@ -35,7 +37,7 @@ export const getCurrentSession = async (): Promise<AuthSession> => {
  * @param email 用户邮箱
  */
 export const signInWithOtp = async (email: string): Promise<void> => {
-  const { error } = await supabase.auth.signInWithOtp({ email });
+  const { error } = await requireSupabase().auth.signInWithOtp({ email });
   if (error) {
     logger.error("Failed to send login OTP email:", error);
     throw error;
@@ -52,7 +54,7 @@ export const signInWithPassword = async (
   email: string,
   password: string
 ): Promise<AuthSession> => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await requireSupabase().auth.signInWithPassword({
     email,
     password,
   });
@@ -76,7 +78,7 @@ export const signUpWithPassword = async (
   email: string,
   password: string
 ): Promise<AuthSession> => {
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await requireSupabase().auth.signUp({ email, password });
   if (error) {
     logger.error("Failed to sign up with password:", error);
     throw error;
@@ -92,7 +94,7 @@ export const signUpWithPassword = async (
  * 调用成功后应重置前端状态为未登录。
  */
 export const signOut = async (): Promise<void> => {
-  const { error } = await supabase.auth.signOut();
+  const { error } = await requireSupabase().auth.signOut();
   if (error) {
     logger.error("Failed to sign out:", error);
     throw error;
@@ -108,11 +110,15 @@ export const signOut = async (): Promise<void> => {
 export const onAuthStateChange = (
   callback: (event: AuthChangeEvent, session: Session | null) => void
 ): (() => void) => {
+  if (!supabase) return () => {};
   const {
     data: { subscription },
   } = supabase.auth.onAuthStateChange((event, session) => {
     try {
-      callback(event, session);
+      // Run outside the auth lock: the callback may start database queries.
+      setTimeout(() => {
+        Promise.resolve(callback(event, session)).catch(err => logger.error("Auth callback failed", err));
+      }, 0);
     } catch (err) {
       logger.error("Error in auth state change callback:", err);
     }
@@ -128,19 +134,15 @@ export const onAuthStateChange = (
  * Supabase 会自动拉起浏览器窗口处理授权。
  * @param provider OAuth 提供方标识
  */
-export const signInWithOAuth = async (
-  provider: "google" | "github",
-  redirectTo?: string
-): Promise<void> => {
-  // supabase-js v2 accepts an object with provider and options where redirectTo can be provided
-  const payload: any = { provider };
-  if (redirectTo) {
-    payload.options = { redirectTo };
-  }
-
-  const { error } = await supabase.auth.signInWithOAuth(payload);
-  if (error) {
-    logger.error("Failed to sign in with OAuth:", error);
-    throw error;
-  }
+export const signInWithOAuth = async (provider: 'google' | 'github'): Promise<AuthSession> => {
+  const client = requireSupabase();
+  const { data, error } = await client.auth.signInWithOAuth({ provider,
+    options: { redirectTo: OAUTH_REDIRECT_URL, skipBrowserRedirect: true },
+  });
+  if (error) throw error;
+  if (!data.url) throw new Error('未获取到授权地址');
+  const code = await window.api.authorizeOAuth(data.url);
+  const result = await client.auth.exchangeCodeForSession(code);
+  if (result.error) throw result.error;
+  return { user: result.data.user, session: result.data.session };
 };

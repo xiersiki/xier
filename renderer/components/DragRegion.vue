@@ -1,7 +1,7 @@
 <template>
   <div class="drag-region">
     <slot>
-      <span class="_placeholder">_hidden</span>
+      <span class="_placeholder" aria-hidden="true">_hidden</span>
     </slot>
   </div>
 </template>

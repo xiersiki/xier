@@ -7,7 +7,7 @@
   },
   "main": {
     "welcome": {
-      "helloMessage": "Hello, I'm Xier"
+      "helloMessage": "Hello, I’m Xier"
     },
     "conversation": {
       "placeholder": "Type a message...",
@@ -127,6 +127,7 @@
       "label": "Language"
     },
     "providers": {
+      "addProvider": "Add provider",
       "defaultModel": "Default Model",
       "apiKey": "API Key",
       "apiUrl": "API URL"
@@ -177,6 +178,26 @@
     }
   },
   "app": {
-    "title": "Xier Application"
+    "title": "Xier"
+  },
+  "ui": {
+    "conversationOptions": "Conversation options",
+    "clearSearch": "Clear search",
+    "emptyConversations": "No conversations found",
+    "welcomeTitle": "A little space to think.",
+    "welcomeDescription": "Bring a question, an idea, or something you want to understand.",
+    "composerHint": "Enter for a new line",
+    "chooseModelHint": "Choose a model to begin",
+    "you": "You",
+    "appearance": "Appearance",
+    "general": "General",
+    "modelServices": "Model services",
+    "preferencesTitle": "Make yourself at home",
+    "preferencesDescription": "Adjust Xier to suit the way you work.",
+    "servicesDescription": "Connect your providers and choose a model for each conversation.",
+    "autoSave": "Changes are saved automatically",
+    "modelCount": "{count} models",
+    "enableService": "Enable service",
+    "models": "Added models"
   }
 }

@@ -27,6 +27,9 @@ interface CreateDialogueProps {
 interface UniversalChunk {
   isEnd: boolean;
   result: string;
+  reasoning?: string;
+  finishReason?: string;
+  error?: string;
 }
 
 interface DialogueBackStream {
@@ -37,7 +40,12 @@ interface DialogueBackStream {
 type WindowNames = "main" | "setting" | "dialog";
 type ThemeMode = "light" | "dark" | "system";
 
+declare const __SUPABASE_URL__: string;
+
 interface WindowApi {
+  listProviderModels: (setting: import('./common/types').OpenAISetting) => Promise<string[]>;
+  authorizeOAuth: (url: string) => Promise<string>;
+  cancelOAuth: () => void;
   createDialog: (params: CreateDialogProps) => Promise<string>;
   openWindow: (name: WindowNames) => void;
   closeWindow: () => void;
@@ -68,6 +76,7 @@ interface WindowApi {
   _dialogGetParams: () => Promise<any>;
 
   startADialogue: (params: CreateDialogueProps) => void;
+  stopADialogue: (messageId: string) => void;
   onDialogueBack: (
     cb: (data: DialogueBackStream) => void,
     messageId: string
@@ -96,6 +105,9 @@ declare interface Window {
 
 interface ImportMetaEnv {
   readonly VITE_BIGMODEL_API_KEY: string;
+  readonly VITE_SUPABASE_URL?: string;
+  readonly VITE_SUPABASE_ANON_KEY?: string;
+  readonly VITE_SUPABASE_PUBLISHABLE_KEY?: string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

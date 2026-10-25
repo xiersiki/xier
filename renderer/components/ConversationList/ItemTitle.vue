@@ -61,13 +61,14 @@ onUnmounted(() => {
 
 // 监听标题内容变化，重新检查溢出状态
 watch([() => props.title, () => ctx?.width.value], () => {
+  _title.value = props.title;
   updateOverflowStatus();
 });
 </script>
 
 <template>
   <n-input v-if="isEditable" size="tiny" v-model:value="_title" class="w-full" @keydown.enter="updatedTitle" />
-  <h2 ref="titleRef" class="conversation-title w-full text-tx-secondary font-semibold leading-5 truncate" v-else>
+  <h2 ref="titleRef" class="conversation-title w-full text-tx-primary font-medium text-[13px] leading-5 truncate" v-else>
     <template v-if="isTitleOverflow">
       <NativeTooltip :content="title">
         {{ title }}

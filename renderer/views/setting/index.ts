@@ -1,5 +1,4 @@
 import '@renderer/index.css';
-import 'vfonts/Lato.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'

@@ -3,7 +3,10 @@ import { ipcMain } from 'electron';
 import { windowManager } from '../service/WindowService';
 
 
+let initialized = false;
 export function setupSettingWindow() {
+  if (initialized) return;
+  initialized = true;
   ipcMain.on(`${IPC_EVENTS.OPEN_WINDOW}:${WINDOW_NAMES.SETTING}`, () => {
     const settingWindow = windowManager.get(WINDOW_NAMES.SETTING);
     if (settingWindow && !settingWindow.isDestroyed())

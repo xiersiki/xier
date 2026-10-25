@@ -1,5 +1,4 @@
 import './index.css';
-import 'vfonts/Lato.css';
 // import 'highlight.js/styles/lioshi.css';
 
 import { type Plugin } from 'vue';
@@ -45,8 +44,9 @@ const router = createRouter({
   ]
 });
 
-preloadIcons().finally(() => {
-  logger.info('icons preloaded');
+void preloadIcons().catch(() => logger.warn('部分图标加载失败'));
+{
+  logger.info('Mounting application');
   createApp(App)
     .use(createPinia())
     .use(directives)
@@ -55,5 +55,4 @@ preloadIcons().finally(() => {
     .use(i18n)
     .use(errorHandler)
     .mount('#app')
-})
-
+}

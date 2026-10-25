@@ -7,7 +7,9 @@ import { useDialog } from '@renderer/hooks/useDialog'
 import { useMessagesStore } from '@renderer/stores/messages'
 import { useBatchTimeAgo } from '@renderer/hooks/useTimeAgo';
 import { NCheckbox, NButton } from 'naive-ui';
+import XierMark from './XierMark.vue';
 import MessageRender from '@renderer/components/MessageRender.vue';
+import AnswerContent from '@renderer/components/AnswerContent.vue';
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
@@ -115,7 +117,7 @@ watch(() => props.messages.length, (newLength, oldLength) => {
 
 // ✅ 监听最后一条消息内容变化（流式输出时）
 watch(
-  () => props.messages[props.messages.length - 1]?.content,
+  () => [props.messages[props.messages.length - 1]?.content, props.messages[props.messages.length - 1]?.reasoningContent, props.messages[props.messages.length - 1]?.status],
   () => {
     if (!isInitialLoad.value) {
       nextTick(() => {
@@ -140,94 +142,50 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <!-- ✅ 使用 DynamicScroller 实现虚拟列表 -->
-    <DynamicScroller ref="scrollerRef" :items="messages" :min-item-size="80" class="message-list px-5 pt-6"
-      key-field="id">
+  <div class="messages-container">
+    <DynamicScroller ref="scrollerRef" :items="messages" :min-item-size="80" class="message-list" key-field="id">
       <template #default="{ item: message, index, active }">
-        <DynamicScrollerItem :item="message" :active="active" :data-index="index" :size-dependencies="[message.content]"
-          class="message-list-item mt-3 pb-5">
-          <div class="flex items-center">
-            <div class="pr-5" v-show="isBatchMode">
-              <n-checkbox :checked="itemChecked(message.id)"
-                @update:checked="(val) => handleCheckItem(message.id, val)" />
-            </div>
-
-            <div class="flex flex-auto" :class="{
-              'justify-end': message.type === 'question',
-              'justify-start': message.type === 'answer'
-            }">
-              <span>
-                <div class="text-sm text-gray-500 mb-2"
-                  :style="{ textAlign: message.type === 'question' ? 'end' : 'start' }">
-                  {{ formatTimeAgo(message.createdAt) }}
-                </div>
-
-                <!-- 问题消息 -->
-                <div v-if="message.type === 'question'" class="msg-shadow p-2 rounded-md bg-bubble-self text-white"
-                  @contextmenu="handleContextMenu(message.id)">
-                  <message-render :msg-id="message.id" :content="message.content"
-                    :is-streaming="message.status === 'streaming'" />
-                </div>
-
-                <!-- 回答消息 -->
-                <div v-else class="msg-shadow p-2 px-6 rounded-md" :class="{
-                  'bg-bubble-others text-tx-primary': message.status !== 'error',
-                  'text-red-300 font-bold': message.status === 'error'
-                }" @contextmenu="handleContextMenu(message.id)">
-                  <template v-if="message.status === 'loading'">
-                    ...
-                  </template>
-                  <template v-else>
-                    <message-render :msg-id="message.id" :content="message.content"
-                      :is-streaming="message.status === 'streaming'" is-answer />
-                  </template>
-                </div>
-              </span>
+        <DynamicScrollerItem :item="message" :active="active" :data-index="index"
+          :size-dependencies="[message.content, message.reasoningContent, message.status, message.error]" class="message-list-item">
+          <div class="message-row" :class="message.type">
+            <div v-show="isBatchMode" class="message-check"><NCheckbox :checked="itemChecked(message.id)" @update:checked="(val) => handleCheckItem(message.id, val)" /></div>
+            <div class="message-body">
+              <div class="message-meta">
+                <template v-if="message.type === 'answer'"><XierMark /><span class="author">Xier</span></template>
+                <span v-else class="author">{{ t('ui.you') }}</span>
+                <time :datetime="new Date(message.createdAt).toISOString()">{{ formatTimeAgo(message.createdAt) }}</time>
+              </div>
+              <div v-if="message.type === 'question'" class="question-content" @contextmenu="handleContextMenu(message.id)">
+                <MessageRender :msg-id="message.id" :content="message.content" :is-streaming="message.status === 'streaming'" />
+              </div>
+              <div v-else class="answer-content" @contextmenu="handleContextMenu(message.id)"><AnswerContent :message="message" /></div>
             </div>
           </div>
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-
-    <!-- 批量操作栏 -->
-    <div v-show="isBatchMode" class="flex justify-between p-2 border-t-3 border-input">
-      <n-button type="error" size="tiny" @click="handleBatchDelete">
-        {{ t('main.message.batchActions.deleteSelected') }}
-      </n-button>
-      <n-button type="primary" size="tiny" quaternary @click="quitBatchMode">
-        {{ t('dialog.cancel') }}
-      </n-button>
+    <div v-show="isBatchMode" class="batch-toolbar">
+      <NButton type="error" size="tiny" @click="handleBatchDelete">{{ t('main.message.batchActions.deleteSelected') }}</NButton>
+      <NButton size="tiny" quaternary @click="quitBatchMode">{{ t('dialog.cancel') }}</NButton>
     </div>
   </div>
 </template>
-
 <style scoped>
-.msg-shadow {
-  box-shadow: 0 0 10px var(--input-bg);
-}
-
-/* ✅ 虚拟滚动器样式 */
-.message-list {
-  height: 100%;
-  overflow-y: auto;
-}
-
-/* 自定义滚动条样式 */
-.message-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.message-list::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-
-.message-list::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.message-list::-webkit-scrollbar-track {
-  background: transparent;
-}
+.messages-container { display: flex; flex-direction: column; height: 100%; min-width: 0; }
+.message-list { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 28px 32px 12px; }
+.message-list-item { padding-bottom: 30px; }
+.message-row { display: flex; gap: 12px; max-width: 780px; margin: 0 auto; min-width: 0; }
+.message-body { font-size: var(--message-font-size, 14px); min-width: 0; width: 100%; }
+.message-meta { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; font-size: 11px; color: var(--text-tertiary); }
+.message-meta .author { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+.message-meta :deep(.xier-mark) { width: 21px; height: 21px; color: var(--accent-ink); margin-left: -3px; }
+.message-meta time { font-size: 10px; }
+.question { justify-content: flex-end; }
+.question .message-body { width: fit-content; max-width: 85%; }
+.question .message-meta { justify-content: flex-end; }
+.question-content { background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent-ink) 8%, var(--line)); padding: 11px 16px; border-radius: 14px 14px 4px 14px; color: var(--text-primary); }
+.answer-content { padding: 0; color: var(--text-primary); }
+.message-check { padding-top: 3px; }
+.batch-toolbar { display: flex; justify-content: space-between; padding: 10px 32px; border-top: 1px solid var(--line); }
+@media (max-width: 850px) { .message-list { padding-inline: 20px; } }
 </style>

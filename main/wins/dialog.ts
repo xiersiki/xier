@@ -2,7 +2,10 @@ import { IPC_EVENTS, WINDOW_NAMES } from '@common/constants';
 import { BrowserWindow, ipcMain } from 'electron';
 import { windowManager } from '../service/WindowService';
 
+let initialized = false;
 export function setupDialogWindow() {
+  if (initialized) return;
+  initialized = true;
   let dialogWindow: BrowserWindow | void;
   let params: CreateDialogProps | void;
   let feedback: string | void;

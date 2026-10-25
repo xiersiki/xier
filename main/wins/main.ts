@@ -1,6 +1,6 @@
-import { ipcMain, type BrowserWindow } from 'electron';
+import { type BrowserWindow } from 'electron';
 import { WINDOW_NAMES, MAIN_WIN_SIZE, MENU_IDS, IPC_EVENTS, CONFIG_KEYS, CONVERSATION_ITEM_MENU_IDS, CONVERSATION_LIST_MENU_IDS, MESSAGE_ITEM_MENU_IDS, SHORTCUT_KEYS } from '@common/constants';
-import { createProvider } from '../providers';
+import { registerDialogueHandlers } from '../service/DialogueService';
 import trayManager from '../service/TrayService';
 import windowManager from '../service/WindowService';
 import configManager from '../service/ConfigService';
@@ -103,20 +103,24 @@ const destroyMenus = () => {
 
 const registerShortcuts = (window: BrowserWindow) => {
   shortcutManager.registerForWindow(window, (input) => {
-    if (input.code === 'Enter' && input.modifiers.includes('control'))
+    if (input.type === 'keyDown' && input.code === 'Enter' && (input.control || input.meta))
       window?.webContents.send(IPC_EVENTS.SHORTCUT_CALLED + SHORTCUT_KEYS.SEND_MESSAGE);
   });
 }
 
+let initialized = false;
 export async function setupMainWindow() {
+  if (initialized) { windowManager.create(WINDOW_NAMES.MAIN, MAIN_WIN_SIZE); return; }
+  initialized = true;
   windowManager.onWindowCreate(WINDOW_NAMES.MAIN, (mainWindow) => {
 
     let minimizeToTray = configManager.get(CONFIG_KEYS.MINIMIZE_TO_TRAY);
-    configManager.onConfigChange((config) => {
+    const unsubscribe = configManager.onConfigChange((config) => {
       if (minimizeToTray === config[CONFIG_KEYS.MINIMIZE_TO_TRAY]) return;
       minimizeToTray = config[CONFIG_KEYS.MINIMIZE_TO_TRAY];
       handleTray(minimizeToTray);
     });
+    mainWindow.once('closed', unsubscribe);
     handleTray(minimizeToTray);
     registerMenus(mainWindow);
     registerShortcuts(mainWindow);
@@ -126,36 +130,7 @@ export async function setupMainWindow() {
   })
   windowManager.create(WINDOW_NAMES.MAIN, MAIN_WIN_SIZE);
 
-  ipcMain.on(IPC_EVENTS.START_A_DIALOGUE, async (_event, props: CreateDialogueProps) => {
-    const { providerName, messages, messageId, selectedModel } = props
-    const mainWindow = windowManager.get(WINDOW_NAMES.MAIN);
-    if (!mainWindow) {
-      throw new Error('main window not found');
-    }
-    try {
-      const provider = createProvider(providerName);
-      const chunks = await provider?.chat(messages, selectedModel);
-      if (!chunks) {
-        throw new Error('stream not found');
-      };
-      for await (const data of chunks) {
-        mainWindow.webContents.send(IPC_EVENTS.DIALOGUE_BACK + messageId, {
-          messageId,
-          data
-        })
-      }
-    } catch (err) {
-      const errorContent = {
-        messageId,
-        data: {
-          isEnd: true,
-          isError: true,
-          result: err instanceof Error ? err.message : String(err),
-        }
-      }
-      mainWindow.webContents.send(IPC_EVENTS.DIALOGUE_BACK + messageId, errorContent);
-    }
-  })
+  registerDialogueHandlers();
 }
 
 export default setupMainWindow;

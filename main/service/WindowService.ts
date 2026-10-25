@@ -8,6 +8,7 @@ import {
   BaseWindow,
   IpcMainInvokeEvent,
   app,
+  dialog,
 } from "electron";
 import type { WindowNames } from "@common/types";
 import { WINDOW_NAMES, IPC_EVENTS, CONFIG_KEYS } from "@common/constants";
@@ -159,10 +160,10 @@ class WindowService {
     // 检查是否存在开发服务器 URL，若存在则表示处于开发环境
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
       return window.loadURL(
-        `${MAIN_WINDOW_VITE_DEV_SERVER_URL}${"/html/" + (name === "main" ? "" : name)}`
+        `${MAIN_WINDOW_VITE_DEV_SERVER_URL}/html/${name === 'main' ? 'index' : name}.html`
       );
     }
-    window.loadFile(
+    return window.loadFile(
       path.join(
         __dirname,
         `../renderer/${MAIN_WINDOW_VITE_NAME}/html/${name === "main" ? "index" : name}.html`
@@ -274,13 +275,19 @@ class WindowService {
      * 处理渲染器准备好的事件
      * @param e IPC 主进程事件对象
      */
+    const removeLoadingView = () => {
+      if (!loadingView) return;
+      if (!window.isDestroyed()) window.contentView.removeChildView(loadingView);
+      loadingView.webContents.close();
+      loadingView = undefined;
+      ipcMain.removeListener(IPC_EVENTS.RENDERER_IS_READY, onRendererIsReady);
+    };
+    window.once('closed', removeLoadingView);
     const onRendererIsReady = (e: IpcMainEvent) => {
       // 如果事件发送者不是当前窗口的 webContents 或者渲染器已经准备好，则直接返回
       if (e.sender !== window?.webContents || rendererIsReady) return;
       rendererIsReady = true;
-      window.contentView.removeChildView(loadingView as WebContentsView);
-      ipcMain.removeListener(IPC_EVENTS.RENDERER_IS_READY, onRendererIsReady);
-      loadingView = void 0;
+      removeLoadingView();
     };
     ipcMain.on(IPC_EVENTS.RENDERER_IS_READY, onRendererIsReady);
 
@@ -312,8 +319,17 @@ class WindowService {
     const isHiddenWin = this._isHiddenWin(name);
     let win = this._createWinInstance(name, moreOpts);
 
-    !isHiddenWin &&
-      this._setupWinLifecycle(win, name)._loadWindowTemplate(win, name);
+    if (!isHiddenWin) {
+      void this._setupWinLifecycle(win, name)._loadWindowTemplate(win, name).catch(error => {
+        logManager.error(`Failed to load window: ${name}`, error);
+        if (!win.isDestroyed()) {
+          win.show(); win.setOpacity(1);
+          void dialog.showMessageBox(win, { type: 'error', title: 'Xier 启动失败',
+            message: '无法加载应用界面', detail: '请确认开发服务正在运行，或重新安装完整的应用包。', buttons: ['重新加载', '关闭']
+          }).then(({ response }) => { if (!win.isDestroyed()) response === 0 ? win.webContents.reload() : win.close(); });
+        }
+      });
+    }
 
     const duration = name === WINDOW_NAMES.MAIN ? 800 : 600;
 
@@ -472,6 +488,7 @@ class WindowService {
    * @private
    */
   private _applySizeConstraints(win: BrowserWindow, size: SizeOptions) {
+    if (win.isDestroyed()) return;
     if (size.maxHeight && size.maxWidth) {
       win?.setMaximumSize(size.maxWidth, size.maxHeight);
     }

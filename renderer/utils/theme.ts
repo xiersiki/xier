@@ -97,7 +97,6 @@ export const setPrimaryColor = (color: string) => {
     document.documentElement.style.setProperty(`--primary-color-${key}`, colors[key as keyof typeof colors]);
   });
 
-  window.api.setConfig(CONFIG_KEYS.PRIMARY_COLOR, colors.DEFAULT)
   return colors;
 }
 export function getCSSVariable(variableName: string): string {

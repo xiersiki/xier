@@ -33,8 +33,8 @@ const message = useMessage();
 
 const mode = ref<Mode>('login');
 const form = reactive({
-  email: '1072742518@qq.com',
-  password: 'gcyhs20020202',
+  email: '',
+  password: '',
   confirmPassword: '',
 });
 const localError = ref<string | null>(null);
@@ -61,6 +61,7 @@ function resetForm() {
 }
 
 function close() {
+  if (oauthLoading.github || oauthLoading.google) window.api.cancelOAuth();
   emit('update:show', false);
   resetForm();
 }
@@ -109,8 +110,11 @@ async function handleOAuth(provider: 'google' | 'github') {
   try {
     oauthLoading[provider] = true;
     await authStore.signInWithOAuth(provider);
-    message.success(`Continuing with ${provider === 'google' ? 'Google' : 'GitHub'}...`);
+    message.success('登录成功');
+    emit('success');
+    close();
   } catch (err) {
+    if (!props.show) { authStore.clearError(); return; }
     const errMsg = err instanceof Error ? err.message : 'OAuth sign-in failed, please retry.';
     message.error(errMsg);
   } finally {
@@ -163,6 +167,8 @@ watch(
         {{ $t('auth.signUp.notify') }}
       </n-alert>
 
+      <n-alert v-if="!authStore.cloudEnabled" type="info" :show-icon="false">云端服务未配置，可以关闭此窗口使用本地模式。</n-alert>
+
       <n-form class="auth-form" @submit.prevent="handleSubmit">
         <n-form-item :label="isLoginMode ? $t('auth.signIn.email') : $t('auth.signUp.email')">
           <n-input v-model:value="form.email"
@@ -184,7 +190,7 @@ watch(
           {{ mergedError }}
         </n-alert>
 
-        <n-button type="primary" block class="auth-submit" :loading="emailSubmitting" @click="handleSubmit">
+        <n-button type="primary" block class="auth-submit" :loading="emailSubmitting" :disabled="!authStore.cloudEnabled" @click="handleSubmit">
           {{ isLoginMode ? $t('auth.signIn.title') : $t('auth.signUp.title') }}
         </n-button>
       </n-form>
@@ -192,13 +198,13 @@ watch(
       <n-divider dashed class="auth-divider">{{ $t('auth.signIn.orContinueWith') }}</n-divider>
 
       <n-space vertical size="small">
-        <n-button block secondary class="auth-social" :loading="oauthLoading.google" @click="handleOAuth('google')">
+        <n-button block secondary class="auth-social" :loading="oauthLoading.google" disabled title="当前 Supabase 项目尚未配置 Google 登录" @click="handleOAuth('google')">
           <span class="auth-social__content">
             <iconify-icon icon="logos:google-icon" width="18" height="18" />
             <span>{{ $t('auth.signIn.continueWithGoogle') }}</span>
           </span>
         </n-button>
-        <n-button block secondary class="auth-social" :loading="oauthLoading.github" @click="handleOAuth('github')">
+        <n-button block secondary class="auth-social" :loading="oauthLoading.github" :disabled="!authStore.cloudEnabled || oauthLoading.google" @click="handleOAuth('github')">
           <span class="auth-social__content">
             <iconify-icon icon="mdi:github" width="18" height="18" />
             <span>{{ $t('auth.signIn.continueWithGitHub') }}</span>

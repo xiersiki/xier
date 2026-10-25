@@ -6,6 +6,7 @@ export function useFontSize() {
   const config = useConfig();
   const setFontSize = (size: number) => {
     document.body.style.fontSize = `${size}px`;
+    document.documentElement.style.setProperty('--message-font-size', `${size}px`);
     if (size !== config[CONFIG_KEYS.FONT_SIZE])
       config[CONFIG_KEYS.FONT_SIZE] = size;
     if (size !== fontSize.value)

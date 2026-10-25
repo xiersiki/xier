@@ -9,6 +9,8 @@ import { useFilter } from './useFilter';
 import { useContextMenu } from './useContextMenu';
 
 import ListItem from './ListItem.vue';
+import { SquarePen, Ellipsis } from 'lucide-vue-next';
+import XierMark from '../XierMark.vue';
 import SearchBar from './SearchBar.vue';
 import OperationsBar from './OperationsBar.vue';
 import UserBadge from './UserBadge.vue';
@@ -22,6 +24,7 @@ const props = defineProps<{ width: number }>();
 const editId = ref<string | void>();
 const checkedIds = ref<string[]>([]);
 
+const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const conversationsStore = useConversationsStore();
@@ -121,7 +124,7 @@ function updateTitle(id: string, title: string) {
 }
 // ------------用户badge事件处理------------
 function handleAllSelectChange(checked: boolean) {
-  checkedIds.value = checked ? conversations.value.map(item => item.id) : [];
+  checkedIds.value = checked ? conversations.value.filter(item => item.type !== 'divider').map(item => item.id) : [];
 }
 
 function handleBadgeLogin() {
@@ -148,23 +151,46 @@ provide(CTX_KEY, {
 </script>
 
 <template>
-  <div class="conversation-list px-2 pt-3 h-[100vh] flex flex-col" :style="{ width: 'calc(100% - 57px)' }"
-    @contextmenu.prevent.stop="handleListContexMenu" @click="handleClickOutItem">
-    <search-bar class="mt-3" />
-    <ul class="flex-1 overflow-auto">
+  <div class="conversation-list" @contextmenu.prevent.stop="handleListContexMenu">
+    <div class="brand drag-region"><XierMark /><span>xier<span class="brand-dot">.</span></span></div>
+    <button class="new-conversation" @click="handleClickOutItem"><SquarePen :size="17" :stroke-width="1.7" />{{ t('main.conversation.newConversation') }}</button>
+    <SearchBar />
+    <div class="list-heading"><span>{{ t('main.sidebar.conversations') }}</span><button class="icon-button" :aria-label="t('ui.conversationOptions')" :title="t('ui.conversationOptions')" @click="handleListContexMenu"><Ellipsis :size="17" /></button></div>
+    <ul class="conversation-items">
       <template v-for="item in conversations" :key="item.id">
-        <li v-if="item.type !== 'divider'"
-          class="cursor-pointer p-2 mt-2 rounded-md hover:bg-input flex flex-col items-start gap-2"
-          :class="{ 'bg-input': item.id === currentId, 'pinned-conversation': item.pinned }"
-          @click.stop="handleItemClick(item)" @contextmenu.prevent.stop="handleContextMenu(item)">
-          <list-item v-bind="(item)" @update-title="updateTitle" />
+        <li v-if="item.type !== 'divider'" class="conversation-item" :class="{ selected: item.id === currentId, 'pinned-conversation': item.pinned }"
+          @contextmenu.prevent.stop="handleContextMenu(item)">
+          <div class="conversation-target" role="button" tabindex="0" :aria-current="item.id === currentId ? 'page' : undefined"
+            @click.stop="handleItemClick(item)" @keydown.enter.self="handleItemClick(item)" @keydown.space.self.prevent="handleItemClick(item)">
+            <ListItem v-bind="item" @update-title="updateTitle" />
+          </div>
+          <button class="icon-button item-menu" :aria-label="t('ui.conversationOptions')" @click.stop="handleContextMenu(item)"><Ellipsis :size="16" /></button>
         </li>
-        <li v-else class="divider my-2 h-px bg-input"></li>
+        <li v-else class="list-divider" />
       </template>
+      <li v-if="!conversations.length" class="empty-list">{{ t('ui.emptyConversations') }}</li>
     </ul>
-    <operations-bar v-show="isBatchOperate" @select-all="handleAllSelectChange" @cancel="isBatchOperate = false"
-      @op="handleBatchOperate" />
-    <user-badge @login="handleBadgeLogin" @profile="handleBadgeProfile" @settings="handleBadgeSettings" />
-    <auth-dialog v-model:show="showAuthDialog" @success="handleAuthSuccess" />
+    <OperationsBar v-show="isBatchOperate" @select-all="handleAllSelectChange" @cancel="isBatchOperate = false" @op="handleBatchOperate" />
+    <UserBadge @login="handleBadgeLogin" @profile="handleBadgeProfile" @settings="handleBadgeSettings" />
+    <AuthDialog v-model:show="showAuthDialog" @success="handleAuthSuccess" />
   </div>
 </template>
+<style scoped>
+.conversation-list { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; padding: 0 14px; }
+.brand { display: flex; align-items: center; gap: 8px; height: 65px; padding: 0 6px 8px; color: var(--accent-ink); }
+.brand > span { font-family: var(--font-display); font-size: 27px; font-weight: 600; letter-spacing: -1.2px; color: var(--text-primary); }
+.brand-dot { color: var(--accent-ink); }
+.new-conversation { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--text-primary); background: var(--surface); font-size: 13px; font-weight: 500; box-shadow: 0 1px 2px #20182f03; }
+.new-conversation:hover { border-color: var(--text-tertiary); }
+.new-conversation svg { color: var(--accent-ink); }
+.list-heading { display: flex; justify-content: space-between; align-items: center; padding: 12px 7px 5px 10px; font-size: 11px; color: var(--text-secondary); }
+.conversation-items { flex: 1; min-height: 0; overflow: auto; margin: 0 -3px; padding: 0 3px; list-style: none; }
+.conversation-item { display: flex; position: relative; border-radius: 8px; margin-bottom: 4px; border: 1px solid transparent; }
+.conversation-item:hover { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+.conversation-item.selected { background: var(--surface); border-color: var(--line); }
+.conversation-target { flex: 1; min-width: 0; padding: 10px 28px 10px 11px; cursor: pointer; border-radius: 8px; }
+.item-menu { position: absolute; right: 3px; top: 7px; opacity: 0; width: 24px; height: 24px; }
+.conversation-item:hover .item-menu, .conversation-item:focus-within .item-menu { opacity: 1; }
+.list-divider { height: 1px; background: var(--line); margin: 10px; }
+.empty-list { padding: 24px 10px; color: var(--text-secondary); font-size: 12px; }
+</style>

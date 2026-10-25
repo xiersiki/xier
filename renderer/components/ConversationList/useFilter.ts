@@ -13,14 +13,12 @@ export function useFilter() {
 
     const divider = Object.freeze({
       type: 'divider',
-      id: -1
+      id: '__pinned_divider__', title: '', selectedModel: '', createdAt: 0, updatedAt: 0,
+      providerId: '', pinned: true, dirty: false, version: 0, idempotentKey: ''
     }) as Conversation; // 用于分隔置顶和非置顶对话的对象
 
     const pinned: Conversation[] = conversationsStore.allConversations.filter(item => item.pinned).map(item => ({ type: 'conversation', ...item }));
 
-    if (pinned.length) {
-      pinned.push(divider); // 分隔置顶和非置顶对话的对象
-    }
 
     const unPinned: Conversation[] = conversationsStore.allConversations.filter(item => !item.pinned).map(item => ({ type: 'conversation', ...item }));
 
@@ -37,6 +35,7 @@ export function useFilter() {
     if (sortBy === 'createAt') {
       return [
         ...pinned.sort((a, b) => handleSortOrder(a.createdAt, b.createdAt)),
+        ...(pinned.length ? [divider] : []),
         ...unPinned.sort((a, b) => handleSortOrder(a.createdAt, b.createdAt)),
       ]
     }
@@ -44,6 +43,7 @@ export function useFilter() {
     if (sortBy === 'updatedAt') {
       return [
         ...pinned.sort((a, b) => handleSortOrder(a.updatedAt, b.updatedAt)),
+        ...(pinned.length ? [divider] : []),
         ...unPinned.sort((a, b) => handleSortOrder(a.updatedAt, b.updatedAt)),
       ]
     }
@@ -51,13 +51,15 @@ export function useFilter() {
     if (sortBy === 'name') {
       return [
         ...pinned.sort((a, b) => handleSortOrder(a.title, b.title)),
+        ...(pinned.length ? [divider] : []),
         ...unPinned.sort((a, b) => handleSortOrder(a.title, b.title))
       ]
     }
 
     return [
       ...pinned.sort((a, b) => handleSortOrder(a.selectedModel, b.selectedModel)),
-      ...unPinned.sort((a, b) => handleSortOrder(a.selectedModel, b.selectedModel))
+      ...(pinned.length ? [divider] : []),
+        ...unPinned.sort((a, b) => handleSortOrder(a.selectedModel, b.selectedModel))
     ]
   });
 

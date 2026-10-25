@@ -1,7 +1,7 @@
 import type { ConfigKeys, IConfig } from '@common/types';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { CONFIG_KEYS, IPC_EVENTS } from '@common/constants';
-import { debounce, simpleCloneDeep } from '@common/utils';
+import { simpleCloneDeep } from '@common/utils';
 import * as fs from 'fs';
 import * as path from 'path';
 import logManager from './LogService';
@@ -9,7 +9,7 @@ import logManager from './LogService';
 
 const DEFAULT_CONFIG: IConfig = {
   [CONFIG_KEYS.THEME_MODE]: 'system',
-  [CONFIG_KEYS.PRIMARY_COLOR]: '#BB5BE7',
+  [CONFIG_KEYS.PRIMARY_COLOR]: '#78658F',
   [CONFIG_KEYS.LANGUAGE]: 'zh',
   [CONFIG_KEYS.FONT_SIZE]: 14,
   [CONFIG_KEYS.MINIMIZE_TO_TRAY]: false,
@@ -38,19 +38,17 @@ export class ConfigService {
     // 加载配置
     this._config = this._loadConfig();
     this._setupIpcEvents()
-    logManager.info('Configuration service initialized with config:', this._config);
+    logManager.info('Configuration service initialized');
   }
 
   /**
    * 配置服务的Ipc事件处理
    */
   private _setupIpcEvents() {
-    const duration = 200;
-    const handleSet = debounce((key, val) => this.set(key, val), duration);
-    const handleUpdate = debounce((val) => this.update(val), duration);
+
     ipcMain.handle(IPC_EVENTS.GET_CONFIG, (_, key) => this.get(key));
-    ipcMain.on(IPC_EVENTS.SET_CONFIG, (_, key, value) => handleSet(key, value));
-    ipcMain.on(IPC_EVENTS.UPDATE_CONFIG, (_, value) => handleUpdate(value));
+    ipcMain.on(IPC_EVENTS.SET_CONFIG, (_, key, value) => this.set(key, value));
+    ipcMain.on(IPC_EVENTS.UPDATE_CONFIG, (_, value) => this.update(value));
   }
 
   /**
@@ -141,7 +139,7 @@ export class ConfigService {
     const oldValue = this._config[key];
     if (oldValue === value) return;
     this._config[key] = value as never;
-    logManager.debug(`Configuration updated: ${key} from ${JSON.stringify(oldValue)} to ${JSON.stringify(value)}`);
+    logManager.debug(`Configuration updated: ${key}`);
     autoSave && this._saveConfig();
   }
 

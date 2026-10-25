@@ -1,5 +1,6 @@
+import { fetchAllRows } from './pagination';
 import type { Message, MessageStatus } from "@common/types";
-import supabase from "./client";
+import { getUserClient } from "./client";
 import { logger } from "../utils/logger";
 import { notify } from "@renderer/utils/notify";
 
@@ -13,6 +14,7 @@ interface MessageRow {
   created_at: string;
   updated_at: string;
   status: MessageStatus;
+  metadata?: { reasoningContent?: string; finishReason?: string; error?: string };
 }
 
 // 将数据库行映射为 Message 对象
@@ -20,6 +22,10 @@ const mapRowToMessage = (row: MessageRow): Message => ({
   id: row.id,
   content: row.content,
   type: row.type,
+  status: row.status,
+  reasoningContent: row.metadata?.reasoningContent,
+  finishReason: row.metadata?.finishReason,
+  error: row.metadata?.error,
   conversationId: row.conversation_id,
   createdAt: new Date(row.created_at).getTime(),
   updatedAt: new Date(row.updated_at).getTime(),
@@ -37,6 +43,12 @@ const mapMessageToRow = (
     conversation_id: message.conversationId,
     content: message.content,
     type: message.type,
+    status: message.status ?? "success",
+    metadata: {
+      ...(message.reasoningContent ? { reasoningContent: message.reasoningContent } : {}),
+      ...(message.finishReason ? { finishReason: message.finishReason } : {}),
+      ...(message.error ? { error: message.error } : {}),
+    },
   };
 
   // ✅ 如果是新建（有 createdAt），发送客户端时间
@@ -56,27 +68,15 @@ const mapMessageToRow = (
 
 export async function fetchMessages(
   userId: string,
-  conversationId: string
+  conversationId?: string
 ): Promise<Message[]> {
-  try {
-    const { data, error } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("user_id", userId)
-      .eq("conversation_id", conversationId)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      logger.error("[messages] 拉取失败:", error);
-      notify.error("从云端获取 messages 失败");
-      throw error;
-    }
-    return (data ?? []).map(mapRowToMessage);
-  } catch (err) {
-    logger.error("Error fetching messages:", err);
-    notify.error("从云端获取 messages 失败");
-    throw err;
-  }
+  const client = await getUserClient(userId);
+  const rows = await fetchAllRows<MessageRow>((from, to) => {
+    let query = client.from('messages').select('*').eq('user_id', userId);
+    if (conversationId) query = query.eq('conversation_id', conversationId);
+    return query.order('created_at', { ascending: true }).order('id').range(from, to);
+  });
+  return rows.map(mapRowToMessage);
 }
 
 export async function upsertMessages(
@@ -86,7 +86,7 @@ export async function upsertMessages(
   try {
     const payload = messages.map((m) => mapMessageToRow(userId, m));
 
-    const { data, error } = await supabase
+    const { data, error } = await (await getUserClient(userId))
       .from("messages")
       .upsert(payload, {
         onConflict: "id",
@@ -119,7 +119,7 @@ export async function upsertMessages(
 
 export async function deleteRemoteMessage(id: string, userId: string): Promise<void> {
   try {
-    const { error } = await supabase
+    const { error } = await (await getUserClient(userId))
       .from("messages")
       .delete()
       .eq("id", id)
@@ -142,7 +142,7 @@ export async function deleteMessagesByConversation(
   userId: string
 ): Promise<void> {
   try {
-    const { error } = await supabase
+    const { error } = await (await getUserClient(userId))
       .from("messages")
       .delete()
       .eq("conversation_id", conversationId)

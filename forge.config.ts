@@ -1,10 +1,11 @@
 const { FusesPlugin } = require("@electron-forge/plugin-fuses");
 const { FuseV1Options, FuseVersion } = require("@electron/fuses");
+const path = require('node:path');
 
 module.exports = {
   packagerConfig: {
     name: "Xier",
-    icon: "/public/noel_icon",
+    icon: path.resolve(__dirname, 'public/noel_icon'),
     asar: true,
   },
   rebuildConfig: {},

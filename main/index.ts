@@ -1,3 +1,4 @@
+import { registerOAuthHandler } from './service/OAuthService';
 import { app, BrowserWindow } from "electron";
 import { setupWindows as setupWins } from "./wins";
 import configManager from "./service/ConfigService";
@@ -14,6 +15,7 @@ if (started) {
 
 const setupWindows = () => {
   // Create the browser window.
+  registerOAuthHandler();
   setupWins();
 };
 
@@ -33,7 +35,7 @@ process.on("unhandledRejection", (reason, promise) =>
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   try {
-    electronDevtoolsInstaller(VUEJS_DEVTOOLS)
+    if (!app.isPackaged && process.env.XIER_DEVTOOLS === '1') electronDevtoolsInstaller(VUEJS_DEVTOOLS)
       .then((name) => console.log(`installed: ${name}`))
       .catch((err) => console.log("Unable to install `vue-devtools`: \n", err));
   } catch (e: any) {

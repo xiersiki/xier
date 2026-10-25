@@ -7,10 +7,7 @@ import { OpenAIProvider } from './OpenAIProvider';
 import { logManager } from '../service/LogService';
 
 interface _Provider extends Omit<Provider, 'openAISetting'> {
-  openAISetting?: {
-    apiKey: string;
-    baseURL: string;
-  }
+  openAISetting?: import('@common/types').OpenAISetting;
 }
 const _parseProvider = () => {
   let result: Provider[] = [];
@@ -64,7 +61,7 @@ export function createProvider(name: string) {
       if (!provider.visible) {
         throw new Error(`provider ${provider.name} is disabled`);
       }
-      return new OpenAIProvider(provider.openAISetting.apiKey, provider.openAISetting.baseURL);
+      return new OpenAIProvider(provider.openAISetting.apiKey, provider.openAISetting.baseURL, provider.openAISetting);
     }
   }
 }

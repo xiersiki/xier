@@ -1,5 +1,6 @@
+import { fetchAllRows } from './pagination';
 import type { Conversation } from "@common/types";
-import supabase from "./client";
+import { getUserClient } from "./client";
 import { logger } from "../utils/logger";
 import { notify } from "@renderer/utils/notify";
 // 云端的数据结构
@@ -64,24 +65,12 @@ const mapConversationToRow = (
 export async function fetchConversations(
   userId: string
 ): Promise<Conversation[]> {
-  try {
-    const { data, error } = await supabase
-      .from("conversations")
-      .select("*")
-      .eq("user_id", userId)
-      .order("updated_at", { ascending: false });
-
-    if (error) {
-      logger.error("[conversations] 拉取失败:", error);
-      notify.error("从云端获取 conversations 失败");
-      throw error;
-    }
-    return (data ?? []).map(mapRowToConversation);
-  } catch (err) {
-    logger.error("Error fetching conversations:", err);
-    notify.error("从云端获取 conversations 失败");
-    throw err;
-  }
+  const client = await getUserClient(userId);
+  const rows = await fetchAllRows<ConversationRow>((from, to) => {
+    const query = client.from('conversations').select('*').eq('user_id', userId);
+    return query.order('updated_at', { ascending: true }).order('id').range(from, to);
+  });
+  return rows.map(mapRowToConversation);
 }
 
 export async function upsertConversations(
@@ -91,7 +80,7 @@ export async function upsertConversations(
   try {
     const payload = conversations.map((c) => mapConversationToRow(userId, c));
 
-    const { data, error } = await supabase
+    const { data, error } = await (await getUserClient(userId))
       .from("conversations")
       .upsert(payload, {
         onConflict: "id",
@@ -127,7 +116,7 @@ export async function deleteConversation(
   userId: string
 ): Promise<void> {
   try {
-    const { error } = await supabase
+    const { error } = await (await getUserClient(userId))
       .from("conversations")
       .delete()
       .eq("id", id)

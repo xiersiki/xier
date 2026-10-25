@@ -13,7 +13,7 @@ import NavBar from '@renderer/components/NavBar.vue';
 import ResizeDivider from '@renderer/components/ResizeDivider.vue';
 
 const isMac = isMacOs();
-const sidebarWidth = ref(320); // 初始宽度
+const sidebarWidth = ref(268); // 初始宽度
 const { theme, themeOverrides } = useNaiveTheme();
 const { locale, dateLocale } = useNaiveLocale();
 import AppInitializer from './AppInitializer.vue';
@@ -28,16 +28,16 @@ useFontSize();
       :date-locale="dateLocale">
       <n-message-provider>
         <AppInitializer>
-          <aside class="sidebar h-full flex flex-shrink-0 flex-col" :style="{ width: sidebarWidth + 'px' }" v-ripple>
+          <aside class="sidebar" :style="{ width: sidebarWidth + 'px' }">
             <!-- Mac ̵Ԥ -->
-            <div v-if="isMac" class="w-full h-[35px]"></div>
-            <div class="flex-auto flex">
+            <div v-if="isMac" class="sidebar-titlebar drag-region"></div>
+            <div class="sidebar-content">
+              <conversation-list :width="sidebarWidth" @click.stop @mouseleave.stop />
               <nav-bar />
-              <conversation-list class="flex-auto" :width="sidebarWidth" @click.stop @mouseleave.stop />
             </div>
           </aside>
-          <resize-divider direction="vertical" v-model:size="sidebarWidth" :max-size="500" :min-size="320" />
-          <div class="flex-auto">
+          <resize-divider direction="vertical" v-model:size="sidebarWidth" :max-size="360" :min-size="240" />
+          <div class="workspace">
             <router-view />
           </div>
         </AppInitializer>
@@ -48,12 +48,9 @@ useFontSize();
 </template>
 
 <style scoped>
-.app-container {
-  background-color: var(--bg-secondary);
-}
-
-.sidebar {
-  background-color: var(--bg-color);
-  box-shadow: -3px -2px 20px rgba(101, 101, 101, 0.2);
-}
+.sidebar { height: 100%; flex-shrink: 0; display: flex; flex-direction: column; background: var(--bg-color); border-right: 1px solid var(--line); }
+.sidebar-titlebar { height: 36px; flex-shrink: 0; }
+.sidebar-content { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.workspace { flex: 1; min-width: 0; height: 100%; }
+:deep(.vertical) { width: 4px; margin-left: -4px; }
 </style>

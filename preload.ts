@@ -7,6 +7,9 @@ import { IPC_EVENTS, WINDOW_NAMES } from '@common/constants';
 let eventId = 0;
 
 const api: WindowApi = {
+  listProviderModels: setting => ipcRenderer.invoke(IPC_EVENTS.LIST_PROVIDER_MODELS, setting),
+  authorizeOAuth: (url: string) => ipcRenderer.invoke('oauth:authorize', url),
+  cancelOAuth: () => ipcRenderer.send('oauth:cancel'),
   openWindow: (name: WindowNames) => ipcRenderer.send(`${IPC_EVENTS.OPEN_WINDOW}:${name}`),
   closeWindow: () => ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW),
   minimizeWindow: () => ipcRenderer.send(IPC_EVENTS.MINIMIZE_WINDOW),
@@ -27,8 +30,9 @@ const api: WindowApi = {
   setConfig: (key: string, value: any) => ipcRenderer.send(IPC_EVENTS.SET_CONFIG, key, value),
   updateConfig: (value: any) => ipcRenderer.send(IPC_EVENTS.UPDATE_CONFIG, value),
   onConfigChange: (callback: (config: any) => void) => {
-    ipcRenderer.on(IPC_EVENTS.CONFIG_CHANGE, (_, config) => callback(config));
-    return () => ipcRenderer.removeListener(IPC_EVENTS.CONFIG_CHANGE, callback);
+    const listener = (_: Electron.IpcRendererEvent, config: any) => callback(config);
+    ipcRenderer.on(IPC_EVENTS.CONFIG_CHANGE, listener);
+    return () => ipcRenderer.removeListener(IPC_EVENTS.CONFIG_CHANGE, listener);
   },
 
   removeConfigChangeListener: (callback: (config: any) => void) => ipcRenderer.removeListener(IPC_EVENTS.CONFIG_CHANGE, callback),
@@ -54,14 +58,16 @@ const api: WindowApi = {
   contextMenuItemClick: (menuId: string, cb: (id: string) => void) => ipcRenderer.once(`${IPC_EVENTS.SHOW_CONTEXT_MENU}:${menuId}`, (_event, id) => cb(id)),
 
   startADialogue: (params: CreateDialogueProps) => ipcRenderer.send(IPC_EVENTS.START_A_DIALOGUE, params),
-  onDialogueBack: (cb: (data: DialogueBackStream) => void, messageId: number) => {
+  stopADialogue: (messageId: string) => ipcRenderer.send(IPC_EVENTS.STOP_A_DIALOGUE, messageId),
+  onDialogueBack: (cb: (data: DialogueBackStream) => void, messageId: string) => {
     const callback = (_event: Electron.IpcRendererEvent, data: DialogueBackStream) => cb(data);
     ipcRenderer.on(IPC_EVENTS.DIALOGUE_BACK + messageId, callback);
     return () => ipcRenderer.removeListener(IPC_EVENTS.DIALOGUE_BACK + messageId, callback);
   },
   onShortcutCalled: (key: string, cb: () => void) => {
-    ipcRenderer.on(IPC_EVENTS.SHORTCUT_CALLED + key, (_event) => cb());
-    return () => ipcRenderer.removeListener(IPC_EVENTS.SHORTCUT_CALLED + key, cb);
+    const listener = () => cb();
+    ipcRenderer.on(IPC_EVENTS.SHORTCUT_CALLED + key, listener);
+    return () => ipcRenderer.removeListener(IPC_EVENTS.SHORTCUT_CALLED + key, listener);
   },
   logger: {
     debug: (message: string, ...meta: any[]) => ipcRenderer.send(IPC_EVENTS.LOG_DEBUG, message, JSON.stringify(meta)),

@@ -47,13 +47,6 @@ watch(() => ctx?.checkedIds.value, (newCheckedIds) => {
 </script>
 
 <template>
-  <div class="conversation-desc text-tx-secondary flex justify-between items-center text-sm leading-5">
-    <span>
-      {{ selectedModel }}
-      <iconify-icon class="inline-block" v-if="pinned" icon="material-symbols:keep-rounded" :width="_PIN_ICON_SIZE"
-        :height="_PIN_ICON_SIZE" />
-    </span>
-  </div>
   <div class="w-full flex items-center" v-if="isBatchOperate">
     <n-checkbox :style="_CHECKBOX_STYLE_FIX" v-model:checked="checked" @click.stop />
     <div class="flex-auto">
@@ -61,4 +54,11 @@ watch(() => ctx?.checkedIds.value, (newCheckedIds) => {
     </div>
   </div>
   <item-title v-else :title="title" :is-editable="isTitleEditable" @update-title="updateTitle" />
+  <div class="conversation-desc text-tx-secondary flex justify-between items-center text-[11px] leading-4 mt-1">
+    <span class="truncate">
+      {{ selectedModel }}
+      <iconify-icon class="inline-block" v-if="pinned" icon="material-symbols:keep-rounded" :width="_PIN_ICON_SIZE"
+        :height="_PIN_ICON_SIZE" />
+    </span>
+  </div>
 </template>

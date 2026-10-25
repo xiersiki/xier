@@ -1,33 +1,15 @@
-declare module "vue-virtual-scroller" {
-  import { DefineComponent, VNode } from "vue";
-
+declare module 'vue-virtual-scroller' {
+  import type { ComponentPublicInstance, VNode } from 'vue';
   export interface DynamicScrollerProps {
-    items: any[];
-    minItemSize: number | string;
-    keyField?: string;
-    [key: string]: any;
+    items: any[]; minItemSize: number | string; keyField?: string; [key: string]: any;
   }
-
-  export interface DynamicScrollerItemProps {
-    item: any;
-    active: boolean;
-    sizeDependencies?: any[];
-    [key: string]: any;
-  }
-
-  export const DynamicScroller: DefineComponent<
-    DynamicScrollerProps,
-    {
-      scrollToBottom: () => void;
-      scrollToItem: (index: number) => void;
-    },
-    any
-  >;
-
-  export const DynamicScrollerItem: DefineComponent<
-    DynamicScrollerItemProps,
-    any,
-    any
-  >;
-  export const RecycleScroller: DefineComponent<any, any, any>;
+  export const DynamicScroller: new () => ComponentPublicInstance<DynamicScrollerProps> & {
+    scrollToBottom(): void;
+    scrollToItem(index: number): void;
+    $slots: { default(props: { item: any; index: number; active: boolean }): VNode[] };
+  };
+  export const DynamicScrollerItem: new () => ComponentPublicInstance<{
+    item: any; active: boolean; sizeDependencies?: any[]; [key: string]: any;
+  }> & { $slots: { default(): VNode[] } };
+  export const RecycleScroller: new () => ComponentPublicInstance<any>;
 }

@@ -1,46 +1,21 @@
 <script setup lang="ts">
-import { NInput, NInputGroup, NInputGroupLabel, NIcon } from 'naive-ui';
-import { Icon as IconifyIcon } from '@iconify/vue';
+import { Search, X } from 'lucide-vue-next';
 import { useFilter } from './useFilter';
-import { useContextMenu } from './useContextMenu';
-
-
-defineOptions({ name: 'SearchBar' });
-
 const { searchKey } = useFilter();
-const { handle: handleListContexMenu } = useContextMenu();
 const { t } = useI18n();
 </script>
-
 <template>
-  <div class="my-2" @contextmenu.stop @click.stop>
-    <n-input-group>
-      <n-input v-model:value="searchKey" size="small" :placeholder="t('main.conversation.searchPlaceholder')" clearable>
-        <template #prefix>
-          <iconify-icon icon="material-symbols:search" />
-        </template>
-      </n-input>
-      <n-input-group-label class="cursor-pointer flex justify-between items-center" @click="handleListContexMenu">
-        <n-icon>
-          <iconify-icon icon="material-symbols:menu" />
-        </n-icon>
-      </n-input-group-label>
-    </n-input-group>
+  <div class="search-field" @contextmenu.stop>
+    <Search :size="15" :stroke-width="1.7" aria-hidden="true" />
+    <input v-model="searchKey" type="search" :placeholder="t('main.conversation.searchPlaceholder')" :aria-label="t('main.conversation.searchPlaceholder')" />
+    <button v-if="searchKey" class="icon-button" :aria-label="t('ui.clearSearch')" @click="searchKey = ''"><X :size="13" /></button>
   </div>
 </template>
-
 <style scoped>
-.n-input-wrapper,
-.n-input__input {
-  align-items: center;
-}
-
-.n-input-group-label,
-.n-input__input {
-  display: flex;
-}
-
-:deep(.n-input__input-el) {
-  translate: 0 3px !important;
-}
+.search-field { display: flex; align-items: center; gap: 8px; margin-top: 13px; padding: 5px 10px; height: 34px; color: var(--text-secondary); border: 1px solid transparent; border-radius: 7px; }
+.search-field:focus-within { border-color: var(--line); background: var(--surface); }
+input { width: 100%; min-width: 0; background: transparent; border: 0; outline: none; font-size: 12px; color: var(--text-primary); }
+input::placeholder { color: var(--text-secondary); }
+input::-webkit-search-cancel-button { display: none; }
+.icon-button { width: 20px; height: 20px; }
 </style>

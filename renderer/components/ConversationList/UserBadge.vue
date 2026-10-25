@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { ChevronDown, UserRound } from 'lucide-vue-next';
 import { NDropdown, type DropdownOption } from 'naive-ui';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@renderer/stores/auth';
+import { notify } from '@renderer/utils/notify';
 
 const emit = defineEmits<{
   login: [];
@@ -25,6 +27,7 @@ const displayName = computed(() => {
 const menuOptions = computed<DropdownOption[]>(() => ([
   { label: '个人资料', key: 'profile' },
   { label: '设置', key: 'settings' },
+  { label: authStore.syncing ? '正在同步…' : '立即同步', key: 'sync', disabled: authStore.syncing },
   { label: '退出登录', key: 'logout' },
 ]));
 
@@ -40,6 +43,11 @@ function handleLoginClick() {
 }
 
 async function handleSelect(key: string | number) {
+  if (key === 'sync') {
+    dropdownVisible.value = false;
+    if (await authStore.syncUserData()) notify.success('同步完成');
+    return;
+  }
   if (key === 'logout') {
     await authStore.signOut();
     dropdownVisible.value = false;
@@ -60,44 +68,26 @@ async function handleSelect(key: string | number) {
 </script>
 
 <template>
-  <div class="px-2 py-3">
-    <div v-if="!authStore.isAuthenticated" @click="handleLoginClick"
-      class="flex items-center justify-between gap-3 bg-[var(--bg-secondary)] px-3 py-2 rounded-md cursor-pointer">
-      <div class="flex items-center gap-2">
-        <div
-          class="w-8 h-8 rounded-full bg-[var(--primary-color)]/20 text-[var(--primary-color)] flex items-center justify-center font-medium">
-          <span>未</span>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-sm text-tx-primary">未登录</span>
-        </div>
-      </div>
-      <button class="px-3 py-1 text-xs rounded-md bg-[var(--primary-color)] text-white hover:opacity-90 transition"
-        type="button" @click="handleLoginClick">
-        登录
-      </button>
-    </div>
-
+  <div class="account-area">
+    <button v-if="!authStore.isAuthenticated" class="account-button" @click="handleLoginClick">
+      <span class="account-avatar"><UserRound :size="17" /></span><span class="account-copy"><span>本地访客</span><small>登录以同步对话</small></span><ChevronDown :size="14" />
+    </button>
     <n-dropdown v-else trigger="click" placement="top-start" :options="menuOptions" :show-arrow="false"
       v-model:show="dropdownVisible" @select="handleSelect">
-      <button type="button"
-        class="w-full flex items-center justify-between gap-3 bg-[var(--bg-secondary)] px-3 py-2 rounded-md hover:bg-[var(--bg-mute)] transition">
-        <div class="flex items-center gap-2">
-          <div
-            class="w-8 h-8 rounded-full bg-[var(--primary-color)]/20 text-[var(--primary-color)] flex items-center justify-center font-medium">
-            <span>{{ badgeInitials }}</span>
-          </div>
-          <div class="flex flex-col text-left">
-            <span class="text-sm text-tx-primary">{{ displayName }}</span>
-            <span class="text-xs text-tx-secondary">点击查看账户选项</span>
-          </div>
-        </div>
-        <svg class="w-4 h-4 text-tx-secondary" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"
-            clip-rule="evenodd" />
-        </svg>
+      <button type="button" class="account-button" :title="displayName">
+        <span class="account-avatar">{{ badgeInitials }}</span>
+        <span class="account-copy"><span>{{ displayName }}</span><small>{{ authStore.syncing ? '正在同步…' : '账户与同步' }}</small></span>
+        <ChevronDown :size="14" />
       </button>
     </n-dropdown>
   </div>
 </template>
+<style scoped>
+.account-area { padding: 12px 0 10px; }
+.account-button { display: flex; align-items: center; gap: 9px; padding: 8px 6px; width: 100%; background: transparent; border: 0; border-radius: 8px; text-align: left; color: var(--text-secondary); }
+.account-button:hover { background: var(--input-bg); }
+.account-avatar { width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--accent-ink); font-size: 13px; flex-shrink: 0; }
+.account-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; font-size: 12px; color: var(--text-primary); }
+.account-copy > span { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.account-copy small { font-size: 10px; color: var(--text-secondary); margin-top: 1px; }
+</style>

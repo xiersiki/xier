@@ -1,4 +1,4 @@
-import { Message, Conversation } from "@common/types";
+import { Message } from "@common/types";
 
 /**
  * 生成随机日期时间戳

@@ -7,7 +7,7 @@
   },
   "main": {
     "welcome": {
-      "helloMessage": "你好，我是诺艾尔"
+      "helloMessage": "你好，我是希儿"
     },
     "conversation": {
       "placeholder": "输入消息...",
@@ -96,6 +96,7 @@
       "modelConfig": "模型配置"
     },
     "providers": {
+      "addProvider": "添加服务商",
       "defaultModel": "默认模型",
       "apiKey": "API密钥",
       "apiUrl": "API地址"
@@ -171,6 +172,26 @@
     }
   },
   "app": {
-    "title": "诺艾尔"
+    "title": "Xier"
+  },
+  "ui": {
+    "conversationOptions": "对话选项",
+    "clearSearch": "清除搜索",
+    "emptyConversations": "没有找到对话",
+    "welcomeTitle": "想法，从这里展开。",
+    "welcomeDescription": "与希儿聊聊问题、灵感，或任何想弄明白的事。",
+    "composerHint": "Enter 换行",
+    "chooseModelHint": "选择一个模型，开始对话",
+    "you": "你",
+    "appearance": "外观",
+    "general": "通用",
+    "modelServices": "模型服务",
+    "preferencesTitle": "外观与偏好",
+    "preferencesDescription": "让希儿适合你的工作习惯。",
+    "servicesDescription": "连接模型服务，选择适合每次对话的模型。",
+    "autoSave": "更改会自动保存",
+    "modelCount": "{count} 个模型",
+    "enableService": "启用服务",
+    "models": "已添加的模型"
   }
 }

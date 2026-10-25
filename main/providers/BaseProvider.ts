@@ -1,3 +1,4 @@
 export abstract class BaseProvider {
-  abstract chat(messages: DialogueMessageProps[], modelName: string): Promise<AsyncIterable<UniversalChunk>>;
+  abstract listModels(): Promise<string[]>;
+  abstract chat(messages: DialogueMessageProps[], modelName: string, signal?: AbortSignal): Promise<AsyncIterable<UniversalChunk>>;
 }

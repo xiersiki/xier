@@ -39,6 +39,9 @@ export type MessageStatus = "loading" | "streaming" | "success" | "error";
 export interface Message {
   id: string; // 修改为uuid
   content: string;
+  reasoningContent?: string;
+  finishReason?: string;
+  error?: string;
   type: "question" | "answer";
   createdAt: number;
   updatedAt?: number;
@@ -50,6 +53,9 @@ export interface Message {
 export interface OpenAISetting {
   baseURL?: string;
   apiKey?: string;
+  adapter?: 'auto' | 'openai-chat' | 'deepseek';
+  thinking?: 'auto' | 'enabled' | 'disabled';
+  reasoningEffort?: 'low' | 'high' | 'max';
 }
 
 export interface Provider {

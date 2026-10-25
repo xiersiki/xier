@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import type { SelectValue } from '@renderer/types';
-import { MAIN_WIN_SIZE } from '@common/constants';
-import { throttle } from '@common/utils';
 import { useMessagesStore } from '@renderer/stores/messages';
 import { useConversationsStore } from '@renderer/stores/conversations';
 import { useProvidersStore } from '@renderer/stores/providers';
 import { useConfig } from '@renderer/hooks/useConfig';
-import { logoData } from '@renderer/logoBase64';
 
-import ResizeDivider from '@renderer/components/ResizeDivider.vue';
+import XierMark from '@renderer/components/XierMark.vue';
 import MessageList from '@renderer/components/MessageList.vue';
 import MessageInput from '@renderer/components/MessageInput.vue';
 import CreateConversation from '@renderer/components/CreateConversation.vue';
 
-const listHeight = ref(0);
-const listScale = ref(0.7);
-const maxListHeight = ref(window.innerHeight * 0.7);
 const isStoping = ref(false);
 const message = ref('');
 const provider = ref<SelectValue>();
@@ -25,6 +19,7 @@ const route = useRoute();
 const router = useRouter();
 
 const config = useConfig();
+const conversationTitle = computed(() => conversationsStore.getConversationById(conversationId.value ?? '')?.title ?? '');
 
 const { t } = useI18n();
 
@@ -33,8 +28,8 @@ const conversationsStore = useConversationsStore();
 const providersStore = useProvidersStore();
 
 const providerId = computed(() => ((provider.value as string)?.split(':')[0]) ?? '');
-const selectedModel = computed(() => ((provider.value as string)?.split(':')[1]) ?? '');
-const conversationId = computed(() => String(route.params.id) as string | undefined);
+const selectedModel = computed(() => ((provider.value as string)?.split(':').slice(1).join(':')) ?? '');
+const conversationId = computed(() => route.params.id ? String(route.params.id) : undefined);
 const defaultModel = computed(() => {
   const vals: string[] = [];
   providersStore.allProviders.forEach(provider => {
@@ -109,21 +104,6 @@ async function handleStopMessage() {
   isStoping.value = false;
 }
 
-window.onresize = throttle(async () => {
-  if (window.innerHeight < MAIN_WIN_SIZE.minHeight) return;
-  listHeight.value = window.innerHeight * listScale.value;
-  await nextTick();
-  maxListHeight.value = window.innerHeight * 0.7;
-  if (listHeight.value > maxListHeight.value) {
-    listHeight.value = maxListHeight.value;
-  }
-}, 10);
-
-onMounted(async () => {
-  await nextTick();
-  listHeight.value = window.innerHeight * listScale.value;
-});
-
 onBeforeRouteUpdate(async (to, from, next) => {
   if (to.params.id === from.params.id) return next();
   await messagesStore.initialize(String(to.params.id));
@@ -133,10 +113,6 @@ onBeforeRouteUpdate(async (to, from, next) => {
 watch(() => defaultModel.value, (val) => {
   if (val !== provider.value && !conversationId.value) provider.value = val
 }, { immediate: true });
-
-watch(() => listHeight.value, () => {
-  listScale.value = listHeight.value / window.innerHeight;
-});
 
 watch([() => conversationId.value, () => msgInputRef.value], async ([id, msgInput]) => {
   if (!msgInput || !id) {
@@ -155,38 +131,46 @@ watch([() => conversationId.value, () => msgInputRef.value], async ([id, msgInpu
 
 </script>
 <template>
-  <div class="h-full" v-if="!conversationId">
-    <div class="h-full pt-[45vh] px-5">
-      <div class="text-3xl font-bold text-primary-subtle text-center">
-        <img :src="logoData" alt="Noel" class="w-20 h-20 inline-block" />
-        {{ t('main.welcome.helloMessage') }}
-      </div>
-
-      <div class="bg-bubble-others mt-6 max-w-[800px] h-[200px] mx-auto rounded-md">
-        <create-conversation :providerId="providerId" :selectedModel="selectedModel" v-slot="{ create }">
-          <message-input v-model:message="message" v-model:provider="provider"
-            :placeholder="t('main.conversation.placeholder')" @send="handleCreateConversation(create, message)" />
-        </create-conversation>
-      </div>
+  <section v-if="!conversationId" class="welcome-view">
+    <div class="welcome-content">
+      <div class="welcome-symbol"><XierMark /></div>
+      <p class="welcome-eyebrow">XIER</p>
+      <h1>{{ t('ui.welcomeTitle') }}</h1>
+      <p class="welcome-description">{{ t('ui.welcomeDescription') }}</p>
+      <CreateConversation :provider-id="providerId" :selected-model="selectedModel" v-slot="{ create }">
+        <MessageInput v-model:message="message" v-model:provider="provider" :placeholder="t('main.conversation.placeholder')" @send="handleCreateConversation(create, message)" />
+      </CreateConversation>
     </div>
-  </div>
-  <div class="h-full flex flex-col" v-else>
-    <div class="w-full min-h-0" :style="{ height: listHeight + 'px' }">
-      <message-list :messages="messagesStore.messagesByConversationId(conversationId)" />
-    </div>
-    <div class="input-container bg-bubble-others flex-auto w-[calc(100% + 10px)] ml-[-5px] ">
-      <resize-divider direction="horizontal" v-model:size="listHeight" :max-size="maxListHeight" :min-size="100" />
-      <message-input class="p-2 pt-0" ref="msgInputRef"
-        :message="conversationsStore.messageInputValueById(conversationId ?? '-1')" v-model:provider="provider"
-        :placeholder="t('main.conversation.placeholder')" :status="messageInputStatus"
+  </section>
+  <section v-else class="conversation-view">
+    <header class="conversation-header drag-region">
+      <h1 :title="conversationTitle">{{ conversationTitle }}</h1>
+      <span>{{ t('main.sidebar.conversations') }}</span>
+    </header>
+    <div class="reading-area"><MessageList :messages="messagesStore.messagesByConversationId(conversationId)" /></div>
+    <div class="composer-area">
+      <MessageInput ref="msgInputRef" :message="conversationsStore.messageInputValueById(conversationId ?? '-1')"
+        v-model:provider="provider" :placeholder="t('main.conversation.placeholder')" :status="messageInputStatus"
         @update:message="(val) => conversationsStore.setMessageInputValue(conversationId ?? '-1', val)"
         @send="handleSendMessage" @stop="handleStopMessage" @select="handleProviderSelect" />
     </div>
-  </div>
+  </section>
 </template>
-
 <style scoped>
-.input-container {
-  box-shadow: 5px 1px 20px 0px rgba(101, 101, 101, 0.2);
-}
+.conversation-view { height: 100%; display: flex; flex-direction: column; min-width: 0; }
+.conversation-header { display: flex; align-items: center; gap: 20px; justify-content: space-between; height: 47px; flex-shrink: 0; padding: 0 32px 12px; border-bottom: 1px solid var(--line); }
+.conversation-header h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 500; }
+.conversation-header > span { flex-shrink: 0; color: var(--text-tertiary); font-size: 11px; }
+.reading-area { flex: 1; min-height: 0; }
+.composer-area { width: 100%; max-width: 844px; margin: 0 auto; padding: 12px 32px 20px; }
+.welcome-view { height: 100%; overflow: auto; display: flex; align-items: center; justify-content: center; padding: 30px 36px 80px; }
+.welcome-content { width: 100%; max-width: 670px; }
+.welcome-symbol { display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; border: 1px solid var(--line); background: var(--surface); border-radius: 19px; color: var(--accent-ink); margin-bottom: 24px; box-shadow: 0 4px 12px #22212c04; }
+.welcome-symbol :deep(svg) { width: 34px; height: 34px; }
+.welcome-eyebrow { font-family: var(--font-display); font-size: 11px; letter-spacing: 3px; color: var(--text-secondary); margin: 0 0 9px; }
+h1 { margin: 0; }
+.welcome-content h1 { font-family: "Songti SC", "STSong", Georgia, serif; font-size: clamp(26px, 3vw, 36px); font-weight: 500; letter-spacing: .02em; line-height: 1.5; }
+.welcome-description { color: var(--text-secondary); font-size: 13px; margin: 12px 0 32px; line-height: 1.8; }
+@media (max-width: 850px) { .composer-area { padding-inline: 20px; } .conversation-header { padding-inline: 20px; } .welcome-view { padding-inline: 24px; } }
+@media (max-height: 640px) { .welcome-view { padding-block: 24px; } .welcome-symbol { margin-bottom: 16px; } }
 </style>
