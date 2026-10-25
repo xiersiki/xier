@@ -1,0 +1,21 @@
+Time: 2026-10-25T19:09:14.476259+08:00
+Command: npm run site:build
+
+
+> xier@1.0.0 site:build
+> npm --prefix site run build
+
+
+> xier-site@1.0.0 build
+> vue-tsc --noEmit && vitepress build && node scripts/preserve-redirect.mjs
+
+
+  vitepress v1.6.4
+
+- building client + server bundles...
+[32m✓[0m building client + server bundles...
+- rendering pages...
+[32m✓[0m rendering pages...
+build complete in 2.21s.
+
+Exit code: 0
