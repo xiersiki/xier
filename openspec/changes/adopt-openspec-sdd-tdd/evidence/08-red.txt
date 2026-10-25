@@ -1,0 +1,46 @@
+Time: 2026-10-25T17:42:24.851268+08:00
+Command: npm test -- tests/spec-workflow.test.ts
+Exit code: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/spec-workflow.test.ts
+
+
+ RUN  v3.2.7 <repo>
+
+ ❯ tests/spec-workflow.test.ts (8 tests | 1 failed) 4417ms
+   ✓ 完整行为交付通过公开 CLI 190ms
+   ✓ 行为文件没有本次 change 时失败 177ms
+   ✓ 缺失设计或行为规格会指出必需产物  630ms
+   ✓ 未完成、空白或没有任务的交付失败  660ms
+   ✓ 缺少红绿重构阶段或错误结果会阻止交付  1429ms
+   ✓ 证据必须是 change 内存在的非空文件，拒绝越界和符号链接  966ms
+   ✓ 纯说明文档不需要制造 TDD 记录 167ms
+   × 无行为变化的依赖更新可用有理由和证据的适用验证 199ms
+     → SDD/TDD gate failed: Missing openspec/changes/example/specs
+: expected 1 to be +0 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/spec-workflow.test.ts > 无行为变化的依赖更新可用有理由和证据的适用验证
+AssertionError: SDD/TDD gate failed: Missing openspec/changes/example/specs
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/spec-workflow.test.ts:129:40
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  17:42:20
+   Duration  4.71s (transform 34ms, setup 34ms, collect 57ms, tests 4.42s, environment 0ms, prepare 69ms)
+

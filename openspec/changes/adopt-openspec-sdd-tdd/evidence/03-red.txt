@@ -1,0 +1,46 @@
+Time: 2026-10-25T17:40:41.285794+08:00
+Command: npm test -- tests/spec-workflow.test.ts
+Exit code: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/spec-workflow.test.ts
+
+
+ RUN  v3.2.7 <repo>
+
+ ❯ tests/spec-workflow.test.ts (3 tests | 1 failed) 551ms
+   ✓ 完整行为交付通过公开 CLI 209ms
+   ✓ 行为文件没有本次 change 时失败 157ms
+   × 缺失设计或行为规格会指出必需产物 184ms
+     → SDD/TDD gate passed
+: expected +0 to be 1 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/spec-workflow.test.ts > 缺失设计或行为规格会指出必需产物
+AssertionError: SDD/TDD gate passed
+: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/spec-workflow.test.ts:69:42
+     67|     rmSync(join(r.root, c.dir, file));
+     68|     const result = r.run();
+     69|     expect(result.status, result.output).toBe(1);
+       |                                          ^
+     70|     expect(result.output).toContain(file === 'specs/feature/spec.md' ?…
+     71|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  17:40:40
+   Duration  818ms (transform 30ms, setup 34ms, collect 53ms, tests 551ms, environment 0ms, prepare 49ms)
+

@@ -1,0 +1,50 @@
+Time: 2026-10-25T17:42:03.300135+08:00
+Command: npm test -- tests/spec-workflow.test.ts
+Exit code: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/spec-workflow.test.ts
+
+
+ RUN  v3.2.7 <repo>
+
+ ❯ tests/spec-workflow.test.ts (7 tests | 1 failed) 3194ms
+   ✓ 完整行为交付通过公开 CLI 186ms
+   ✓ 行为文件没有本次 change 时失败 154ms
+   ✓ 缺失设计或行为规格会指出必需产物  549ms
+   ✓ 未完成、空白或没有任务的交付失败  537ms
+   ✓ 缺少红绿重构阶段或错误结果会阻止交付  870ms
+   ✓ 证据必须是 change 内存在的非空文件，拒绝越界和符号链接  738ms
+   × 纯说明文档不需要制造 TDD 记录 160ms
+     → SDD/TDD gate failed: Uncovered file: README.md
+: expected 1 to be +0 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/spec-workflow.test.ts > 纯说明文档不需要制造 TDD 记录
+AssertionError: SDD/TDD gate failed: Uncovered file: README.md
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/spec-workflow.test.ts:120:40
+    118|   r.put('site/guide/development.md', '# Development');
+    119|   const result = r.run();
+    120|   expect(result.status, result.output).toBe(0);
+       |                                        ^
+    121| });
+    122| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  17:41:59
+   Duration  3.47s (transform 34ms, setup 33ms, collect 61ms, tests 3.19s, environment 0ms, prepare 58ms)
+
