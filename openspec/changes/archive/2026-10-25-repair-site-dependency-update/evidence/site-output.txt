@@ -1,0 +1,9 @@
+Time: 2026-10-25T19:11:51.009583+08:00
+Command: node --input-type=module -e import {readFileSync,statSync} from "node:fs"; import assert from "node:assert/strict"; const base="site/.vitepress/dist/"; for(const file of ["index.html","guide/development.html","guide/getting-started.html"]){assert(statSync(base+file).size>0); console.log(file+": present");} assert.deepEqual(readFileSync(base+"auth-redirect.html"),readFileSync("docs/auth-redirect.html")); console.log("auth-redirect.html: byte-identical to source");
+
+index.html: present
+guide/development.html: present
+guide/getting-started.html: present
+auth-redirect.html: byte-identical to source
+
+Exit code: 0
