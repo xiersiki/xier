@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "mode": "verification-only",
+  "files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/desktop.yml",
+    ".github/workflows/docs.yml",
+    ".github/workflows/release.yml"
+  ],
+  "reason": "仅官方Actions固定SHA升级；触发条件、权限及应用行为不变。兼容审查与真实工作流验证边界见design/verification。",
+  "checks": [
+    {
+      "command": "/tmp/xier-actionlint/actionlint -color",
+      "exitCode": 0,
+      "evidence": "evidence/actionlint.txt",
+      "summary": "actionlint 1.7.12检查四个工作流成功；最终运行结果由PR required提供。"
+    }
+  ]
+}
