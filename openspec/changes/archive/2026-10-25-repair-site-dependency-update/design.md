@@ -13,7 +13,7 @@
 
 vue-tsc 3.3.13（当前npm版本）仍require.resolve typescript/lib/tsc；原始CI40180222787明确报ERR_PACKAGE_PATH_NOT_EXPORTED。使用TypeScript5.9.3，保留5.x工具链；Node类型选择22.20.5匹配.nvmrc。Vue补丁更新为3.5.44。
 
-公开验证边界为干净npm ci --prefix site、npm run site:build（包含vue-tsc、VitePress、认证回调保留脚本）、输出HTML和auth/redirect.html检查。禁止删除类型检查来使构建变绿。无UI/路由源代码修改，不增添镜像实现的测试。
+公开验证边界为干净npm ci --prefix site、npm run site:build（包含vue-tsc、VitePress、认证回调保留脚本）、输出HTML和auth-redirect.html检查。禁止删除类型检查来使构建变绿。无UI/路由源代码修改，不增添镜像实现的测试。
 
 ## Risks / Trade-offs
 

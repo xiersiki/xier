@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "mode": "verification-only",
+  "files": [
+    "site/package.json",
+    "site/package-lock.json"
+  ],
+  "reason": "纯官网依赖兼容更新，业务行为不变；保留原有类型与构建检查。",
+  "checks": [
+    {
+      "command": "npm ci --prefix site",
+      "exitCode": 0,
+      "evidence": "evidence/install.txt",
+      "summary": "干净安装成功"
+    },
+    {
+      "command": "npm run site:build",
+      "exitCode": 0,
+      "evidence": "evidence/site-build.txt",
+      "summary": "类型检查、VitePress构建与认证回调复制成功"
+    },
+    {
+      "command": "node --input-type=module -e <site output assertions>",
+      "exitCode": 0,
+      "evidence": "evidence/site-output.txt",
+      "summary": "3个HTML入口存在，回调与源文件逐字节一致"
+    }
+  ]
+}
