@@ -1,0 +1,20 @@
+Time: 2026-10-25T19:41:34.009209+08:00
+Command: npm install --package-lock-only
+
+
+up to date, audited 899 packages in 9s
+
+170 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (3 low, 2 moderate, 26 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Exit code: 0

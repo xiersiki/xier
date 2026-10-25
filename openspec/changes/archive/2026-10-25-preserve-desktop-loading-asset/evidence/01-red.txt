@@ -1,0 +1,33 @@
+Time: 2026-10-25T19:41:10.238105+08:00
+Command: node --test tests/packaged/loading-asset.mjs
+
+TAP version 13
+# Subtest: desktop package ships the loading page requested at startup
+not ok 1 - desktop package ships the loading page requested at startup
+  ---
+  duration_ms: 1.367541
+  type: 'test'
+  location: '/Users/gongchenyu/code/xier-worktrees/maintain-pr17/tests/packaged/loading-asset.mjs:7:1'
+  failureType: 'testCodeFailure'
+  error: '".vite/build/loading.html" was not found in this archive'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Filesystem.getFile (/Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/asar/lib/filesystem.js:187:19)
+    Object.extractFile (/Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/asar/lib/asar.js:256:33)
+    TestContext.<anonymous> (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/tests/packaged/loading-asset.mjs:12:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 75.001916
+
+Exit code: 1

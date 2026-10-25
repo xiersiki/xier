@@ -1,0 +1,13 @@
+Time: 2026-10-25T19:36:45.854580+08:00
+Command: node /tmp/xier-pr-maintenance/cdp.mjs /tmp/xier-pr-maintenance/smoke-interactions.js
+
+file:///private/tmp/xier-pr-maintenance/cdp.mjs:12
+if(result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
+                                  ^
+
+Error: {"exceptionId":1,"text":"Uncaught (in promise) Error: UI condition timed out","lineNumber":0,"columnNumber":0,"exception":{"type":"object","subtype":"error","className":"Error","description":"Error: UI condition timed out\n    at wait (<anonymous>:2:121)\n    at async <anonymous>:9:22","objectId":"6020479738705811613.3.1"}}
+    at file:///private/tmp/xier-pr-maintenance/cdp.mjs:12:35
+
+Node.js v22.23.1
+
+Exit code: 1
