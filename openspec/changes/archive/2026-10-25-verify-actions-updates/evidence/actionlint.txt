@@ -1,0 +1,5 @@
+Time: 2026-10-25T19:09:01.783915+08:00
+Command: /tmp/xier-actionlint/actionlint -color
+
+
+Exit code: 0
