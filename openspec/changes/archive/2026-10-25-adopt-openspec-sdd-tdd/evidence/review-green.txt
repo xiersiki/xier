@@ -1,0 +1,26 @@
+Time: 2026-10-25T17:56:38.672643+08:00
+Command: npm test -- tests/spec-workflow.test.ts
+Exit code: 0
+
+
+> xier@1.0.0 test
+> vitest run tests/spec-workflow.test.ts
+
+
+ RUN  v3.2.7 <repo>
+
+ ✓ tests/spec-workflow.test.ts (16 tests) 8326ms
+   ✓ 完整行为交付通过公开 CLI  352ms
+   ✓ 缺失设计或行为规格会指出必需产物  797ms
+   ✓ 未完成、空白或没有任务的交付失败  758ms
+   ✓ 缺少红绿重构阶段或错误结果会阻止交付  1108ms
+   ✓ 证据必须是 change 内存在的非空文件，拒绝越界和符号链接  817ms
+   ✓ 无行为变化的依赖更新可用有理由和证据的适用验证  483ms
+   ✓ 未触及的历史 change 不能覆盖新代码，遗漏或删除的文件也必须被声明  502ms
+   ✓ OpenSpec 支持的所有未完成清单标记都必须阻断  1606ms
+   ✓ 已完成的编号和加号任务可交付，普通 Markdown 链接不当作任务  385ms
+
+ Test Files  1 passed (1)
+      Tests  16 passed (16)
+   Start at  17:56:29
+   Duration  8.75s (transform 42ms, setup 87ms, collect 110ms, tests 8.33s, environment 0ms, prepare 89ms)

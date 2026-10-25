@@ -73,3 +73,7 @@ CI 验证类型、离线回归、renderer、官网与三平台桌面构建；固
 模型设置支持获取接口当前可用的模型列表，并可手动保留或添加模型 ID。官方 DeepSeek 接口自动启用专用适配，可设置思考模式及强度；代理服务按需显式选择适配类型。思考内容与正文分开保存和展示，截断、中断和错误均有独立提示。
 
 已有云项目升级本次模型适配前需应用 `supabase/migrations/20261023055319_add_message_model_metadata.sql`；本次恢复的原项目已应用。适配依据、开源参考和真实接口测试结果见 [docs/MODEL-ADAPTER.md](docs/MODEL-ADAPTER.md)。
+
+## 规格与开发流程
+
+需求按 [OpenSpec SDD/TDD 规范](docs/spec-driven-development.md) 开发：先规格、再测试、红绿重构，PR 通过规格门禁和实际测试后合并。`npm ci` 安装项目固定 CLI，运行 `npm run spec -- list` 查看变更。
