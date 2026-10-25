@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (2 tests | 1 failed) 4ms
+   × rejects oversized or invalid UTF-8 imports without losing the current draft 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > rejects oversized or invalid UTF-8 imports without losing the current draft
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/content-controller.test.ts:17:90
+     15|   editor.importText('边界.txt', new TextEncoder().encode('😀'.repeat(200…
+     16|   expect(editor.state.doc.length).toBe(40000);
+     17|   expect(() => editor.importText('过长.txt', new TextEncoder().encode('字…
+       |                                                                                          ^
+     18|   expect(() => editor.importText('损坏.txt', new Uint8Array([0xff]))).to…
+     19|   expect(editor.state.doc.toString()).toBe('😀'.repeat(20000));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:37:34
+   Duration  521ms (environment 77%, setup 8%, transform 8%, import 6%, tests 1%, worker 1%)

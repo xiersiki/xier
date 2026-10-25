@@ -1,0 +1,30 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (17 tests | 1 failed) 13ms
+   × rejects oversized typing and handles transport loss without treating it as stopped 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > rejects oversized typing and handles transport loss without treating it as stopped
+TypeError: this.port.observe is not a function
+ ❯ ContentController.generate renderer/features/content/controller.ts:95:24
+     93|     };
+     94|     this.active = { requestId, draft, receive, detach: () => detach() …
+     95|     detach = this.port.observe(requestId, receive);
+       |                        ^
+     96|     try { receive(await this.port.start({ requestId, scopeId: this.sco…
+     97|     catch { if (!terminal && !this.disposed) { draft.status = 'unknown…
+ ❯ tests/content-controller.test.ts:199:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  20:46:29
+   Duration  3.32s (environment 84%, setup 7%, import 6%, transform 2%)

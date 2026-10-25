@@ -1,0 +1,29 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (16 tests | 1 failed) 10ms
+   × notifies subscribers and disposal detaches, cancels and ignores late completion 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > notifies subscribers and disposal detaches, cancels and ignores late completion
+TypeError: editor.subscribe is not a function
+ ❯ tests/content-controller.test.ts:184:10
+    182|     get: async () => ({ requestId: id, sequence: 0, status: 'unknown' …
+    183|   });
+    184|   editor.subscribe(() => { updates++; });
+       |          ^
+    185|   editor.importText('one', new TextEncoder().encode('原始内容')); editor.s…
+    186|   await editor.generate('精简'); expect(updates).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  20:45:57
+   Duration  501ms (environment 68%, import 12%, setup 9%, transform 8%, tests 2%, worker 1%)

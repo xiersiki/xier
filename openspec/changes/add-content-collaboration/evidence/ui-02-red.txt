@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-components.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-components.test.ts (2 tests | 1 failed) 15ms
+   × renders escaped diff with textual labels and disables stale acceptance while preserving copy 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-components.test.ts > renders escaped diff with textual labels and disables stale acceptance while preserving copy
+AssertionError: expected '建议' to contain '原文'
+
+Expected: "原文"
+Received: "建议"
+
+ ❯ tests/content-components.test.ts:20:26
+     18| it('renders escaped diff with textual labels and disables stale accept…
+     19|   const wrapper = mount(RewriteSuggestion, { props: { before: '原文', af…
+     20|   expect(wrapper.text()).toContain('原文'); expect(wrapper.text()).toCon…
+       |                          ^
+     21|   expect(wrapper.text()).toContain('删去'); expect(wrapper.text()).toCon…
+     22|   await wrapper.get('[data-action="accept"]').trigger('click'); expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:23:53
+   Duration  673ms (environment 58%, transform 20%, import 13%, setup 6%, tests 3%)

@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (18 tests | 1 failed) 10ms
+   × clears a connection warning when refresh confirms completion 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > clears a connection warning when refresh confirms completion
+AssertionError: expected '连接中断，任务可能仍在运行' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"连接中断，任务可能仍在运行"
+
+ ❯ tests/content-controller.test.ts:211:96
+    209|   editor.newDraft('draft', '原始内容'); editor.select(0, 4); await editor.…
+    210|   expect(editor.errorMessage).toContain('连接中断');
+    211|   await editor.refresh(); expect(editor.status).toBe('completed'); exp…
+       |                                                                                                ^
+    212| });
+    213|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  00:32:33
+   Duration  505ms (environment 76%, import 8%, transform 7%, setup 6%, tests 2%, worker 1%)

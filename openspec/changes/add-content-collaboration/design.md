@@ -2,7 +2,7 @@
 
 ## Context
 
-**结论：有条件采用 OpenCode 作为现成执行服务；一期主要建设 Vue 内容协作前端和组件库，AG-UI 只做交互协议适配。** 本文是设计提案，接入实验已执行，产品尚未实现。动机与范围见 [proposal](./proposal.md)，实验事实见 [接入验证](./evidence/integration.md)，快速阅读见 [飞书方案摘要](https://pcn11w88fq9h.feishu.cn/wiki/YNVXwcj0Vij6hhk2u57csEGXnMf)。
+**结论：有条件采用 OpenCode 作为现成执行服务；一期主要建设 Vue 内容协作前端和组件库，AG-UI 只做交互协议适配。** 本文保留一期整体设计。2026-10-26 固定响应编辑切片已实现并进入验证；真实接入、组件库消费、保存恢复与正式 Web host 待实施。当前接口以 [源码使用说明](../../../docs/content/README.md) 和 common/content/contracts.ts 为准。动机与范围见 [proposal](./proposal.md)，实验事实见 [接入验证](./evidence/integration.md)，快速阅读见 [飞书方案摘要](https://pcn11w88fq9h.feishu.cn/wiki/YNVXwcj0Vij6hhk2u57csEGXnMf)。
 
 2026-10-25 核验 Xier `07dd6be`：Electron 45、Vue 3.5、TypeScript、Pinia、Dexie，主入口 `renderer/index.ts` 使用 memory router；`preload.ts` 暴露 IPC；聊天存储在 `renderer/dataBase.ts` 按账号切库，现有 schema v6。Xier 没有内容编辑器，也没有依赖 xier-element。
 
@@ -62,7 +62,7 @@ flowchart TD
 
 ### 3. 状态分层，保存与恢复不依赖 Agent 历史
 
-核心契约建议：
+以下为原始整体设计草案；固定响应切片已将 transport RunStatus 与 UI GenerationStatusValue 分开，并移除同步接受不需要的 applying，当前接口以 common/content/contracts.ts 为准：
 
 ```ts
 type RunStatus = 'connecting' | 'running' | 'cancelling'

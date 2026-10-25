@@ -35,6 +35,11 @@ const router = createRouter({
           redirect: 'conversation'
         },
         {
+          name: 'content',
+          path: 'content',
+          component: () => import('./views/content.vue')
+        },
+        {
           name: 'conversation',
           path: 'conversation/:id?',
           component: () => import('./views/conversation.vue')

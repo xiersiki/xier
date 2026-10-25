@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (5 tests | 1 failed) 7ms
+   × keeps a proposal stale even if edits during generation are undone before completion 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > keeps a proposal stale even if edits during generation are undone before completion
+AssertionError: expected 'reviewable' to be 'stale' // Object.is equality
+
+Expected: "stale"
+Received: "reviewable"
+
+ ❯ tests/content-controller.test.ts:78:37
+     76|   complete({ requestId, sequence: 2, status: 'completed', result: { re…
+     77|   await generating;
+     78|   expect(editor.suggestion?.status).toBe('stale');
+       |                                     ^
+     79|   expect(editor.accept()).toBe(false);
+     80|   expect(editor.state.doc.toString()).toBe('原始内容');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:39:10
+   Duration  553ms (environment 74%, import 9%, setup 8%, transform 7%, tests 2%, worker 1%)

@@ -1,0 +1,41 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (3 tests | 1 failed) 6ms
+   × sends only the captured selection and presents a complete suggestion without changing the draft 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > sends only the captured selection and presents a complete suggestion without changing the draft
+AssertionError: expected [] to deeply equal [ ObjectContaining{…} ]
+
+- Expected
++ Received
+
+- [
+-   ObjectContaining {
+-     "requirement": "更精简",
+-     "selectedText": "冗长的文本",
+-   },
+- ]
++ []
+
+ ❯ tests/content-controller.test.ts:34:16
+     32|   editor.select(3, 8);
+     33|   await editor.generate('更精简');
+     34|   expect(sent).toEqual([expect.objectContaining({ selectedText: '冗长的文本…
+       |                ^
+     35|   expect(JSON.stringify(sent)).not.toContain('后文');
+     36|   expect(editor.suggestion?.result?.replacement).toBe('简洁文本');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  20:38:08
+   Duration  609ms (environment 76%, transform 8%, import 7%, setup 6%, tests 1%, worker 1%)

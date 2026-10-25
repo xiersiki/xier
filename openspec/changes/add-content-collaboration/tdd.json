@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "files": [
+    "common/content/contracts.ts",
+    "html/content-preview.html",
+    "package-lock.json",
+    "package.json",
+    "renderer/components/NavBar.vue",
+    "renderer/features/content/ContentWorkspace.vue",
+    "renderer/features/content/components/ContentEditor.vue",
+    "renderer/features/content/components/ContextSelection.vue",
+    "renderer/features/content/components/GenerationStatus.vue",
+    "renderer/features/content/components/RewriteSuggestion.vue",
+    "renderer/features/content/composables/useContentEditor.ts",
+    "renderer/features/content/controller.ts",
+    "renderer/features/content/preview.ts",
+    "renderer/index.ts",
+    "renderer/platform/content/browser-files.ts",
+    "renderer/platform/content/fixture-agent.ts",
+    "renderer/views/content.vue",
+    "tests/content-components.test.ts",
+    "tests/content-controller.test.ts",
+    "tests/content-fixture.test.ts",
+    "tests/content-workspace.test.ts"
+  ],
+  "seam": "已批准设计与本轮实施指令：用户可见编辑操作、AgentPort、FilePort、组件 props/emits；不测试内部函数互调",
+  "cycles": [
+    {
+      "scenario": "UTF-8 副本导入与 LF 规范化",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-01-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-01-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "超限/非法导入保持原文",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-02-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-02-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "冻结原选区并只发送选区",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-03-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-03-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "单次接受、去重及分步撤销",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-04-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-04-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "编辑再撤销也使建议过期",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-05-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-05-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "迟到结果属于原草稿",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-06-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-06-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "空选区、4k 与 surrogate 边界",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-07-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-07-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "非法/空/超限结果不进入正文",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-08-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-08-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "先订阅、乱序去重及拒绝",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-09-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-09-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "运行锁、取消 unknown 与查询确认",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-10-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-10-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "订阅通知、卸载退订与迟到隔离",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-11-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-11-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "输入 20k 限制与断线 unknown",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-12-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-12-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "状态恢复清除断线提示",
+      "red": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/editor-13-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-controller.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/editor-13-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "固定响应确认、幂等及终态查询",
+      "red": {
+        "command": "npm test -- tests/content-fixture.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/fixture-01-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-fixture.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/fixture-01-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "退订不取消、服务取消和 ID/并发约束",
+      "red": {
+        "command": "npm test -- tests/content-fixture.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/fixture-02-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-fixture.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/fixture-02-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "预设、自定义要求及禁用提交",
+      "red": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-01-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-01-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "转义 diff、stale 接受禁用和复制/拒绝事件",
+      "red": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-02-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-02-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "unknown 核实、取消中与重试事件",
+      "red": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-03-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-components.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-03-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    },
+    {
+      "scenario": "界面选择、固定生成、复制、接受和撤销闭环",
+      "red": {
+        "command": "npm test -- tests/content-workspace.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/workspace-01-red.txt",
+        "summary": "缺失行为的实际失败，详见日志"
+      },
+      "green": {
+        "command": "npm test -- tests/content-workspace.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/workspace-01-green.txt",
+        "summary": "对应实现通过；editor-12 失败尝试另保留"
+      },
+      "refactor": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "evidence": "evidence/check-final.txt",
+        "summary": "后续汇总重构与最终回归；没有逐场景单独重构日志，时间顺序说明见 editor-verification.md"
+      }
+    }
+  ]
+}

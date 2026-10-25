@@ -1,0 +1,30 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-components.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-components.test.ts (3 tests | 1 failed) 21ms
+   × announces uncertain status and emits refresh or cancel instead of claiming success 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-components.test.ts > announces uncertain status and emits refresh or cancel instead of claiming success
+Error: Unable to get [role="status"] within: <div>状态</div>
+ ❯ VueWrapper.get node_modules/@vue/test-utils/dist/vue-test-utils.cjs.js:7333:15
+ ❯ tests/content-components.test.ts:32:18
+     30| it('announces uncertain status and emits refresh or cancel instead of …
+     31|   const wrapper = mount(GenerationStatus, { props: { status: 'unknown'…
+     32|   expect(wrapper.get('[role="status"]').text()).toContain('待核实');
+       |                  ^
+     33|   await wrapper.get('[data-action="refresh"]').trigger('click'); expec…
+     34|   await wrapper.get('[data-action="cancel"]').trigger('click'); expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:24:31
+   Duration  638ms (environment 54%, transform 22%, import 15%, setup 4%, tests 4%)

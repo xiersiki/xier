@@ -1,0 +1,20 @@
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+
+ Test Files  18 passed | 1 skipped (19)
+      Tests  77 passed | 1 skipped (78)
+   Start at  00:29:17
+   Duration  9.00s (import 46%, tests 28%, environment 20%, transform 3%, setup 2%)

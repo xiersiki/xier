@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-workspace.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-workspace.test.ts (1 test | 1 failed) 9ms
+   × runs the user-facing sample, review, accept and undo loop and copies without applying 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-workspace.test.ts > runs the user-facing sample, review, accept and undo loop and copies without applying
+AssertionError: expected '内容工作台' to contain '固定示例'
+
+Expected: "固定示例"
+Received: "内容工作台"
+
+ ❯ tests/content-workspace.test.ts:10:26
+      8|   Object.defineProperty(navigator, 'clipboard', { configurable: true, …
+      9|   const wrapper = mount(ContentWorkspace, { attachTo: document.body, p…
+     10|   expect(wrapper.text()).toContain('固定示例');
+       |                          ^
+     11|   await wrapper.get('[data-action="sample"]').trigger('click');
+     12|   const original = wrapper.get('[role="textbox"]').text();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:26:07
+   Duration  572ms (environment 57%, transform 23%, import 13%, setup 5%, tests 2%)

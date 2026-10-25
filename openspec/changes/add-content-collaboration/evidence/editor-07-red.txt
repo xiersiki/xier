@@ -1,0 +1,40 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+ ❯ tests/content-controller.test.ts (9 tests | 3 failed) 9ms
+   × does not submit an invalid selection: 空选区 2ms
+   × does not submit an invalid selection: 选区超限 0ms
+   × does not submit an invalid selection: 截断 emoji 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-controller.test.ts > does not submit an invalid selection: 空选区
+ FAIL  tests/content-controller.test.ts > does not submit an invalid selection: 选区超限
+ FAIL  tests/content-controller.test.ts > does not submit an invalid selection: 截断 emoji
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/content-controller.test.ts:118:20
+    116|   editor.select(from, to);
+    117|   await editor.generate('精简');
+    118|   expect(requests).toBe(0);
+       |                    ^
+    119|   expect(editor.state.doc.toString()).toBe(text);
+    120| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 6 passed (9)
+   Start at  20:40:46
+   Duration  578ms (environment 72%, import 10%, setup 9%, transform 6%, tests 2%, worker 1%)

@@ -1,0 +1,12 @@
+
+> xier@1.0.0 test
+> vitest run tests/content-controller.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/phase1-content-design
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:38:31
+   Duration  529ms (environment 72%, import 11%, setup 8%, transform 7%, tests 1%, worker 1%)
