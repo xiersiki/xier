@@ -1,0 +1,34 @@
+UTC: 2026-10-25T17:04:19.714346+00:00
+Command: npm test -- tests/content-opencode-runtime.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-runtime.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-runtime.test.ts (1 test | 1 failed) 6ms
+   × launches an isolated, restricted CLI and cleans up the owned process and profile 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-runtime.test.ts > launches an isolated, restricted CLI and cleans up the owned process and profile
+Error: RUNTIME_NOT_IMPLEMENTED
+ ❯ startContentRuntime main/content/opencode-runtime.ts:4:109
+      2| export interface ContentRuntimeOptions { executable: string; profileRo…
+      3| export interface ContentRuntime { gateway: OpenCodeGateway; stop(): Pr…
+      4| export async function startContentRuntime(_options: ContentRuntimeOpti…
+       |                                                                                                             ^
+      5|
+ ❯ tests/content-opencode-runtime.test.ts:20:55
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  01:04:19
+   Duration  225ms (import 40%, setup 28%, transform 25%, tests 5%, worker 2%)
+

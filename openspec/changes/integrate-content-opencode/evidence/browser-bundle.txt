@@ -1,0 +1,8 @@
+UTC: 2026-10-25T17:25:03.954955+00:00
+Command: ./node_modules/.bin/esbuild renderer/platform/content/opencode-agent.ts --bundle --platform=browser --format=esm --minify --outfile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser.js --metafile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser-meta.json
+Exit: 0
+
+
+  ...Codex/2026-10-26/xier-opencode-integration/work/agent-browser.js  477.3kb
+
+⚡ Done in 60ms

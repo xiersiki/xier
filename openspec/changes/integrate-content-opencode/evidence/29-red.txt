@@ -1,0 +1,38 @@
+UTC: 2026-10-25T17:12:55.588875+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (21 tests | 1 failed) 492ms
+   × can verify an abort error without requiring a success completion timestamp 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > can verify an abort error without requiring a success completion timestamp
+AssertionError: expected 'unknown' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "unknown"
+
+ ❯ tests/content-opencode-gateway.test.ts:174:50
+    172|   const { server, gateway } = setup(); await gateway.start(request);
+    173|   server.latest = [{ info: { sessionID: 'ses-1', role: 'assistant', ti…
+    174|   expect((await gateway.cancel('req-1')).status).toBe('cancelled');
+       |                                                  ^
+    175| });
+    176|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 passed (21)
+   Start at  01:12:54
+   Duration  1.12s (tests 55%, setup 21%, import 12%, transform 11%, worker 1%)
+

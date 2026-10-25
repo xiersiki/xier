@@ -1,0 +1,25 @@
+UTC: 2026-10-25T17:27:09.072526+00:00
+Command: npm run check
+Exit: 0
+
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+
+ Test Files  22 passed | 1 skipped (23)
+      Tests  120 passed | 1 skipped (121)
+   Start at  01:27:01
+   Duration  7.69s (tests 51%, environment 31%, import 13%, setup 4%, transform 1%)
+

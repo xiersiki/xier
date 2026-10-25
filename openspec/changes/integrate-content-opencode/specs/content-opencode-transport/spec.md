@@ -37,14 +37,14 @@ get SHALL 仅查询原 session 最新一条消息或已知消息，cancel SHALL 
 
 #### Scenario: Confirmed abort and completion race
 - **WHEN** abort 已确认且 session 不活跃，或核实发现完整结果
-- **THEN** 分别返回 cancelled 或 completed；迟到完成、错误与旧查询不得覆盖已提交终态
+- **THEN** 只有同 session 中止记录与非活动状态同时核实时返回 cancelled，完整结果则 completed；迟到完成、错误与旧查询不得覆盖已提交终态
 
 ### Requirement: AG-UI boundary
 HTTP handler SHALL 将请求映射到 RUN_STARTED、STATE_SNAPSHOT 与 RUN_FINISHED/RUN_ERROR，适配器 SHALL 实现未改变的 AgentPort v1。completed MUST 同时具有有效 STATE_SNAPSHOT 和对应 RUN_FINISHED，EOF 不代表完成。每个本地可观察变化 SHALL 增加 sequence，重复/旧序号不得覆盖；本地断线序号与服务序号独立。
 
 #### Scenario: Disconnect and explicit recovery
 - **WHEN** 流提前结束、传输拒绝或解析失败
-- **THEN** AgentPort 返回/通知 unknown；get 只调用查询路由，恢复原结果
+- **THEN** AgentPort 返回/通知 unknown；get 只调用查询路由，恢复原结果；恢复 running 且原流结束后继续只读观察，直到终态或再次 unknown
 
 #### Scenario: Cancellation and observation
 - **WHEN** 客户端取消或退订

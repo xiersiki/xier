@@ -1,0 +1,159 @@
+UTC: 2026-10-25T17:00:23.591238+00:00
+Command: npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+stderr | tests/content-opencode-http.test.ts > uses real AG-UI HTTP to acknowledge, observe and query a structured suggestion
+Agent execution failed: Error: HTTP 400: {"code":"INVALID_REQUEST"}
+    at file:///Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/@ag-ui/client/dist/index.mjs:1:29322
+    at doInnerSub (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:22:31)
+    at outerNext (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:17:70)
+    at OperatorSubscriber._this._next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/OperatorSubscriber.js:33:21)
+    at OperatorSubscriber.Subscriber.next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/Subscriber.js:51:18)
+    at /Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/observable/innerFrom.js:120:28
+    at processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  status: 400,
+  payload: { code: 'INVALID_REQUEST' }
+}
+
+stderr | tests/content-opencode-http.test.ts > queries the same run after a lost upstream connection without repeating generation
+Agent execution failed: Error: HTTP 400: {"code":"INVALID_REQUEST"}
+    at file:///Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/@ag-ui/client/dist/index.mjs:1:29322
+    at doInnerSub (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:22:31)
+    at outerNext (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:17:70)
+    at OperatorSubscriber._this._next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/OperatorSubscriber.js:33:21)
+    at OperatorSubscriber.Subscriber.next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/Subscriber.js:51:18)
+    at /Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/observable/innerFrom.js:120:28
+    at processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  status: 400,
+  payload: { code: 'INVALID_REQUEST' }
+}
+
+stderr | tests/content-opencode-http.test.ts > unsubscribe only detaches while cancel reaches OpenCode and returns its confirmed state
+Agent execution failed: Error: HTTP 400: {"code":"INVALID_REQUEST"}
+    at file:///Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/@ag-ui/client/dist/index.mjs:1:29322
+    at doInnerSub (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:22:31)
+    at outerNext (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:17:70)
+    at OperatorSubscriber._this._next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/OperatorSubscriber.js:33:21)
+    at OperatorSubscriber.Subscriber.next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/Subscriber.js:51:18)
+    at /Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/observable/innerFrom.js:120:28
+    at processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  status: 400,
+  payload: { code: 'INVALID_REQUEST' }
+}
+
+ ❯ tests/content-opencode-http.test.ts (4 tests | 4 failed) 36ms
+   × uses real AG-UI HTTP to acknowledge, observe and query a structured suggestion 21ms
+   × queries the same run after a lost upstream connection without repeating generation 8ms
+   × unsubscribe only detaches while cancel reaches OpenCode and returns its confirmed state 4ms
+   × requires host authorization on every route and rejects extra generation context 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > uses real AG-UI HTTP to acknowledge, observe and query a structured suggestion
+AssertionError: expected 'unknown' to be 'running' // Object.is equality
+
+Expected: "running"
+Received: "unknown"
+
+ ❯ tests/content-opencode-http.test.ts:24:46
+     22|   const { port, upstream } = await setup(); const seen: RunSnapshot[] …
+     23|   port.observe('req-1', s => seen.push(s));
+     24|   expect((await port.start(request)).status).toBe('running');
+       |                                              ^
+     25|   upstream.prompt.resolve(Response.json(assistant()));
+     26|   await expect.poll(() => seen.at(-1)?.status).toBe('completed');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/content-opencode-http.test.ts > queries the same run after a lost upstream connection without repeating generation
+AssertionError: expected { requestId: 'req-1', …(2) } to match object { status: 'completed', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "result": {
+-     "replacement": "测试文字。",
+-   },
+-   "status": "completed",
++   "status": "unknown",
+  }
+
+ ❯ tests/content-opencode-http.test.ts:36:21
+     34|   upstream.latest = [assistant()];
+     35|   const recovered = await port.get('req-1');
+     36|   expect(recovered).toMatchObject({ status: 'completed', result: { rep…
+       |                     ^
+     37|   expect(recovered.sequence).toBeGreaterThan(seen.find(s => s.status =…
+     38|   expect(upstream.calls.filter(c => c.method === 'POST' && c.path.incl…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/content-opencode-http.test.ts > unsubscribe only detaches while cancel reaches OpenCode and returns its confirmed state
+AssertionError: expected 'unknown' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "unknown"
+
+ ❯ tests/content-opencode-http.test.ts:45:47
+     43|   off(); const before = seen.length;
+     44|   expect(upstream.calls.some(c => c.path.includes('/abort'))).toBe(fal…
+     45|   expect((await port.cancel('req-1')).status).toBe('cancelled');
+       |                                               ^
+     46|   expect(upstream.calls.filter(c => c.path === '/session/ses-1/abort')…
+     47|   expect(seen).toHaveLength(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/content-opencode-http.test.ts > requires host authorization on every route and rejects extra generation context
+AssertionError: expected 400 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 400
+
+ ❯ tests/content-opencode-http.test.ts:54:29
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: lost upstream
+ ❯ tests/content-opencode-http.test.ts:32:26
+     30|   const { port, upstream } = await setup(); const seen: RunSnapshot[] …
+     31|   port.observe('req-1', s => seen.push(s)); await port.start(request);
+     32|   upstream.prompt.reject(new Error('lost upstream'));
+       |                          ^
+     33|   await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+     34|   upstream.latest = [assistant()];
+ ❯ processTicksAndRejections node:internal/process/task_queues:103:5
+ ❯ node_modules/vitest/dist/chunks/run.BPv-BBRv.js:2801:20
+
+This error originated in "tests/content-opencode-http.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The last test to run before this error was "queries the same run after a lost upstream connection without repeating generation". This means either:
+- the error was thrown while Vitest was running this test, or
+- the error was thrown after the test completed, and this was the most recent test at that point.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 1 passed (5)
+     Errors  1 error
+   Start at  01:00:23
+   Duration  309ms (import 52%, tests 23%, setup 12%, transform 11%, worker 1%)
+

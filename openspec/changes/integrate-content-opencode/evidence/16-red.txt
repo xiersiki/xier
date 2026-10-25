@@ -1,0 +1,47 @@
+UTC: 2026-10-25T16:59:16.664355+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-http.test.ts (2 tests | 1 failed) 135ms
+   × queries the same run after a lost upstream connection without repeating generation 62ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > queries the same run after a lost upstream connection without repeating generation
+AssertionError: expected { requestId: 'req-1', …(2) } to match object { status: 'completed', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "result": {
+-     "replacement": "测试文字。",
+-   },
+-   "status": "completed",
++   "status": "unknown",
+  }
+
+ ❯ tests/content-opencode-http.test.ts:36:21
+     34|   upstream.latest = [assistant()];
+     35|   const recovered = await port.get('req-1');
+     36|   expect(recovered).toMatchObject({ status: 'completed', result: { rep…
+       |                     ^
+     37|   expect(recovered.sequence).toBeGreaterThan(seen.find(s => s.status =…
+     38|   expect(upstream.calls.filter(c => c.method === 'POST' && c.path.incl…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:59:16
+   Duration  426ms (import 46%, tests 38%, transform 8%, setup 8%, worker 1%)
+

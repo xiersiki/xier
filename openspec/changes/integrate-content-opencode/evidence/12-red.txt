@@ -1,0 +1,46 @@
+UTC: 2026-10-25T16:56:00.632236+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (17 tests | 1 failed) 366ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (17)
+     × sanitizes definite HTTP and model failures, including setup failures 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > sanitizes definite HTTP and model failures, including setup failures
+Error: GET http://private.invalid/global/health?directory=%2Fisolated → 401
+ ❯ wrapClientError node_modules/@opencode-ai/sdk/dist/error-interceptor.js:26:16
+ ❯ request node_modules/@opencode-ai/sdk/dist/v2/gen/client/client.gen.js:169:37
+ ❯ OpenCodeGateway.initialize services/content-gateway/gateway.ts:31:21
+     29|   private async initialize(run: Run): Promise<RunSnapshot> {
+     30|     const request = run.request;
+     31|     const health = (await this.client.global.health({ throwOnError: tr…
+       |                     ^
+     32|     if (health.version !== '1.19.4') {
+     33|       run.snapshot = { requestId: request.requestId, sequence: 2, stat…
+ ❯ tests/content-opencode-gateway.test.ts:134:12
+
+{
+  body: { key: 'private-key' },
+  status: 401,
+  name: 'Caused by',
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { body: { key: 'private-key' }, status: 401 }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  00:56:00
+   Duration  572ms (tests 76%, import 10%, setup 7%, transform 6%, worker 1%)
+

@@ -1,0 +1,45 @@
+UTC: 2026-10-25T17:23:52.048335+00:00
+Command: npm run package
+Exit: 0
+
+
+> xier@1.0.0 package
+> electron-forge package
+
+❯ Checking your system
+❯ Checking package manager version
+✔ Found npm@10.9.8
+✔ Checking your system
+[?25h❯ Preparing to package application
+✔ Preparing to package application
+❯ Running packaging hooks
+❯ Running generateAssets hook
+✔ Running generateAssets hook
+❯ Running prePackage hook
+❯ [plugin-vite] Building production Vite bundles
+❯ Building main and preload targets...
+❯ Building renderer targets...
+❯ Building main/index.ts target
+❯ Building preload.ts target
+✔ Building preload.ts target
+✔ Building main/index.ts target
+✔ Building main and preload targets...
+✔ Built target main_window
+✔ Building renderer targets...
+✔ [plugin-vite] Building production Vite bundles
+✔ Running prePackage hook
+✔ Running packaging hooks
+❯ Packaging application
+› Determining targets...
+❯ Packaging for arm64 on darwin
+❯ Copying files
+❯ Preparing native dependencies
+❯ Finalizing package
+✔ Copying files
+✔ Preparing native dependencies
+✔ Finalizing package
+✔ Packaging for arm64 on darwin
+✔ Packaging application
+❯ Running postPackage hook
+✔ Running postPackage hook
+[?25h

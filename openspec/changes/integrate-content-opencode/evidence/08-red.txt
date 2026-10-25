@@ -1,0 +1,39 @@
+UTC: 2026-10-25T16:52:33.523496+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (13 tests | 1 failed) 233ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (13)
+     × confirms service abort and ignores completion arriving after confirmed cancellation 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > confirms service abort and ignores completion arriving after confirmed cancellation
+AssertionError: expected 'unknown' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "unknown"
+
+ ❯ tests/content-opencode-gateway.test.ts:92:28
+     90|     const { server, gateway } = setup(); await gateway.start(request);
+     91|     const stopped = await gateway.cancel('req-1');
+     92|     expect(stopped.status).toBe('cancelled');
+       |                            ^
+     93|     expect(server.calls.some(c => c.path === '/session/ses-1/abort')).…
+     94|     server.prompt.resolve(Response.json(assistant()));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  00:52:33
+   Duration  431ms (tests 66%, import 12%, transform 12%, setup 9%, worker 1%)
+

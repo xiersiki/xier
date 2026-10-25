@@ -1,0 +1,42 @@
+UTC: 2026-10-25T16:56:58.170378+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (19 tests | 1 failed) 1373ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (19)
+     × does not complete a run using a message belonging to another session 1013ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > does not complete a run using a message belonging to another session
+AssertionError: expected 'completed' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "completed"
+
+ ❯ tests/content-opencode-gateway.test.ts:156:50
+    154|     server.prompt.resolve(Response.json({ ...assistant(), info: { ...a…
+    155|     const seen: RunSnapshot[] = []; gateway.observe('req-1', s => seen…
+    156|     await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+       |                                                  ^
+    157|   });
+    158|
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ tests/content-opencode-gateway.test.ts:156:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 passed (19)
+   Start at  00:56:56
+   Duration  1.58s (tests 92%, import 3%, transform 2%, setup 2%)
+

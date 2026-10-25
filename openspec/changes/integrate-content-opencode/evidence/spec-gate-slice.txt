@@ -1,0 +1,9 @@
+UTC: 2026-10-25T17:31:03.724563+00:00
+Command: npm run spec:gate -- --base origin/codex/phase1-content-design
+Exit: 1
+
+
+> xier@1.0.0 spec:gate
+> node scripts/check-sdd.mjs --base origin/codex/phase1-content-design
+
+SDD/TDD gate failed: Incomplete openspec/changes/integrate-content-opencode/tasks.md

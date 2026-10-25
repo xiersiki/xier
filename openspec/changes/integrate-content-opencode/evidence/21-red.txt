@@ -1,0 +1,41 @@
+UTC: 2026-10-25T17:02:24.438964+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (4 tests | 1 failed) 127ms
+   × does not create another HTTP run for repeated IDs and rejects conflicting input locally 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > does not create another HTTP run for repeated IDs and rejects conflicting input locally
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/content-opencode-protocol.test.ts:45:17
+     43|   const port = new OpenCodeAgentPort({ url: 'http://gateway.invalid/ru…
+     44|   await Promise.all([port.start(request), port.start({ ...request })]);
+     45|   expect(posts).toBe(1);
+       |                 ^
+     46|   await expect(port.start({ ...request, selectedText: 'other' })).reje…
+     47| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  01:02:23
+   Duration  435ms (import 48%, tests 35%, setup 9%, transform 7%, worker 1%)
+

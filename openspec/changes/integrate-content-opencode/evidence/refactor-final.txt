@@ -1,0 +1,29 @@
+UTC: 2026-10-25T17:15:48.062249+00:00
+Command: npm run check
+Exit: 0
+
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+
+ Test Files  22 passed | 1 skipped (23)
+      Tests  115 passed | 1 skipped (116)
+   Start at  01:15:36
+   Duration  11.55s (environment 45%, import 28%, tests 19%, transform 6%, setup 2%)
+
+Environment  happy-dom was created 23 times · 23.62s total, 45% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

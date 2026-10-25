@@ -1,0 +1,48 @@
+UTC: 2026-10-25T16:50:03.716261+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (9 tests | 1 failed) 504ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (9)
+     × rejects an incompatible service before creating a session 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > rejects an incompatible service before creating a session
+AssertionError: expected { requestId: 'req-1', …(2) } to match object { status: 'failed', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "INCOMPATIBLE_SERVICE",
+-   },
+-   "status": "failed",
++   "status": "running",
+  }
+
+ ❯ tests/content-opencode-gateway.test.ts:49:42
+     47|   it('rejects an incompatible service before creating a session', asyn…
+     48|     const { server, gateway } = setup(); server.version = '9.9.9';
+     49|     expect(await gateway.start(request)).toMatchObject({ status: 'fail…
+       |                                          ^
+     50|     expect(server.calls.some(c => c.method === 'POST')).toBe(false);
+     51|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  00:50:02
+   Duration  705ms (tests 83%, import 7%, setup 5%, transform 4%)
+
