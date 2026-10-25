@@ -17,6 +17,8 @@ Issue 认领评论记录会话、分支、工作区、范围和依赖。由协�
 
 桌面验收为每个任务新建临时目录，以 `--user-data-dir=<绝对临时路径>` 启动已解包的 macOS App；启动命令和配置、日志、窗口、退出检查见[独立 profile 验收](releasing.md#macos-独立-profile-验收)。保持 `HOME` 原值，不复制个人配置或聊天数据，默认只验收访客和本地设置，不调用模型或云端。Windows/Linux 的实际 GUI 验收仍需单独记录。
 
+当前源码使用 Electron 45，macOS 最低要求为 13；本机开发工具仍使用 `.nvmrc` 的 Node 22，应用 Node 类型对齐 Electron 的 24.x。此要求适用于后续从当前源码构建的包；已发布的 v1.0.0 测试包仍以其原始构建与验收记录为准。
+
 ## 规格与测试先行
 
 需求和缺陷使用 [OpenSpec SDD/TDD](spec-driven-development.md)：Issue → proposal/specs/design/tasks → 一个场景的 RED/GREEN/REFACTOR → PR/独立评审 → required → 合并。变更资料与代码放在同一 PR；可先开 Draft，资料完成前检查失败是预期状态。飞书记录背景与决策，仓库 `openspec/` 保存版本化的契约和证据。

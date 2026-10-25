@@ -38,6 +38,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y rpm
       - run: npm ci
       - run: npm run make -- --arch=${{ matrix.arch }}
+      - name: Verify packaged startup assets
+        run: node --test tests/packaged/loading-asset.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: desktop-${{ matrix.platform }}-${{ matrix.arch }}

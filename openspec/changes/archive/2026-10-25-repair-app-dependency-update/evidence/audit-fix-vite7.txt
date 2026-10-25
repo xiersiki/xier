@@ -1,0 +1,175 @@
+Time: 2026-10-25T19:22:34.650048+08:00
+Command: npm audit fix --package-lock-only
+
+
+up to date, audited 899 packages in 12s
+
+170 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+extract-zip  *
+Severity: high
+extract-zip unvalidated symlink path traversal - https://github.com/advisories/GHSA-jmr9-qjv8-65gv
+extract-zip allows arbitrary file writes through symlink archive entries - https://github.com/advisories/GHSA-7pqw-9j4j-h8q3
+fix available via `npm audit fix --force`
+Will install @electron-forge/cli@8.0.1, which is a breaking change
+node_modules/extract-zip
+  @electron/packager  18.0.0 - 20.0.0
+  Depends on vulnerable versions of extract-zip
+  node_modules/@electron/packager
+    @electron-forge/core  <=8.0.0-alpha.10
+    Depends on vulnerable versions of @electron-forge/core-utils
+    Depends on vulnerable versions of @electron-forge/maker-base
+    Depends on vulnerable versions of @electron-forge/plugin-base
+    Depends on vulnerable versions of @electron-forge/publisher-base
+    Depends on vulnerable versions of @electron-forge/shared-types
+    Depends on vulnerable versions of @electron-forge/template-base
+    Depends on vulnerable versions of @electron-forge/template-vite
+    Depends on vulnerable versions of @electron-forge/template-vite-typescript
+    Depends on vulnerable versions of @electron-forge/template-webpack
+    Depends on vulnerable versions of @electron-forge/template-webpack-typescript
+    Depends on vulnerable versions of @electron/packager
+    Depends on vulnerable versions of @electron/rebuild
+    node_modules/@electron-forge/core
+      @electron-forge/cli  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/core
+      Depends on vulnerable versions of @electron-forge/core-utils
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @inquirer/prompts
+      node_modules/@electron-forge/cli
+    @electron-forge/shared-types  <=8.0.0-alpha.10
+    Depends on vulnerable versions of @electron/packager
+    Depends on vulnerable versions of @electron/rebuild
+    node_modules/@electron-forge/shared-types
+      @electron-forge/core-utils  <=8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @electron/rebuild
+      node_modules/@electron-forge/core-utils
+        @electron-forge/template-base  7.0.0 - 8.0.0-alpha.10
+        Depends on vulnerable versions of @electron-forge/core-utils
+        Depends on vulnerable versions of @electron-forge/shared-types
+        node_modules/@electron-forge/template-base
+      @electron-forge/maker-base  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/maker-base
+      @electron-forge/maker-deb  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/maker-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/maker-deb
+      @electron-forge/maker-rpm  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/maker-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/maker-rpm
+      @electron-forge/maker-squirrel  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/maker-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/maker-squirrel
+      @electron-forge/maker-zip  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/maker-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/maker-zip
+      @electron-forge/plugin-auto-unpack-natives  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/plugin-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/plugin-auto-unpack-natives
+      @electron-forge/plugin-base  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/plugin-base
+      @electron-forge/plugin-fuses  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/plugin-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/plugin-fuses
+      @electron-forge/plugin-vite  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/plugin-base
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/plugin-vite
+      @electron-forge/publisher-base  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      node_modules/@electron-forge/publisher-base
+      @electron-forge/template-vite  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @electron-forge/template-base
+      node_modules/@electron-forge/template-vite
+      @electron-forge/template-vite-typescript  >=7.0.0
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @electron-forge/template-base
+      node_modules/@electron-forge/template-vite-typescript
+      @electron-forge/template-webpack  7.0.0 - 8.0.0-alpha.10
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @electron-forge/template-base
+      node_modules/@electron-forge/template-webpack
+      @electron-forge/template-webpack-typescript  >=7.0.0
+      Depends on vulnerable versions of @electron-forge/shared-types
+      Depends on vulnerable versions of @electron-forge/template-base
+      node_modules/@electron-forge/template-webpack-typescript
+
+postcss-selector-parser  <7.1.6
+Severity: moderate
+PostCSS: Quadratic complexity in flat selector parsing allows CPU exhaustion - https://github.com/advisories/GHSA-rj75-hqrm-r3gf
+fix available via `npm audit fix --force`
+Will install @tailwindcss/typography@0.5.4, which is a breaking change
+node_modules/postcss-selector-parser
+  @tailwindcss/typography  <=0.0.0-insiders.fda8ce5 || >=0.5.5
+  Depends on vulnerable versions of postcss-selector-parser
+  node_modules/@tailwindcss/typography
+
+tar  <=7.5.20
+Severity: critical
+node-tar Vulnerable to Arbitrary File Creation/Overwrite via Hardlink Path Traversal - https://github.com/advisories/GHSA-34x7-hfp2-rc4v
+node-tar is Vulnerable to Arbitrary File Overwrite and Symlink Poisoning via Insufficient Path Sanitization - https://github.com/advisories/GHSA-8qq5-rm4j-mr97
+Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction - https://github.com/advisories/GHSA-83g3-92jg-28cx
+tar has Hardlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-qffp-2rhf-9h96
+node-tar Symlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-9ppj-qmqm-q256
+Race Condition in node-tar Path Reservations via Unicode Ligature Collisions on macOS APFS - https://github.com/advisories/GHSA-r6q2-hw4h-h46w
+node-tar applies PAX size override to intermediary GNU long-name/long-link headers, causing tar parser interpretation differential (file smuggling) - https://github.com/advisories/GHSA-vmf3-w455-68vh
+node-tar: Process crash via PAX numeric path type confusion - https://github.com/advisories/GHSA-w8wr-v893-vjvp
+node-tar: Decompression/parse DoS via unlimited input - https://github.com/advisories/GHSA-23hp-3jrh-7fpw
+node-tar: Negative tar entry size causes infinite loop in archive replace - https://github.com/advisories/GHSA-8x88-c5mf-7j5w
+node-tar: Uncaught Exception DoS via NUL byte in PAX path/linkpath records - https://github.com/advisories/GHSA-gvwx-54wh-qm9j
+node-tar: Uncontrolled recursion in mapHas/filesFilter allows uncatchable stack-overflow DoS via crafted long-path tar with member selection - https://github.com/advisories/GHSA-r292-9mhp-454m
+fix available via `npm audit fix --force`
+Will install @electron-forge/cli@8.0.1, which is a breaking change
+node_modules/tar
+  @electron/node-gyp  *
+  Depends on vulnerable versions of make-fetch-happen
+  Depends on vulnerable versions of tar
+  node_modules/@electron/node-gyp
+    @electron/rebuild  3.2.10 - 4.0.2
+    Depends on vulnerable versions of @electron/node-gyp
+    Depends on vulnerable versions of tar
+    node_modules/@electron/rebuild
+  cacache  14.0.0 - 18.0.4
+  Depends on vulnerable versions of tar
+  node_modules/cacache
+    make-fetch-happen  7.1.1 - 14.0.0
+    Depends on vulnerable versions of cacache
+    node_modules/make-fetch-happen
+
+tmp  <=0.2.5
+Severity: high
+tmp allows arbitrary temporary file / directory write via symbolic link `dir` parameter - https://github.com/advisories/GHSA-52f5-9888-hmc6
+tmp has Path Traversal via unsanitized prefix/postfix that enables directory escape - https://github.com/advisories/GHSA-ph9p-34f9-6g65
+fix available via `npm audit fix --force`
+Will install @electron-forge/cli@8.0.1, which is a breaking change
+node_modules/external-editor/node_modules/tmp
+  external-editor  >=1.1.1
+  Depends on vulnerable versions of tmp
+  node_modules/external-editor
+    @inquirer/editor  <=4.2.15
+    Depends on vulnerable versions of external-editor
+    node_modules/@electron-forge/cli/node_modules/@inquirer/editor
+      @inquirer/prompts  <=6.0.1
+      Depends on vulnerable versions of @inquirer/editor
+      node_modules/@electron-forge/cli/node_modules/@inquirer/prompts
+
+32 vulnerabilities (3 low, 2 moderate, 26 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Exit code: 1

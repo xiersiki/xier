@@ -1,0 +1,10 @@
+19:44:23.052 › Log service initialized successfully
+19:44:23.073 › Configuration loaded successfully from: /private/tmp/xier-pr-maintenance/profile-pr17/config.json
+19:44:23.084 › Configuration service initialized
+19:44:23.098 › Shortcut service initialized
+19:44:23.113 › Theme service initialized
+19:44:23.116 › Window service initialized
+19:44:23.119 › Tray service initialized
+19:44:23.122 › Menu service initialized
+19:44:23.201 › Application started
+19:44:23.423 › Window created: main, size: 1024x800

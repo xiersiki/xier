@@ -1,0 +1,26 @@
+Time: 2026-10-25T19:29:01.300835+08:00
+Command: npm run check
+
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/maintain-pr17
+
+
+ Test Files  14 passed | 1 skipped (15)
+      Tests  54 passed | 1 skipped (55)
+   Start at  19:29:07
+   Duration  8.57s (tests 50%, environment 34%, import 12%, setup 3%, transform 1%)
+
+
+Exit code: 0

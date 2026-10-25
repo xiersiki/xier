@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "mode": "verification-only",
+  "files": [
+    "package.json",
+    "package-lock.json"
+  ],
+  "reason": "依赖兼容维护；加载资源行为修复独立 SDD/TDD，不以此豁免业务文件。",
+  "checks": [
+    {
+      "command": "npm ci",
+      "exitCode": 0,
+      "evidence": "evidence/install-accepted.txt",
+      "summary": "最终 lockfile 干净安装成功"
+    },
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "evidence": "evidence/check-accepted.txt",
+      "summary": "最终类型与离线回归54通过1跳过"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "evidence": "evidence/build-vite7.txt",
+      "summary": "Vite7 renderer 构建成功"
+    },
+    {
+      "command": "npm run make",
+      "exitCode": 0,
+      "evidence": "evidence/make-vite7.txt",
+      "summary": "兼容依赖组合桌面打包成功；加载资源修复后再次打包见独立 change"
+    },
+    {
+      "command": "node /tmp/xier-pr-maintenance/cdp.mjs /tmp/xier-pr-maintenance/desktop-smoke.js /tmp/xier-pr-maintenance/pr17-final-smoke.png",
+      "exitCode": 0,
+      "evidence": "evidence/desktop-smoke-final.txt",
+      "summary": "隔离 profile 的路由、滚动、主题 IPC 成功；自动滚动旧缺陷另见Issue22"
+    }
+  ]
+}

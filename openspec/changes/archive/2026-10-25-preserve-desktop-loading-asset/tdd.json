@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "files": [
+    "vite.main.config.ts",
+    "tests/packaged/loading-asset.mjs",
+    ".github/workflows/desktop.yml",
+    "openspec/specs/desktop-startup/spec.md"
+  ],
+  "seam": "已授权的桌面 make/启动验收范围：读取实际打包 app.asar，通过公开 extractFile API 验证启动请求资源存在且内容一致；不 mock 内部配置。",
+  "cycles": [
+    {
+      "scenario": "打包后的加载页存在且与维护的源页面相同",
+      "red": {
+        "command": "node --test tests/packaged/loading-asset.mjs",
+        "exitCode": 1,
+        "evidence": "evidence/01-red.txt",
+        "summary": "实际 app.asar 缺少 .vite/build/loading.html"
+      },
+      "green": {
+        "command": "node --test tests/packaged/loading-asset.mjs",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "恢复复制并 make 后，同一产物测试通过"
+      },
+      "refactor": {
+        "command": "node --test tests/packaged/loading-asset.mjs",
+        "exitCode": 0,
+        "evidence": "evidence/01-refactor.txt",
+        "summary": "仅一项显式配置，无需额外重构；复核真实归档测试再次通过"
+      }
+    }
+  ]
+}

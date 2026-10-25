@@ -1,0 +1,78 @@
+Time: 2026-10-25T19:12:18.259117+08:00
+Command: npm run make
+
+
+> xier@1.0.0 make
+> electron-forge make
+
+❯ Checking your system
+❯ Checking package manager version
+✔ Found npm@10.9.8
+✔ Checking your system
+❯ Loading configuration
+✔ Loading configuration
+❯ Resolving make targets
+› Making for the following targets: 
+✔ Resolving make targets
+❯ Running package command
+❯ Preparing to package application
+✔ Preparing to package application
+❯ Running packaging hooks
+❯ Running generateAssets hook
+✔ Running generateAssets hook
+❯ Running prePackage hook
+❯ [plugin-vite] Building production Vite bundles
+❯ Building main and preload targets...
+❯ Building renderer targets...
+❯ Building main/index.ts
+❯ Building preload.ts
+❯ Building main_window
+✔ Built target preload.ts
+✔ Built target main/index.ts
+✔ Building main and preload targets...
+✔ Built target main_window
+✔ Building renderer targets...
+✔ [plugin-vite] Building production Vite bundles
+✔ Running prePackage hook
+✔ Running packaging hooks
+❯ Packaging application
+› Determining targets...
+❯ Packaging for arm64 on darwin
+❯ Copying files
+
+
+✔ Copying files
+❯ Preparing native dependencies
+✖ Preparing native dependencies [FAILED: The "main" entry point in "package.json" is ".vite/build/index.js", but the Vite plugin now emits
+the main process bundle as ".vite/build/index.cjs". Update "main" in "package.json" to
+".vite/build/index.cjs", and any preload script paths in your main process code to end in ".cjs".]
+✖ Packaging for arm64 on darwin [FAILED: The "main" entry point in "package.json" is ".vite/build/index.js", but the Vite plugin now emits
+the main process bundle as ".vite/build/index.cjs". Update "main" in "package.json" to
+".vite/build/index.cjs", and any preload script paths in your main process code to end in ".cjs".]
+✖ Packaging application [FAILED: The "main" entry point in "package.json" is ".vite/build/index.js", but the Vite plugin now emits
+the main process bundle as ".vite/build/index.cjs". Update "main" in "package.json" to
+".vite/build/index.cjs", and any preload script paths in your main process code to end in ".cjs".]
+✖ Running package command [FAILED: The "main" entry point in "package.json" is ".vite/build/index.js", but the Vite plugin now emits
+the main process bundle as ".vite/build/index.cjs". Update "main" in "package.json" to
+".vite/build/index.cjs", and any preload script paths in your main process code to end in ".cjs".]
+
+An unhandled rejection has occurred inside Forge:
+Error: The "main" entry point in "package.json" is ".vite/build/index.js", but the Vite plugin now emits
+the main process bundle as ".vite/build/index.cjs". Update "main" in "package.json" to
+".vite/build/index.cjs", and any preload script paths in your main process code to end in ".cjs".
+at assertMainEntryExists (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron-forge/plugin-vite/dist/VitePlugin.js:34:15)
+    at async packageAfterCopy (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron-forge/plugin-vite/dist/VitePlugin.js:276:9)
+    at async PluginInterface.triggerHook (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron-forge/core/dist/util/plugin-interface.js:65:25)
+    at async runHook (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron-forge/core/dist/util/hook.js:14:5)
+    at async async.buildPath.buildPath (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron-forge/core/dist/api/package.js:125:25)
+    at async file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/hooks.js:13:17
+    at async Promise.all (index 0)
+    at async runHooks (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/hooks.js:6:5)
+    at async MacApp.copyTemplate (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/platform.js:202:9)
+    at async MacApp.buildApp (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/platform.js:146:9)
+    at async MacApp.initialize (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/platform.js:141:13)
+    at async MacApp.create (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/mac.js:582:9)
+    at async Promise.all (index 0)
+    at async packager (file:///Users/gongchenyu/code/xier-worktrees/maintain-pr17/node_modules/@electron/packager/dist/packager.js:244:22)
+
+Exit code: 1

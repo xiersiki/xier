@@ -1,0 +1,16 @@
+19:36:29.486 › Log service initialized successfully
+19:36:29.489 › Configuration file not found, using default configuration
+19:36:29.492 › Configuration service initialized
+19:36:29.494 › Shortcut service initialized
+19:36:29.498 › Theme service initialized
+19:36:29.501 › Window service initialized
+19:36:29.505 › Tray service initialized
+19:36:29.507 › Menu service initialized
+
+DevTools listening on ws://127.0.0.1:9338/devtools/browser/f37c3847-afba-4053-855f-98d8bf03a512
+19:36:29.577 › Application started
+19:36:29.637 › Window created: main, size: 1024x800
+19:36:30.925 › Configuration saved successfully to: /private/tmp/xier-pr-maintenance/profile-baseline-ui/config.json
+19:41:41.551 › Window closed: main
+19:41:41.554 › All shortcuts unregistered
+19:41:41.561 › Application is quitting
