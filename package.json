@@ -8,11 +8,14 @@
     "start": "dotenv -e .env electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish": "node scripts/request-release.mjs",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit -p tsconfig.app.json",
     "check": "npm run typecheck && npm test",
-    "build": "vite build --config vite.renderer.config.ts"
+    "build": "vite build --config vite.renderer.config.ts",
+    "site:dev": "npm --prefix site run dev --",
+    "site:build": "npm --prefix site run build",
+    "site:preview": "npm --prefix site run preview --"
   },
   "keywords": [],
   "author": {

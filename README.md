@@ -2,6 +2,10 @@
 
 Electron + Vue 3 桌面对话助手，支持 OpenAI 兼容模型、流式回复、本地历史记录和 Supabase 账号同步。
 
+[项目网站](https://xiersiki.github.io/xier/) · [下载与版本](https://github.com/xiersiki/xier/releases) · [参与开发](CONTRIBUTING.md) · [Agent 入口](AGENTS.md)
+
+项目处于开发阶段。安装包的签名、平台和验收状态以具体 Release 说明为准；没有公开 Release 时可从源码运行。路线图见[项目站点](https://xiersiki.github.io/xier/roadmap.html)。
+
 ## 本地运行
 
 推荐 Node 22，使用仓库中的 npm lockfile 安装。
@@ -46,6 +50,12 @@ npm run make       # 当前平台安装/分发文件
 ```
 
 当前 Forge 配置：macOS ZIP、Windows Squirrel、Linux deb/rpm。macOS 应用图标包含 icns。跨平台产物需在对应平台验证；仓库没有配置正式代码签名或公证。
+
+CI 验证类型、离线回归、renderer、官网与三平台桌面构建；固定汇总检查为 `required`。main 的实际保护与运行状态见 [GitHub Actions](https://github.com/xiersiki/xier/actions)。构建绿色不替代安装/启动验收。
+
+官网在独立的 `site/` 中维护：`npm ci --prefix site` 后运行 `npm run site:dev` 或 `npm run site:build`。Pages 发布只使用官网构建产物，并原样保留历史 `auth-redirect.html` 路径。
+
+发布流程创建未签名的草稿预发布，附校验和和提交信息；完成安装验收后再公开。详见[发布指南](docs/releasing.md)。
 
 开发环境不会自动安装 Vue Devtools。需要时可运行 `XIER_DEVTOOLS=1 npm start`。
 

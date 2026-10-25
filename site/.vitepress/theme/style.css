@@ -1,0 +1,33 @@
+:root {
+  --xier-paper: #fafafc;
+  --xier-silver: #f0f0f5;
+  --xier-ink: #292733;
+  --xier-muted: #777582;
+  --xier-iris: #78658f;
+  --xier-line: #e3e2e9;
+  --xier-display: 'Songti SC', 'STSong', 'Noto Serif CJK SC', Georgia, serif;
+  --xier-brand: 'Avenir Next', 'Segoe UI', sans-serif;
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --vp-c-brand-1: #78658f;
+  --vp-c-brand-2: #655278;
+  --vp-c-brand-3: #78658f;
+  --vp-c-brand-soft: #78658f15;
+  --vp-c-bg: var(--xier-paper);
+  --vp-c-bg-alt: var(--xier-silver);
+  --vp-c-text-1: var(--xier-ink);
+  --vp-c-text-2: var(--xier-muted);
+}
+.dark {
+  --xier-paper: #24232a;
+  --xier-silver: #2e2c36;
+  --xier-ink: #eeedf2;
+  --xier-muted: #b0acba;
+  --xier-iris: #bca5d3;
+  --xier-line: #44414d;
+  --vp-c-brand-1: #bca5d3;
+  --vp-c-brand-2: #9b80b4;
+  --vp-c-brand-3: #78658f;
+}
+.VPNavBarTitle .title { font-family: var(--xier-brand); letter-spacing: .04em; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--xier-iris); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
