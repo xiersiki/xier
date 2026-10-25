@@ -1,0 +1,9 @@
+UTC: 2026-10-25T17:30:13.620363+00:00
+Command: npm run spec:gate -- --base origin/main
+Exit: 1
+
+
+> xier@1.0.0 spec:gate
+> node scripts/check-sdd.mjs --base origin/main
+
+SDD/TDD gate failed: Incomplete openspec/changes/add-content-collaboration/tasks.md

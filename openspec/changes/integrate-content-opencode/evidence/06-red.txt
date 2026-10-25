@@ -1,0 +1,64 @@
+UTC: 2026-10-25T16:51:03.544586+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (11 tests | 1 failed) 1508ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (11)
+     × keeps an uncertain run reserved after transport loss and never exposes the raw error 1010ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > keeps an uncertain run reserved after transport loss and never exposes the raw error
+AssertionError: expected 'running' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "running"
+
+ ❯ tests/content-opencode-gateway.test.ts:65:50
+     63|     gateway.observe('req-1', s => seen.push(s)); await gateway.start(r…
+     64|     server.prompt.reject(new Error('secret-provider-key internal-url')…
+     65|     await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+       |                                                  ^
+     66|     expect(JSON.stringify(await gateway.get('req-1'))).not.toContain('…
+     67|     await expect(gateway.start({ ...request, requestId: 'req-2' })).re…
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ tests/content-opencode-gateway.test.ts:65:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: secret-provider-key internal-url
+ ❯ tests/content-opencode-gateway.test.ts:64:26
+     62|     const { server, gateway } = setup(); const seen: RunSnapshot[] = […
+     63|     gateway.observe('req-1', s => seen.push(s)); await gateway.start(r…
+     64|     server.prompt.reject(new Error('secret-provider-key internal-url')…
+       |                          ^
+     65|     await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+     66|     expect(JSON.stringify(await gateway.get('req-1'))).not.toContain('…
+ ❯ node_modules/vitest/dist/chunks/run.BPv-BBRv.js:2801:20
+
+This error originated in "tests/content-opencode-gateway.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The last test to run before this error was "keeps an uncertain run reserved after transport loss and never exposes the raw error". This means either:
+- the error was thrown while Vitest was running this test, or
+- the error was thrown after the test completed, and this was the most recent test at that point.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+     Errors  1 error
+   Start at  00:51:01
+   Duration  1.73s (tests 92%, import 3%, setup 2%, transform 2%)

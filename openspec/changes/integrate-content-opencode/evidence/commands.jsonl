@@ -1,0 +1,84 @@
+{"label": "01-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "01-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "02-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "02-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "03-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "03-red-corrected", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "03-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "03-green-fixed", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "04-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "04-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "05-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "05-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "06-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "06-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "07-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "07-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "08-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "08-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "09-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "09-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "10-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "10-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "11-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "11-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "12-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "12-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "13-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "13-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "14-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "14-green", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 0}
+{"label": "15-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "15-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "16-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "16-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "17-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "17-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "18-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "18-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "18-green-fixed", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "19-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "19-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "20-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "20-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "21-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "21-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "22-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "22-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "23-red", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 1}
+{"label": "23-green", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "24-red", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 1}
+{"label": "24-green", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "25-red", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 1}
+{"label": "25-green", "command": "npm test -- tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "26-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "26-green", "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "27-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "27-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "28-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "28-green", "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts", "exitCode": 0}
+{"label": "runtime-health", "command": "node /Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/runtime-health.mjs", "exitCode": 0}
+{"label": "29-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "29-green", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 0}
+{"label": "30-red", "command": "npm test -- tests/content-opencode-gateway.test.ts", "exitCode": 1}
+{"label": "30-green", "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "refactor-final", "command": "npm run check", "exitCode": 0}
+{"label": "31-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "31-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "build", "command": "npm run build", "exitCode": 0}
+{"label": "32-red", "command": "npm test -- tests/content-opencode-http.test.ts", "exitCode": 1}
+{"label": "32-green", "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts", "exitCode": 0}
+{"label": "33-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "33-green", "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts", "exitCode": 0}
+{"label": "34-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "34-green", "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts", "exitCode": 0}
+{"label": "package", "command": "npm run package", "exitCode": 0}
+{"label": "browser-bundle", "command": "./node_modules/.bin/esbuild renderer/platform/content/opencode-agent.ts --bundle --platform=browser --format=esm --minify --outfile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser.js --metafile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser-meta.json", "exitCode": 0}
+{"label": "check-final", "command": "npm run check", "exitCode": 2}
+{"label": "35-red", "command": "npm test -- tests/content-opencode-protocol.test.ts", "exitCode": 1}
+{"label": "35-green", "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts", "exitCode": 0}
+{"label": "check-final-fixed", "command": "npm run check", "exitCode": 0}
+{"label": "browser-bundle-final", "command": "./node_modules/.bin/esbuild renderer/platform/content/opencode-agent.ts --bundle --platform=browser --format=esm --minify --outfile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser.js --metafile=/Users/gongchenyu/Documents/Codex/2026-10-26/xier-opencode-integration/work/agent-browser-meta.json", "exitCode": 0}
+{"label": "spec-gate-main", "command": "npm run spec:gate -- --base origin/main", "exitCode": 1}
+{"label": "spec-validate", "command": "npm run spec:validate", "exitCode": 0}
+{"label": "spec-gate-slice", "command": "npm run spec:gate -- --base origin/codex/phase1-content-design", "exitCode": 1}

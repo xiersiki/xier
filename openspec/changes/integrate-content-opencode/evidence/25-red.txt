@@ -1,0 +1,37 @@
+UTC: 2026-10-25T17:06:24.876322+00:00
+Command: npm test -- tests/content-opencode-runtime.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-runtime.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-runtime.test.ts (3 tests | 1 failed) 440ms
+   × rejects a different CLI version before service launch and cleans failed startup artifacts 222ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-runtime.test.ts > rejects a different CLI version before service launch and cleans failed startup artifacts
+AssertionError: expected [Function] to throw error including 'CONTENT_RUNTIME_INCOMPATIBLE' but got 'CONTENT_RUNTIME_START_FAILED'
+
+Expected: "CONTENT_RUNTIME_INCOMPATIBLE"
+Received: "CONTENT_RUNTIME_START_FAILED"
+
+ ❯ tests/content-opencode-runtime.test.ts:39:41
+     37| it('rejects a different CLI version before service launch and cleans f…
+     38|   const opts = await options('9.9.9'); opts.startupTimeoutMs = 200;
+     39|   await expect(startContentRuntime(opts)).rejects.toThrow('CONTENT_RUN…
+       |                                         ^
+     40|   expect(await readdir(opts.profileRoot)).toEqual([]);
+     41| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  01:06:24
+   Duration  625ms (tests 80%, import 9%, setup 6%, transform 5%, worker 1%)

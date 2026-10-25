@@ -1,0 +1,45 @@
+UTC: 2026-10-25T17:01:11.828297+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (2 tests | 1 failed) 69ms
+   × validates query results and never exposes foreign IDs, invalid results or remote error text 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > validates query results and never exposes foreign IDs, invalid results or remote error text
+AssertionError: expected { requestId: 'foreign', …(3) } to match object { requestId: 'req-1', …(1) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "requestId": "req-1",
+-   "status": "unknown",
++   "requestId": "foreign",
++   "status": "completed",
+  }
+
+ ❯ tests/content-opencode-protocol.test.ts:24:22
+     22|     const port = new OpenCodeAgentPort({ url: 'http://gateway.invalid/…
+     23|     const snapshot = await port.get('req-1');
+     24|     expect(snapshot).toMatchObject({ requestId: 'req-1', status: 'unkn…
+       |                      ^
+     25|     expect(snapshot.result).toBeUndefined();
+     26|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  01:01:11
+   Duration  328ms (import 52%, tests 27%, setup 11%, transform 9%, worker 1%)

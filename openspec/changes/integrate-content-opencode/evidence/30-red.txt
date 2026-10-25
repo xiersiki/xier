@@ -1,0 +1,46 @@
+UTC: 2026-10-25T17:13:27.479587+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (22 tests | 1 failed) 486ms
+   × reads the final result after the idle observation when completion races with verification 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > reads the final result after the idle observation when completion races with verification
+AssertionError: expected { requestId: 'req-1', …(2) } to match object { status: 'completed', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "result": {
+-     "replacement": "测试文字。",
+-   },
+-   "status": "completed",
++   "status": "cancelled",
+  }
+
+ ❯ tests/content-opencode-gateway.test.ts:180:41
+    178|   server.latest = [{ info: { role: 'user', sessionID: 'ses-1', time: {…
+    179|   server.statusHook = async () => { server.latest = [assistant()]; };
+    180|   expect(await gateway.cancel('req-1')).toMatchObject({ status: 'compl…
+       |                                         ^
+    181| });
+    182|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 21 passed (22)
+   Start at  01:13:26
+   Duration  665ms (tests 83%, transform 8%, import 5%, setup 3%)

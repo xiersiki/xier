@@ -1,0 +1,41 @@
+UTC: 2026-10-25T16:50:23.747417+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (10 tests | 1 failed) 509ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (10)
+     × validates request fields before any external request 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > validates request fields before any external request
+AssertionError: promise resolved "{ requestId: 'req-1', …(2) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "requestId": "req-1",
++   "sequence": 1,
++   "status": "running",
+  }
+
+ ❯ tests/content-opencode-gateway.test.ts:56:42
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  00:50:23
+   Duration  697ms (tests 84%, import 7%, transform 4%, setup 4%)

@@ -1,0 +1,55 @@
+UTC: 2026-10-25T17:16:47.873923+00:00
+Command: npm run build
+Exit: 0
+
+
+> xier@1.0.0 build
+> vite build --config vite.renderer.config.ts
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 4934 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/html/dialog.html                                  1.04 kB │ gzip:   0.41 kB
+dist/html/index.html                                   1.46 kB │ gzip:   0.49 kB
+dist/html/setting.html                                 1.51 kB │ gzip:   0.49 kB
+dist/assets/LatoLatin-Regular-Dmlz1U0B.woff2          43.76 kB
+dist/assets/LatoLatin-Semibold-Dbk81p2D.woff2         44.36 kB
+dist/assets/XierMark-CLjKS143.css                      0.07 kB │ gzip:   0.08 kB
+dist/assets/index-BVjnq2-C.css                         0.18 kB │ gzip:   0.14 kB
+dist/assets/dialog-Bny9CEwZ.css                        0.19 kB │ gzip:   0.13 kB
+dist/assets/setting-riVxxFTy.css                       4.67 kB │ gzip:   1.18 kB
+dist/assets/index-D_OZtMKf.css                         6.05 kB │ gzip:   1.60 kB
+dist/assets/content-ByUmhkUm.css                       6.25 kB │ gzip:   1.48 kB
+dist/assets/conversation-CfmyGk9a.css                 10.01 kB │ gzip:   2.57 kB
+dist/assets/DragRegion-Dod_mzg1.css                   31.40 kB │ gzip:   6.51 kB
+dist/assets/_plugin-vue_export-helper-DlAUqK2U.js      0.09 kB │ gzip:   0.10 kB
+dist/assets/index-yuiMXh0s.js                          0.47 kB │ gzip:   0.34 kB
+dist/assets/dialog-DPNtOBGg.js                         1.84 kB │ gzip:   0.94 kB
+dist/assets/providers-Dl_3SQ15.js                      2.11 kB │ gzip:   1.03 kB
+dist/assets/conversations-DAxr7WeI.js                  2.81 kB │ gzip:   1.16 kB
+dist/assets/messages-CB1GkpxG.js                       4.17 kB │ gzip:   1.91 kB
+dist/assets/utils-JbBk_noW.js                          4.29 kB │ gzip:   2.08 kB
+dist/assets/zh-DRMTbaOX.js                             4.31 kB │ gzip:   2.15 kB
+dist/assets/en-CCZxKl29.js                             4.75 kB │ gzip:   1.88 kB
+dist/assets/runtime-dom.esm-bundler-9cSlvHTh.js       14.92 kB │ gzip:   6.46 kB
+dist/assets/core-lKvJr1_R.js                          40.96 kB │ gzip:  16.14 kB
+dist/assets/system-CLixFsf8.js                        55.86 kB │ gzip:  18.23 kB
+dist/assets/useConfig-CkzmNoWE.js                     58.88 kB │ gzip:  20.14 kB
+dist/assets/setting-D7_1uXeP.js                       65.73 kB │ gzip:  19.15 kB
+dist/assets/runtime-core.esm-bundler-FDiteD8F.js      69.30 kB │ gzip:  27.27 kB
+dist/assets/Select-DZ0C2J1J.js                        69.40 kB │ gzip:  20.18 kB
+dist/assets/index-BQEkUS1J.js                        106.28 kB │ gzip:  33.39 kB
+dist/assets/XierMark-BtOv1FO8.js                     116.10 kB │ gzip:  35.90 kB
+dist/assets/DragRegion-DjMorHZY.js                   118.45 kB │ gzip:  31.88 kB
+dist/assets/FormItem-BTl7D_C4.js                     125.40 kB │ gzip:  35.20 kB
+dist/assets/auth-D3cguJ6X.js                         343.24 kB │ gzip:  98.29 kB
+dist/assets/content-D7gCCBo7.js                      524.01 kB │ gzip: 184.11 kB
+dist/assets/conversation-DhifnPO0.js               1,119.52 kB │ gzip: 373.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1m 23s

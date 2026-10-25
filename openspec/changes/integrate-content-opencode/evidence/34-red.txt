@@ -1,0 +1,37 @@
+UTC: 2026-10-25T17:20:30.908529+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (8 tests | 1 failed) 240ms
+   × ignores a query begun before a newer local connection-loss observation 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > ignores a query begun before a newer local connection-loss observation
+AssertionError: expected 'running' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "running"
+
+ ❯ tests/content-opencode-protocol.test.ts:82:71
+     80|   await port.get('req-1'); const old = port.get('req-1'); await entere…
+     81|   expect((await port.get('req-1')).status).toBe('unknown');
+     82|   delayed.resolve(Response.json(running)); expect((await old).status).…
+       |                                                                       ^
+     83| });
+     84|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  01:20:30
+   Duration  539ms (tests 51%, import 36%, transform 6%, setup 6%, worker 1%)

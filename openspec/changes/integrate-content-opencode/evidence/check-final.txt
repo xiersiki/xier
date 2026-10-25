@@ -1,0 +1,16 @@
+UTC: 2026-10-25T17:25:09.649795+00:00
+Command: npm run check
+Exit: 2
+
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+renderer/platform/content/opencode-agent.ts(53,9): error TS2322: Type '({ event }: { event: StateSnapshotEvent; } & AgentSubscriberParams) => RunSnapshot | undefined' is not assignable to type '(params: { event: StateSnapshotEvent; } & AgentSubscriberParams) => MaybePromise<void | AgentStateMutation>'.
+  Type 'RunSnapshot | undefined' is not assignable to type 'MaybePromise<void | AgentStateMutation>'.
+    Type 'RunSnapshot' is not assignable to type 'MaybePromise<void | AgentStateMutation>'.
+renderer/platform/content/opencode-agent.ts(58,27): error TS2304: Cannot find name 'requestId'.

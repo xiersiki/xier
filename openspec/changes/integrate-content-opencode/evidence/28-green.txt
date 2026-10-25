@@ -1,0 +1,16 @@
+UTC: 2026-10-25T17:11:26.715084+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts
+Exit: 0
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  01:11:26
+   Duration  461ms (tests 55%, import 31%, transform 7%, setup 5%, worker 1%)

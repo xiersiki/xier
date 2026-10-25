@@ -1,0 +1,46 @@
+UTC: 2026-10-25T16:48:17.064824+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (1 test | 1 failed) 7ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (1)
+     × acknowledges a fresh session and observes a structured rewrite without sending editor state 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > acknowledges a fresh session and observes a structured rewrite without sending editor state
+AssertionError: expected { requestId: 'req-1', …(2) } to match object { status: 'running', sequence: 1 }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "sequence": 1,
+-   "status": "running",
++   "sequence": 0,
++   "status": "unknown",
+  }
+
+ ❯ tests/content-opencode-gateway.test.ts:16:42
+     14|     const observed: RunSnapshot[] = [];
+     15|     gateway.observe(request.requestId, s => observed.push(s));
+     16|     expect(await gateway.start(request)).toMatchObject({ status: 'runn…
+       |                                          ^
+     17|     server.prompt.resolve(Response.json(assistant()));
+     18|     await expect.poll(() => observed.at(-1)?.status).toBe('completed');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  00:48:16
+   Duration  515ms (setup 66%, transform 21%, import 6%, worker 4%, tests 2%)

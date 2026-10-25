@@ -1,0 +1,33 @@
+UTC: 2026-10-25T17:05:30.443375+00:00
+Command: npm test -- tests/content-opencode-runtime.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-runtime.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-runtime.test.ts (2 tests | 1 failed) 225ms
+   × prevents two hosts from owning the same profile and releases only its own lock 132ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-runtime.test.ts > prevents two hosts from owning the same profile and releases only its own lock
+AssertionError: expected undefined to be an instance of Error
+ ❯ tests/content-opencode-runtime.test.ts:33:17
+     31|   let error: unknown;
+     32|   try { const second = await startContentRuntime(opts); cleanup.push((…
+     33|   expect(error).toBeInstanceOf(Error); expect((error as Error).message…
+       |                 ^
+     34|   await first.stop();
+     35|   const third = await startContentRuntime(opts); cleanup.push(() => th…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  01:05:30
+   Duration  418ms (tests 65%, import 14%, setup 10%, transform 10%, worker 1%)

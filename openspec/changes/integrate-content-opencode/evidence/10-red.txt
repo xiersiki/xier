@@ -1,0 +1,38 @@
+UTC: 2026-10-25T16:55:04.274468+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (15 tests | 1 failed) 311ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (15)
+     × does not let a stale query erase a newer connection-loss observation 64ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > does not let a stale query erase a newer connection-loss observation
+AssertionError: expected 'running' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "running"
+
+ ❯ tests/content-opencode-gateway.test.ts:116:53
+    114|     server.prompt.reject(new Error('offline'));
+    115|     await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+    116|     blocked.resolve(); expect((await query).status).toBe('unknown');
+       |                                                     ^
+    117|   });
+    118|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  00:55:03
+   Duration  523ms (tests 72%, import 12%, transform 8%, setup 8%, worker 1%)

@@ -1,0 +1,40 @@
+UTC: 2026-10-25T17:18:21.464650+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-http.test.ts (7 tests | 1 failed) 1259ms
+   × resumes observation with read-only polling when explicit recovery finds an active run 1063ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > resumes observation with read-only polling when explicit recovery finds an active run
+AssertionError: expected 'running' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "running"
+
+ ❯ tests/content-opencode-http.test.ts:87:60
+     85|     expect((await port.get('req-1')).status).toBe('running');
+     86|     upstream.status = {}; upstream.latest = [assistant()];
+     87|     await expect.poll(() => seen[seen.length - 1]?.status).toBe('compl…
+       |                                                            ^
+     88|     expect(upstream.calls.filter(c => c.method === 'POST' && c.path.in…
+     89|   } finally { off(); }
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ tests/content-opencode-http.test.ts:87:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  01:18:19
+   Duration  1.66s (tests 80%, import 14%, transform 4%, setup 2%)

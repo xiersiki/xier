@@ -1,0 +1,41 @@
+UTC: 2026-10-25T16:49:45.975313+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (8 tests | 1 failed) 375ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (8)
+     × registers before awaiting: identical IDs are idempotent, conflicting inputs and other scopes are rejected 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > registers before awaiting: identical IDs are idempotent, conflicting inputs and other scopes are rejected
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/content-opencode-gateway.test.ts:39:90
+     37|     expect(duplicate).toEqual(first);
+     38|     expect(server.calls.filter(c => c.method === 'POST' && c.path === …
+     39|     expect(server.calls.filter(c => c.method === 'POST' && c.path.incl…
+       |                                                                                          ^
+     40|     await expect(gateway.start({ ...request, requirement: '扩写' })).rej…
+     41|     await expect(gateway.start({ ...request, requestId: 'req-2', scope…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  00:49:45
+   Duration  571ms (tests 77%, import 10%, transform 8%, setup 5%)

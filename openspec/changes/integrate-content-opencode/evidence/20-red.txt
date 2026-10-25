@@ -1,0 +1,40 @@
+UTC: 2026-10-25T17:01:48.021006+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (3 tests | 1 failed) 1081ms
+   × ignores old and duplicate service sequences while a later running state invalidates an unfinished result 1013ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > ignores old and duplicate service sequences while a later running state invalidates an unfinished result
+AssertionError: expected 'completed' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "completed"
+
+ ❯ tests/content-opencode-protocol.test.ts:36:48
+     34|     : stream([start, state(running), state(completed), state({ ...runn…
+     35|   port.observe('req-1', s => seen.push(s)); await port.start(request);
+     36|   await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+       |                                                ^
+     37|   expect(seen.some(s => s.status === 'completed')).toBe(false);
+     38|   const old = seen.at(-1)!.sequence;
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ tests/content-opencode-protocol.test.ts:36:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  01:01:46
+   Duration  1.36s (tests 84%, import 12%, transform 2%, setup 2%)

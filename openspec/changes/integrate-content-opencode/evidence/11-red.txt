@@ -1,0 +1,72 @@
+UTC: 2026-10-25T16:55:34.213245+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (16 tests | 3 failed) 1303ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (16)
+     × confirms service abort and ignores completion arriving after confirmed cancellation 7ms
+     × honors cancellation while session creation is still being acknowledged 2ms
+     × keeps abort-message races uncertain until server confirmation, and does not infer acceptance from empty history 1009ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > confirms service abort and ignores completion arriving after confirmed cancellation
+AssertionError: expected 'failed' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "failed"
+
+ ❯ tests/content-opencode-gateway.test.ts:92:28
+     90|     const { server, gateway } = setup(); await gateway.start(request);
+     91|     const stopped = await gateway.cancel('req-1');
+     92|     expect(stopped.status).toBe('cancelled');
+       |                            ^
+     93|     expect(server.calls.some(c => c.path === '/session/ses-1/abort')).…
+     94|     server.prompt.resolve(Response.json(assistant()));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > honors cancellation while session creation is still being acknowledged
+AssertionError: expected 'failed' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "failed"
+
+ ❯ tests/content-opencode-gateway.test.ts:103:35
+    101|     const start = gateway.start(request); const cancel = gateway.cance…
+    102|     await start;
+    103|     expect((await cancel).status).toBe('cancelled');
+       |                                   ^
+    104|     expect(server.calls.filter(c => c.path === '/session/ses-1/abort')…
+    105|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > keeps abort-message races uncertain until server confirmation, and does not infer acceptance from empty history
+AssertionError: expected 'failed' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "failed"
+
+ ❯ tests/content-opencode-gateway.test.ts:126:52
+    124|       await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+    125|     };
+    126|     expect((await gateway.cancel('req-1')).status).toBe('cancelled');
+       |                                                    ^
+    127|     const other = setup(); other.server.recordAbort = false;
+    128|     await other.gateway.start(request);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 13 passed (16)
+   Start at  00:55:32
+   Duration  1.54s (tests 90%, import 4%, transform 3%, setup 2%)

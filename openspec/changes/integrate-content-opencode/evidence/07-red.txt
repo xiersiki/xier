@@ -1,0 +1,46 @@
+UTC: 2026-10-25T16:51:46.799061+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (12 tests | 1 failed) 618ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (12)
+     × recovers the original run via bounded reads without regenerating, including missing mappings 66ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > recovers the original run via bounded reads without regenerating, including missing mappings
+AssertionError: expected { requestId: 'req-1', …(3) } to match object { status: 'running', sequence: 3 }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "sequence": 3,
+-   "status": "running",
++   "sequence": 2,
++   "status": "unknown",
+  }
+
+ ❯ tests/content-opencode-gateway.test.ts:77:40
+     75|     await expect.poll(() => seen.at(-1)?.status).toBe('unknown');
+     76|     server.status = { 'ses-1': { type: 'busy' } };
+     77|     expect(await gateway.get('req-1')).toMatchObject({ status: 'runnin…
+       |                                        ^
+     78|     expect(await gateway.get('req-1')).toMatchObject({ status: 'runnin…
+     79|     server.status = {}; server.latest = [assistant()];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  00:51:45
+   Duration  822ms (tests 85%, import 6%, transform 4%, setup 4%)

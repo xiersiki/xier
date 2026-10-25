@@ -1,0 +1,35 @@
+UTC: 2026-10-25T17:00:10.339429+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-http.test.ts (4 tests | 1 failed) 148ms
+   × requires host authorization on every route and rejects extra generation context 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > requires host authorization on every route and rejects extra generation context
+AssertionError: expected 200 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 200
+
+ ❯ tests/content-opencode-http.test.ts:54:29
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  01:00:09
+   Duration  435ms (import 44%, tests 40%, transform 8%, setup 7%, worker 1%)

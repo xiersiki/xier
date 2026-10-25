@@ -1,0 +1,37 @@
+UTC: 2026-10-25T16:59:40.775493+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-http.test.ts (3 tests | 1 failed) 146ms
+   × unsubscribe only detaches while cancel reaches OpenCode and returns its confirmed state 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > unsubscribe only detaches while cancel reaches OpenCode and returns its confirmed state
+AssertionError: expected 'unknown' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "unknown"
+
+ ❯ tests/content-opencode-http.test.ts:45:47
+     43|   off(); const before = seen.length;
+     44|   expect(upstream.calls.some(c => c.path.includes('/abort'))).toBe(fal…
+     45|   expect((await port.cancel('req-1')).status).toBe('cancelled');
+       |                                               ^
+     46|   expect(upstream.calls.filter(c => c.path === '/session/ses-1/abort')…
+     47|   expect(seen).toHaveLength(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:59:40
+   Duration  432ms (import 44%, tests 40%, transform 8%, setup 8%, worker 1%)

@@ -1,0 +1,35 @@
+UTC: 2026-10-25T17:11:15.390966+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (6 tests | 1 failed) 1190ms
+   × does not finish an earlier candidate after a malformed newer state 1013ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > does not finish an earlier candidate after a malformed newer state
+AssertionError: expected 'completed' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "completed"
+
+ ❯ tests/content-opencode-protocol.test.ts:64:58
+
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ tests/content-opencode-protocol.test.ts:64:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  01:11:13
+   Duration  1.48s (tests 85%, import 11%, setup 2%, transform 2%)

@@ -1,0 +1,75 @@
+UTC: 2026-10-25T17:09:12.206286+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+stderr | tests/content-opencode-http.test.ts
+Agent execution failed: TypeError: terminated
+    at Fetch.onAborted (node:internal/deps/undici/undici:11457:53)
+    at Fetch.emit (node:events:519:28)
+    at Fetch.terminate (node:internal/deps/undici/undici:10615:14)
+    at Object.onError (node:internal/deps/undici/undici:11580:38)
+    at Request.onError (node:internal/deps/undici/undici:2240:31)
+    at Object.errorRequest (node:internal/deps/undici/undici:1734:17)
+    at Socket.<anonymous> (node:internal/deps/undici/undici:6523:16)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:347:12) {
+  [cause]: SocketError: other side closed
+      at Socket.<anonymous> (node:internal/deps/undici/undici:6497:28)
+      at Socket.emit (node:events:531:35)
+      at endReadableNT (node:internal/streams/readable:1698:12)
+      at processTicksAndRejections (node:internal/process/task_queues:89:21) {
+    code: 'UND_ERR_SOCKET',
+    socket: {
+      localAddress: '127.0.0.1',
+      localPort: 51670,
+      remoteAddress: '127.0.0.1',
+      remotePort: 51669,
+      remoteFamily: 'IPv4',
+      timeout: undefined,
+      bytesWritten: 512,
+      bytesRead: 164
+    },
+    [Symbol(undici.error.UND_ERR)]: true,
+    [Symbol(undici.error.UND_ERR_SOCKET)]: true
+  }
+}
+
+ ❯ tests/content-opencode-http.test.ts (5 tests | 1 failed) 363ms
+   × turns a stalled stream into unknown within the configured timeout 209ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > turns a stalled stream into unknown within the configured timeout
+AssertionError: expected 'still waiting' to match object { requestId: 'req-1', …(1) }
+
+- Expected:
+{
+  "requestId": "req-1",
+  "status": "unknown",
+}
+
++ Received:
+"still waiting"
+
+ ❯ tests/content-opencode-http.test.ts:68:18
+     66|   const port = new OpenCodeAgentPort({ url: `http://127.0.0.1:${(serve…
+     67|   const result = await Promise.race([port.start(request), new Promise(…
+     68|   expect(result).toMatchObject({ requestId: 'req-1', status: 'unknown'…
+       |                  ^
+     69| });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  01:09:11
+   Duration  657ms (tests 62%, import 27%, transform 7%, setup 3%)

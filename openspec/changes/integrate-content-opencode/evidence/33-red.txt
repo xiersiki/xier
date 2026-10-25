@@ -1,0 +1,32 @@
+UTC: 2026-10-25T17:19:56.970304+00:00
+Command: npm test -- tests/content-opencode-protocol.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-protocol.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-protocol.test.ts (7 tests | 1 failed) 237ms
+   × accepts a missing mapping after host restart even though the new server sequence resets to zero 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-protocol.test.ts > accepts a missing mapping after host restart even though the new server sequence resets to zero
+AssertionError: expected 'running' to be 'unknown' // Object.is equality
+
+Expected: "unknown"
+Received: "running"
+
+ ❯ tests/content-opencode-protocol.test.ts:71:44
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  01:19:56
+   Duration  554ms (tests 49%, import 37%, setup 7%, transform 6%, worker 1%)

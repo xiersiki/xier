@@ -1,0 +1,38 @@
+UTC: 2026-10-25T16:53:11.078538+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (14 tests | 1 failed) 252ms
+   ❯ OpenCode gateway through AgentPort and SDK HTTP (14)
+     × honors cancellation while session creation is still being acknowledged 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > OpenCode gateway through AgentPort and SDK HTTP > honors cancellation while session creation is still being acknowledged
+AssertionError: expected 'running' to be 'cancelled' // Object.is equality
+
+Expected: "cancelled"
+Received: "running"
+
+ ❯ tests/content-opencode-gateway.test.ts:103:35
+    101|     const start = gateway.start(request); const cancel = gateway.cance…
+    102|     await start;
+    103|     expect((await cancel).status).toBe('cancelled');
+       |                                   ^
+    104|     expect(server.calls.filter(c => c.path === '/session/ses-1/abort')…
+    105|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  00:53:10
+   Duration  442ms (tests 71%, import 12%, transform 8%, setup 8%, worker 1%)

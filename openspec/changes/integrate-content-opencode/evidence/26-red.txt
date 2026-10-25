@@ -1,0 +1,39 @@
+UTC: 2026-10-25T17:08:04.699386+00:00
+Command: npm test -- tests/content-opencode-gateway.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-gateway.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+ ❯ tests/content-opencode-gateway.test.ts (20 tests | 1 failed) 403ms
+   × isolates failing observers and prevents snapshot mutation from corrupting future queries 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-gateway.test.ts > isolates failing observers and prevents snapshot mutation from corrupting future queries
+Error: broken UI
+ ❯ tests/content-opencode-gateway.test.ts:162:42
+    160| it('isolates failing observers and prevents snapshot mutation from cor…
+    161|   const { server, gateway } = setup(); const seen: RunSnapshot[] = [];
+    162|   gateway.observe('req-1', () => { throw new Error('broken UI'); });
+       |                                          ^
+    163|   gateway.observe('req-1', s => seen.push(s));
+    164|   const initial = await gateway.start(request);
+ ❯ services/content-gateway/gateway.ts:15:88
+ ❯ OpenCodeGateway.publish services/content-gateway/gateway.ts:15:74
+ ❯ OpenCodeGateway.change services/content-gateway/gateway.ts:58:10
+ ❯ OpenCodeGateway.externalFailure services/content-gateway/gateway.ts:49:17
+ ❯ services/content-gateway/gateway.ts:26:58
+ ❯ tests/content-opencode-gateway.test.ts:164:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  01:08:04
+   Duration  631ms (tests 72%, transform 11%, import 10%, setup 6%)

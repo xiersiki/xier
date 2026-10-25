@@ -1,0 +1,757 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "files": [
+    "services/content-gateway/gateway.ts",
+    "services/content-gateway/protocol.ts",
+    "services/content-gateway/http.ts",
+    "main/content/opencode-runtime.ts",
+    "renderer/platform/content/opencode-agent.ts",
+    "tests/content-opencode-helpers.ts",
+    "tests/content-opencode-gateway.test.ts",
+    "tests/content-opencode-http.test.ts",
+    "tests/content-opencode-protocol.test.ts",
+    "tests/content-opencode-runtime.test.ts",
+    "tests/content-opencode-runtime-fixture.cjs",
+    "package.json",
+    "package-lock.json"
+  ],
+  "seam": "AgentPort v1 / SDK HTTP / AG-UI HTTP / 外置 CLI 生命周期；确认来源：2026-10-26 用户授权的主会话接入交接及父设计公开边界。",
+  "cycles": [
+    {
+      "scenario": "确认与结构化生成观察",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/01-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/01-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "非法结构化结果",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/02-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/02-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/02-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "登记前置与幂等/单并发",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/03-red-corrected.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/03-green-fixed.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/03-green-fixed.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "固定服务版本",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/04-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/04-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/04-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "请求字段校验",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/05-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/05-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/05-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "生成断线 unknown 与占位",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/06-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/06-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/06-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "只读查询恢复与缺映射",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/07-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/07-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/07-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "取消确认与迟到完成",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/08-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/08-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/08-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "初始化期间取消",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/09-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/09-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/09-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "旧查询不能覆盖新断线状态",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/10-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/10-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/10-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "中止消息竞态与空历史",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/11-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/11-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/11-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "明确 HTTP/模型错误脱敏",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/12-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/12-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/12-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "完成赢过取消与 session 归属",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/13-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/13-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/13-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "真实 SDK→HTTP→AG-UI 链路",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/14-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/14-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/14-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "提前 EOF 不确认完成",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/15-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/15-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/15-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "HTTP 查询恢复",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/16-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/16-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/16-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "退订与服务端取消分离",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/17-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/17-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/17-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "host 授权与禁止附加上下文",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/18-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/18-green-fixed.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/18-green-fixed.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "查询快照校验与脱敏",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/19-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/19-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/19-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "服务序号与本地序号分离",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/20-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/20-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/20-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "客户端幂等",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/21-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/21-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/21-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "AG-UI 生命周期归属与 RUN_ERROR",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/22-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/22-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/22-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "隔离 CLI 生命周期",
+      "red": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/23-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/23-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/23-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "profile 单实例锁",
+      "red": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/24-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/24-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/24-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "固定 CLI 版本与失败清理",
+      "red": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/25-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/25-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/25-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "观察者隔离与只读快照",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/26-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/26-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/26-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "流超时 unknown",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/27-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/27-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/27-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "非法后续状态不得确认旧候选",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/28-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/28-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/28-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "无成功时间戳的取消错误",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/29-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/29-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/29-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "查询核实时完成优先",
+      "red": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/30-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/30-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/30-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "跨客户端工作区冲突",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/31-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/31-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/31-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "断流恢复 running 后只读继续观察",
+      "red": {
+        "command": "npm test -- tests/content-opencode-http.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/32-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/32-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/32-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "host 重启序号归零与缺映射",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/33-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/33-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/33-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "迟到查询不覆盖客户端断线状态",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/34-red.txt",
+        "summary": "真实缺失/错误行为的失败，见日志；探索性失败另保留。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/34-green.txt",
+        "summary": "对应最小实现通过；并复跑本文件之前的场景。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-gateway.test.ts tests/content-opencode-http.test.ts tests/content-opencode-protocol.test.ts tests/content-opencode-runtime.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/34-green.txt",
+        "summary": "本场景没有另做独立重构，复用这次 GREEN 作为该步骤检查；后续公共边界整理的全量回归另见 verification.md。"
+      }
+    },
+    {
+      "scenario": "AG-UI cancelled outcome 不能确认成功候选",
+      "red": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/35-red.txt",
+        "summary": "已取消的 RUN_FINISHED 被错误映射 completed，实际失败见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/35-green.txt",
+        "summary": "仅 success outcome 可提交候选；取消和非法组合等待查询核实。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/content-opencode-protocol.test.ts tests/content-opencode-http.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/35-green.txt",
+        "summary": "本场景无需独立重构，保留同次 GREEN；最终检查另见 verification.md。"
+      }
+    }
+  ]
+}

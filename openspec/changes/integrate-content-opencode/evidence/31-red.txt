@@ -1,0 +1,59 @@
+UTC: 2026-10-25T17:16:18.423876+00:00
+Command: npm test -- tests/content-opencode-http.test.ts
+Exit: 1
+
+
+> xier@1.0.0 test
+> vitest run tests/content-opencode-http.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/content-opencode-port
+
+stderr | tests/content-opencode-http.test.ts > reports a definite workspace conflict from another client while preserving the active run
+Agent execution failed: Error: HTTP 409: {"code":"WORKSPACE_BUSY"}
+    at file:///Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/@ag-ui/client/dist/index.mjs:1:29322
+    at doInnerSub (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:22:31)
+    at outerNext (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/mergeInternals.js:17:70)
+    at OperatorSubscriber._this._next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/operators/OperatorSubscriber.js:33:21)
+    at OperatorSubscriber.Subscriber.next (/Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/Subscriber.js:51:18)
+    at /Users/gongchenyu/code/xier-worktrees/content-opencode-port/node_modules/rxjs/dist/cjs/internal/observable/innerFrom.js:120:28
+    at processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  status: 409,
+  payload: { code: 'WORKSPACE_BUSY' }
+}
+
+ ❯ tests/content-opencode-http.test.ts (6 tests | 1 failed) 194ms
+   × reports a definite workspace conflict from another client while preserving the active run 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-opencode-http.test.ts > reports a definite workspace conflict from another client while preserving the active run
+AssertionError: expected { requestId: 'req-2', …(2) } to match object { status: 'failed', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "WORKSPACE_BUSY",
+-   },
+-   "status": "failed",
++   "status": "unknown",
+  }
+
+ ❯ tests/content-opencode-http.test.ts:73:65
+     71|   const { port, upstream, url } = await setup(); await port.start(requ…
+     72|   const other = new OpenCodeAgentPort({ url, headers: { authorization:…
+     73|   expect(await other.start({ ...request, requestId: 'req-2' })).toMatc…
+       |                                                                 ^
+     74|   expect(upstream.calls.filter(c => c.method === 'POST' && c.path.incl…
+     75|   expect((await port.cancel('req-1')).status).toBe('cancelled');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  01:16:17
+   Duration  588ms (import 48%, tests 38%, setup 7%, transform 7%, worker 1%)

@@ -63,11 +63,15 @@
     "vue-tsc": "^3.3.13"
   },
   "dependencies": {
+    "@ag-ui/client": "1.0.3",
+    "@ag-ui/core": "1.0.3",
+    "@ag-ui/encoder": "1.0.3",
     "@codemirror/commands": "6.11.1",
     "@codemirror/lang-markdown": "6.5.2",
     "@codemirror/merge": "6.12.3",
     "@codemirror/state": "6.7.6",
     "@codemirror/view": "6.43.15",
+    "@opencode-ai/sdk": "1.19.4",
     "@supabase/supabase-js": "^2.118.0",
     "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",
