@@ -19,7 +19,7 @@
 
 ## macOS 独立 profile 验收
 
-适用 Electron 37.1.0。2026-10-25 已核对其 [PreSandboxStartup 实现](https://github.com/electron/electron/blob/v37.1.0/shell/app/electron_main_delegate.cc#L298-L303)，同版本隔离探针已确认 `app.getPath('userData')` 返回指定临时目录，证据见 [Issue #3](https://github.com/xiersiki/xier/issues/3)。这些证据只确认参数生效；实际 Release 的下载、窗口与退出验收须另行记录，Windows/Linux 尚未做实际 GUI 验收。
+适用 Electron 37.1.0。2026-10-25 已核对其 [PreSandboxStartup 实现](https://github.com/electron/electron/blob/v37.1.0/shell/app/electron_main_delegate.cc#L313-L322)，同版本隔离探针已确认 `app.getPath('userData')` 返回指定临时目录，证据见 [Issue #3](https://github.com/xiersiki/xier/issues/3)。这些证据只确认参数生效；实际 Release 的下载、窗口与退出验收须另行记录，Windows/Linux 尚未做实际 GUI 验收。
 
 先下载目标 macOS ZIP、`SHA256SUMS.txt` 和 `build-info.json`，核对来源提交与 ZIP 的 SHA256，再解包。下载了全部资产时可运行 `shasum -a 256 -c SHA256SUMS.txt`；只下载目标 ZIP 时，运行 `shasum -a 256 "/绝对路径/目标.zip"`，逐字核对清单中该文件的条目，匹配后继续。
 
