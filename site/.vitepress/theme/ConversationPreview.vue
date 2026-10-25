@@ -35,7 +35,7 @@
 .preview-mark { width: 28px; height: 28px; color: var(--xier-iris); margin-bottom: 24px; }
 .sidebar-label { font-size: 9px; color: var(--xier-muted); padding: 0 9px; margin-bottom: 12px; }
 .conversation { font-size: 10px; padding: 9px; color: var(--xier-muted); white-space: nowrap; }
-.conversation.active { background: #e7e4ec; color: var(--xier-ink); border-radius: 6px; }
+.conversation.active { background: var(--vp-c-brand-soft); color: var(--xier-ink); border-radius: 6px; }
 .local-note { margin-top: auto; color: var(--xier-muted); font-size: 10px; padding: 16px 8px 0; }
 .conversation-area { padding: 18px; display: flex; flex-direction: column; min-width: 0; }
 .conversation-header { font-size: 11px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
