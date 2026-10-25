@@ -182,3 +182,20 @@ test('记录的命令只作为数据，不执行 shell 文本', () => {
   c.record.cycles[0].green.command = 'exit 99; this-command-must-never-run'; c.save();
   expect(r.run().status).toBe(0);
 });
+
+test('OpenSpec 支持的所有未完成清单标记都必须阻断', () => {
+  for (const pending of ['+ [ ] Pending', '1. [ ] Pending', '- [~] Pending', '* [?] Pending', '2) [ ] Pending']) {
+    const r = repo(); const c = change(r);
+    r.put(`${c.dir}/tasks.md`, `- [x] Done\n${pending}\n`);
+    const result = r.run();
+    expect(result.status, `${pending}: ${result.output}`).toBe(1);
+    expect(result.output).toContain('tasks.md');
+  }
+});
+
+test('已完成的编号和加号任务可交付，普通 Markdown 链接不当作任务', () => {
+  const r = repo(); const c = change(r);
+  r.put(`${c.dir}/tasks.md`, '1. [x] Done\n2) [ X ] Done\n+ [x]Done\n- [A](https://example.invalid)\n');
+  const result = r.run();
+  expect(result.status, result.output).toBe(0);
+});

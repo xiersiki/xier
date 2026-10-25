@@ -17,9 +17,13 @@ Issue 认领评论记录会话、分支、工作区、范围和依赖。由协�
 
 桌面验收为每个任务新建临时目录，以 `--user-data-dir=<绝对临时路径>` 启动已解包的 macOS App；启动命令和配置、日志、窗口、退出检查见[独立 profile 验收](releasing.md#macos-独立-profile-验收)。保持 `HOME` 原值，不复制个人配置或聊天数据，默认只验收访客和本地设置，不调用模型或云端。Windows/Linux 的实际 GUI 验收仍需单独记录。
 
+## 规格与测试先行
+
+需求和缺陷使用 [OpenSpec SDD/TDD](spec-driven-development.md)：Issue → proposal/specs/design/tasks → 一个场景的 RED/GREEN/REFACTOR → PR/独立评审 → required → 合并。变更资料与代码放在同一 PR；可先开 Draft，资料完成前检查失败是预期状态。飞书记录背景与决策，仓库 `openspec/` 保存版本化的契约和证据。
+
 ## 检查与合并
 
-`ci.yml` 在每次 PR 与 main push 执行应用检查、站点检查和桌面构建，`required` 汇总 job 只接受所有依赖成功。它不使用路径过滤，避免必须检查因未触发而永久等待。PR 测试仅有读取权限、没有云端或模型密钥。
+`ci.yml` 在每次 PR 与 main push 执行 OpenSpec/TDD 门禁、应用检查、站点检查和桌面构建，`required` 汇总 job 只接受所有依赖成功。它不使用路径过滤，避免必须检查因未触发而永久等待。PR 测试仅有读取权限、没有云端或模型密钥。
 
 `desktop.yml` 是供 CI 和手动触发使用的桌面构建流程。macOS arm64 是首期安装验收目标；Windows 和 Linux 的打包结果也会保留，但构建通过不等于这些系统已通过人工安装验收。
 

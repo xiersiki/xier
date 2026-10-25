@@ -1,0 +1,90 @@
+Command: env -u XIER_LIVE_PROVIDER_CONFIG npm run check
+Exit code: 0
+
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.7 <repo>
+
+ ↓ tests/deepseek.live.test.ts (1 test | 1 skipped)
+ ✓ tests/provider.test.ts (10 tests) 70ms
+ ✓ tests/account-client.test.ts (2 tests) 35ms
+ ✓ tests/startup.test.ts (1 test) 133ms
+ ✓ tests/message-metadata.test.ts (2 tests) 4ms
+ ✓ tests/config.test.ts (1 test) 198ms
+stdout | tests/sync.test.ts > keeps edits made while an upload is in flight for the next sync
+[providers] 本地默认数据已初始化
+
+stdout | tests/sync.test.ts > does not resurrect a conversation deleted during a cloud pull
+[providers] 本地默认数据已初始化
+
+stdout | tests/sync.test.ts > replays offline deletion before downloading cloud data
+[providers] 本地默认数据已初始化
+
+stdout | tests/sync.test.ts > retains deletion intent when the network fails
+[providers] 本地默认数据已初始化
+
+stdout | tests/sync.test.ts > isolates different accounts and restores their own local cache
+[providers] 本地默认数据已初始化
+
+ ✓ tests/sync.test.ts (5 tests) 64ms
+stdout | tests/chat.test.ts > publishes local providers to the main process on first startup
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > marks pin/rename changes for cloud synchronization
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > persists complete streamed answers while offline and removes listeners
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > stopping generation aborts the main-process request and keeps the partial answer
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > opening another view does not mark an active response as interrupted
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > imports guest model configuration only on explicit request and preserves the account provider ID
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > imports guest model configuration only on explicit request and preserves the account provider ID
+[providers] 本地默认数据已初始化
+
+stdout | tests/chat.test.ts > persists reasoning and partial output separately from a stream error
+[providers] 本地默认数据已初始化
+
+ ✓ tests/pagination.test.ts (2 tests) 4ms
+ ✓ tests/theme-preferences.test.ts (1 test) 4ms
+stdout | tests/chat.test.ts > does not replay reasoning or stopped output as normal assistant context
+[providers] 本地默认数据已初始化
+
+ ✓ tests/chat.test.ts (8 tests) 168ms
+ ✓ tests/answer-content.test.ts (1 test) 9ms
+ ✓ tests/model-adapter.test.ts (2 tests) 2ms
+ ✓ tests/oauth.test.ts (1 test) 2ms
+ ✓ tests/ui-theme.test.ts (2 tests) 48ms
+ ✓ tests/spec-workflow.test.ts (16 tests) 8862ms
+   ✓ 完整行为交付通过公开 CLI  603ms
+   ✓ 行为文件没有本次 change 时失败  399ms
+   ✓ 缺失设计或行为规格会指出必需产物  831ms
+   ✓ 未完成、空白或没有任务的交付失败  861ms
+   ✓ 缺少红绿重构阶段或错误结果会阻止交付  1294ms
+   ✓ 证据必须是 change 内存在的非空文件，拒绝越界和符号链接  993ms
+   ✓ 无行为变化的依赖更新可用有理由和证据的适用验证  337ms
+   ✓ 归档后继续检查同一份交付证据与主规格覆盖  342ms
+   ✓ 未触及的历史 change 不能覆盖新代码，遗漏或删除的文件也必须被声明  507ms
+   ✓ OpenSpec 支持的所有未完成清单标记都必须阻断  1296ms
+
+ Test Files  14 passed | 1 skipped (15)
+      Tests  54 passed | 1 skipped (55)
+   Start at  17:57:39
+   Duration  9.35s (transform 751ms, setup 815ms, collect 4.20s, tests 9.60s, environment 6.60s, prepare 1.54s)

@@ -3,6 +3,9 @@
 - 目标与验收：
 - 执行会话、时间、工作区：
 - 分支、HEAD、Issue、PR：
+- OpenSpec change ID / 活动或归档路径：
+- 当前阶段（SDD / RED / GREEN / REFACTOR / review）与未完成任务：
+- 测试边界、tdd.json 与真实日志：
 - 已完成项：
 - 当前修改状态（未提交 / 未推送 / PR / 已合并）：
 - 验证（环境、命令/步骤、结果、证据 SHA）：

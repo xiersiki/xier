@@ -15,7 +15,11 @@
     "build": "vite build --config vite.renderer.config.ts",
     "site:dev": "npm --prefix site run dev --",
     "site:build": "npm --prefix site run build",
-    "site:preview": "npm --prefix site run preview --"
+    "site:preview": "npm --prefix site run preview --",
+    "spec": "openspec",
+    "spec:validate": "openspec validate --all --strict --no-interactive && openspec validate --archived --strict --no-interactive",
+    "spec:gate": "node scripts/check-sdd.mjs",
+    "test:workflow": "vitest run tests/spec-workflow.test.ts"
   },
   "keywords": [],
   "author": {

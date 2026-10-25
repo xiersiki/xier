@@ -26,3 +26,8 @@ body:
     id: evidence
     attributes:
       label: 脱敏日志或截图
+  - type: textarea
+    id: openspec
+    attributes:
+      label: OpenSpec 与测试边界
+      description: 实现者填写 change ID、规格/设计链接、验收场景、公开测试边界；报告问题时可以留空。先 SDD，再逐项红绿重构。
