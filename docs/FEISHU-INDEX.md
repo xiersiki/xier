@@ -29,6 +29,8 @@
 | Agent 协作与交付链路验收 | [05.1](https://pcn11w88fq9h.feishu.cn/wiki/VFiQwsEZmiY3uwkl3Nuc3i9un1e) | 工程化实施、独立评审、CI 阻断与恢复、站点及发布验收记录；通过链接引用 GitHub 事实 |
 | OpenSpec 与 SDD/TDD 开发规范 | [05.2](https://pcn11w88fq9h.feishu.cn/wiki/UC9GwJwXyi6ozSkgCG7c0uFYnof) | [版本化执行规则](spec-driven-development.md) 与 `openspec/` 保存规格/证据；飞书保存目的、决策与验收链接 |
 | 开源方案调研 | [08](https://pcn11w88fq9h.feishu.cn/wiki/SN3zwGPoxiQzmAkzKh1cm3ImnJf) | 原“个人项目”工作区 `docs/research/2026-10-25-agent-oss-landscape.md`；保留来源日期，复核后记录增量结论 |
+| 本地资料库 PRD | [导入、搜索与恢复](https://pcn11w88fq9h.feishu.cn/wiki/LMW1w1n5AiSIDBkeheac4WWQnij) | 2026-10-26 评审稿；[PRD 快照](product/local-material-service.md)；未实施 |
+| 本地资料服务技术方案 | [进程、事务与恢复](https://pcn11w88fq9h.feishu.cn/wiki/Hf02wtW5eiXhRfkUQDec9qCpnWe) | [OpenSpec 设计与任务](../openspec/changes/add-local-material-service/design.md) 为版本化方案；[技术依据](research/local-material-service-2026-10-26.md)；Issue #28 |
 
 飞书迁入页开头注明来源、时间与状态。历史 GUI/真实服务验证没有因迁入而重新执行；产品 Agent 工作台仍是提案。不要将历史来源中的“本轮”“已验证”自动理解为当前会话或当前提交。
 
