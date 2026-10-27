@@ -1,0 +1,109 @@
+
+> xier@1.0.0 spec
+> openspec status --change add-local-material-service --json
+
+{
+  "changeName": "add-local-material-service",
+  "schemaName": "spec-driven",
+  "planningHome": {
+    "kind": "repo",
+    "root": "/Users/gongchenyu/code/xier-worktrees/local-material-design",
+    "changesDir": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes",
+    "defaultSchema": "spec-driven"
+  },
+  "changeRoot": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service",
+  "artifactPaths": {
+    "proposal": {
+      "outputPath": "proposal.md",
+      "resolvedOutputPath": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/proposal.md",
+      "existingOutputPaths": [
+        "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/proposal.md"
+      ]
+    },
+    "specs": {
+      "outputPath": "specs/**/*.md",
+      "resolvedOutputPath": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/specs/**/*.md",
+      "existingOutputPaths": [
+        "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/specs/local-material-jobs/spec.md",
+        "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/specs/local-material-library/spec.md"
+      ]
+    },
+    "design": {
+      "outputPath": "design.md",
+      "resolvedOutputPath": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/design.md",
+      "existingOutputPaths": [
+        "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/design.md"
+      ]
+    },
+    "tasks": {
+      "outputPath": "tasks.md",
+      "resolvedOutputPath": "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/tasks.md",
+      "existingOutputPaths": [
+        "/Users/gongchenyu/code/xier-worktrees/local-material-design/openspec/changes/add-local-material-service/tasks.md"
+      ]
+    }
+  },
+  "isPlanningComplete": true,
+  "isComplete": true,
+  "applyRequires": [
+    "tasks"
+  ],
+  "nextSteps": [
+    "All planning artifacts are complete. Run openspec instructions apply --change \"add-local-material-service\" --json to inspect implementation progress."
+  ],
+  "actionContext": {
+    "mode": "repo-local",
+    "sourceOfTruth": "repo",
+    "planningArtifacts": [
+      "proposal",
+      "specs",
+      "design",
+      "tasks"
+    ],
+    "linkedContext": [],
+    "allowedEditRoots": [
+      "/Users/gongchenyu/code/xier-worktrees/local-material-design"
+    ],
+    "requiresAffectedAreaSelection": false,
+    "constraints": [
+      "Repo-local change artifacts and implementation edits are scoped to this project."
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "proposal",
+      "outputPath": "proposal.md",
+      "status": "done",
+      "requires": []
+    },
+    {
+      "id": "specs",
+      "outputPath": "specs/**/*.md",
+      "status": "done",
+      "requires": [
+        "proposal"
+      ]
+    },
+    {
+      "id": "design",
+      "outputPath": "design.md",
+      "status": "done",
+      "requires": [
+        "proposal"
+      ]
+    },
+    {
+      "id": "tasks",
+      "outputPath": "tasks.md",
+      "status": "done",
+      "requires": [
+        "specs",
+        "design"
+      ]
+    }
+  ],
+  "root": {
+    "path": "/Users/gongchenyu/code/xier-worktrees/local-material-design",
+    "source": "nearest"
+  }
+}

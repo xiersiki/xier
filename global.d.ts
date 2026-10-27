@@ -43,6 +43,7 @@ type ThemeMode = "light" | "dark" | "system";
 declare const __SUPABASE_URL__: string;
 
 interface WindowApi {
+  materials: import('./common/materials').MaterialApi;
   listProviderModels: (setting: import('./common/types').OpenAISetting) => Promise<string[]>;
   authorizeOAuth: (url: string) => Promise<string>;
   cancelOAuth: () => void;

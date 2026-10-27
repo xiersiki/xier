@@ -1,0 +1,13 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-library.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:23:36
+   Duration  1.22s (transform 40%, environment 35%, import 17%, tests 4%, setup 3%)
+

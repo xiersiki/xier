@@ -1,3 +1,5 @@
+import { benchmarkMaterials } from './materials/benchmark';
+import { smokeMaterials } from './materials/smoke';
 import { registerOAuthHandler } from './service/OAuthService';
 import { app, BrowserWindow } from "electron";
 import { setupWindows as setupWins } from "./wins";
@@ -34,6 +36,19 @@ process.on("unhandledRejection", (reason, promise) =>
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  const benchmark = process.argv.find(arg => arg.startsWith('--material-benchmark='));
+  if ((benchmark || process.argv.some(arg => arg.startsWith('--material-smoke='))) &&
+      !process.argv.some(arg => arg.startsWith('--user-data-dir='))) {
+    console.error('Material QA requires an isolated --user-data-dir');
+    app.exit(1);
+    return;
+  }
+  if (benchmark) {
+    void benchmarkMaterials(benchmark.slice('--material-benchmark='.length));
+    return;
+  }
+  const smoke = process.argv.find(arg => arg.startsWith('--material-smoke='));
+  if (smoke) { smokeMaterials(smoke.slice('--material-smoke='.length)); return; }
   try {
     if (!app.isPackaged && process.env.XIER_DEVTOOLS === '1') electronDevtoolsInstaller(VUEJS_DEVTOOLS)
       .then((name) => console.log(`installed: ${name}`))

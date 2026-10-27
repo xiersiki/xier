@@ -1,0 +1,38 @@
+
+> xier@1.0.0 test:materials:electron
+> node scripts/test-material-electron.mjs
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-process.test.ts (6 tests | 1 failed) 4227ms
+   × does not kill a healthy service when cancellation traffic fills the control plane 1612ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-process.test.ts > does not kill a healthy service when cancellation traffic fills the control plane
+AssertionError: expected 'MATERIAL_RESULT={"healthy":false}\n' to contain '"healthy":true'
+
+- Expected
++ Received
+
+- "healthy":true
++ MATERIAL_RESULT={"healthy":false}
++
+
+ ❯ tests/material-process.test.ts:91:20
+     89|       let output='';child.stdout.on('data',part=>output+=part);child.o…
+     90|     });
+     91|     expect(result).toContain('"healthy":true');
+       |                    ^
+     92|   }finally{await rm(directory,{recursive:true,force:true});}
+     93| },20000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  20:45:18
+   Duration  4.40s (tests 98%, setup 1%, transform 1%, import 1%)
+

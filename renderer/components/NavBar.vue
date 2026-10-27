@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { Settings2 } from 'lucide-vue-next';
+import { ref,onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
+import { Library,Settings2 } from 'lucide-vue-next';
 import { WINDOW_NAMES } from '@common/constants';
 import { openWindow } from '@renderer/utils/system';
 import ThemeSwitcher from './ThemeSwitcher.vue';
+const materialsEnabled=ref(false);
+onMounted(()=>{void window.api.materials?.isEnabled().then(value=>materialsEnabled.value=value).catch(()=>{});});
 const { t } = useI18n();
 </script>
 <template>
   <nav class="sidebar-tools">
+    <RouterLink v-if="materialsEnabled" class="settings-link" to="/materials"><Library :size="16" :stroke-width="1.6" />资料库</RouterLink>
     <button class="settings-link" @click="openWindow(WINDOW_NAMES.SETTING)"><Settings2 :size="16" :stroke-width="1.6" />{{ t('main.sidebar.settings') }}</button>
     <ThemeSwitcher />
   </nav>

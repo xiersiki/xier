@@ -1,0 +1,28 @@
+
+> xier@1.0.0 check
+> npm run typecheck && npm test
+
+
+> xier@1.0.0 typecheck
+> vue-tsc --noEmit -p tsconfig.app.json
+
+
+> xier@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:56983) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:56985) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ Test Files  21 passed | 2 skipped (23)
+      Tests  114 passed | 9 skipped (123)
+   Start at  12:28:44
+   Duration  7.88s (tests 58%, environment 27%, import 10%, setup 3%, transform 1%)
+
+    Isolate  23 workers spawned · ~402ms startup each (spawn + environment, per file)
+             at least ~439ms faster with isolate: false — reuses workers across files instead of one per file
+

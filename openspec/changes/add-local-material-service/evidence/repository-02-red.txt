@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-repository.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:83283) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-repository.test.ts (2 tests | 1 failed) 20ms
+   × replays the same request safely, deduplicates bytes and retains history when a copy is removed 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-repository.test.ts > replays the same request safely, deduplicates bytes and retains history when a copy is removed
+Error: UNIQUE constraint failed: jobs.request_id
+ ❯ MaterialRepository.startImport main/materials/repository.ts:24:61
+     22|   startImport(requestId:string, digest:string, files:MaterialFile[], r…
+     23|     const job:ImportJob = {requestId,digest,retryOf,status:'running',c…
+     24|     this.database.prepare('INSERT INTO jobs VALUES(?,?,?)').run(reques…
+       |                                                             ^
+     25|     return job;
+     26|   }
+ ❯ tests/material-repository.test.ts:28:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  19:48:55
+   Duration  192ms (setup 37%, transform 24%, tests 18%, import 16%, worker 4%)
+

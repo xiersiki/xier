@@ -1,0 +1,28 @@
+{
+  "node": "v22.23.1",
+  "beforeBytesFree": 262144,
+  "fillerBytes": 32227328,
+  "publicError": {
+    "message": "cannot rollback - no transaction is active",
+    "code": "ERR_SQLITE_ERROR",
+    "errcode": 1,
+    "errstr": "SQL logic error"
+  },
+  "job": {
+    "requestId": "physical-full",
+    "digest": "physical-full",
+    "status": "running",
+    "createdAt": 1793072281836,
+    "items": [
+      {
+        "name": "new.txt",
+        "size": 2097152,
+        "status": "pending"
+      }
+    ]
+  },
+  "usage": {
+    "documents": 1,
+    "bytes": 4
+  }
+}

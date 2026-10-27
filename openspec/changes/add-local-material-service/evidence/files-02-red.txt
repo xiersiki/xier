@@ -1,0 +1,31 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-files.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-files.test.ts (2 tests | 1 failed) 36ms
+   × keeps valid files in a mixed selection and reports invalid sources as individual outcomes 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-files.test.ts > keeps valid files in a mixed selection and reports invalid sources as individual outcomes
+Error: EMPTY_FILE
+ ❯ authorizeFiles main/materials/files.ts:15:25
+     13|     if(!stat.isFile())throw new Error('NOT_REGULAR_FILE');
+     14|     if(!['.txt','.md','.markdown'].includes(extname(path).toLowerCase(…
+     15|     if(!stat.size)throw new Error('EMPTY_FILE');
+       |                         ^
+     16|     if(stat.size>MATERIAL_LIMITS.fileBytes)throw new Error('FILE_TOO_L…
+     17|     bytes+=stat.size;if(bytes>MATERIAL_LIMITS.batchBytes)throw new Err…
+ ❯ tests/material-files.test.ts:29:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:30:34
+   Duration  199ms (setup 29%, tests 29%, transform 21%, import 18%, worker 3%)
+

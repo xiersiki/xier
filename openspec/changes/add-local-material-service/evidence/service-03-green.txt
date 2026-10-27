@@ -1,0 +1,15 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-service.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:65959) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  22:17:32
+   Duration  304ms (tests 38%, transform 30%, setup 17%, import 14%, worker 1%)
+

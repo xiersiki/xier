@@ -1,0 +1,30 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-library.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-library.test.ts (2 tests | 1 failed) 292ms
+   × explains overlong queries before sending them to the host 262ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-library.test.ts > explains overlong queries before sending them to the host
+AssertionError: expected "vi.fn()" to be called 1 times, but got 2 times
+ ❯ tests/material-library.test.ts:32:18
+     30|   await wrapper.get('input[aria-label="搜索资料"]').setValue('a'.repeat(12…
+     31|   await new Promise(resolve=>setTimeout(resolve,250));await flushPromi…
+     32|   expect(search).toHaveBeenCalledTimes(1);expect(wrapper.text()).toCon…
+       |                  ^
+     33| });
+     34|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:34:53
+   Duration  1.01s (environment 52%, tests 31%, import 9%, transform 4%, setup 3%)
+

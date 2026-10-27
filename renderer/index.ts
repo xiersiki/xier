@@ -30,6 +30,7 @@ const router = createRouter({
       path: '/',
       component: () => import('./views/index.vue'),
       children: [
+        { name:'materials',path:'materials',component:()=>import('./views/materials.vue') },
         {
           path: '/',
           redirect: 'conversation'

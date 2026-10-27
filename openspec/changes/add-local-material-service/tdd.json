@@ -1,0 +1,726 @@
+{
+  "version": 1,
+  "mode": "red-green-refactor",
+  "seam": "用户已授权实施评审方案：MaterialApi用户行为、Host来源/lease、进程协议、Repository持久结果、真实Electron/安装包和Vue用户交互。",
+  "files": [
+    "common/materialPaintTrace.ts",
+    "common/materials.ts",
+    "forge.config.ts",
+    "global.d.ts",
+    "main/index.ts",
+    "main/materials/benchmark.ts",
+    "main/materials/connection.ts",
+    "main/materials/entry.ts",
+    "main/materials/files.ts",
+    "main/materials/host.ts",
+    "main/materials/register.ts",
+    "main/materials/repository.ts",
+    "main/materials/service.ts",
+    "main/materials/smoke.ts",
+    "main/wins/main.ts",
+    "package.json",
+    "preload.ts",
+    "renderer/components/Materials/ImportPanel.vue",
+    "renderer/components/Materials/MaterialList.vue",
+    "renderer/components/Materials/MaterialPreview.vue",
+    "renderer/components/NavBar.vue",
+    "renderer/index.ts",
+    "renderer/stores/auth.ts",
+    "renderer/utils/materialErrors.ts",
+    "renderer/views/materials.vue",
+    "scripts/test-material-electron.mjs",
+    "tests/material-files.test.ts",
+    "tests/material-host.test.ts",
+    "tests/material-library.test.ts",
+    "tests/material-paint-trace.test.ts",
+    "tests/material-process.test.ts",
+    "tests/material-repository.test.ts",
+    "tests/material-service.test.ts",
+    "tests/materials/control-probe.cjs",
+    "tests/materials/control-runner.ts",
+    "tests/materials/process-runner.cjs",
+    "tests/materials/recovery-runner.ts",
+    "tests/materials/schema-runner.ts",
+    "tests/materials/sqlite-probe.ts",
+    "tests/materials/storage-faults/reproduce.sh",
+    "tests/materials/storage-faults/storage-faults.mjs",
+    "tests/materials/storage-faults/worker.mjs",
+    "tests/materials/supervision-runner.ts",
+    "tests/materials/unresponsive-runner.ts",
+    "tests/packaged/material-service.mjs",
+    "vite.materials.config.ts"
+  ],
+  "cycles": [
+    {
+      "scenario": "真实Electron服务握手、ping和退出",
+      "red": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/g0-01-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/g0-01-green.txt",
+        "summary": "真实utilityProcess经MessagePort回答，Electron45运行时已验证。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/g0-01-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "产品utility入口打开WAL/FTS5数据库",
+      "red": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/g0-02-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/g0-02-green.txt",
+        "summary": "产品入口初始化SQLite3.53.4，WAL与FTS5成功；另附100oracle及2MiB事务实验。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-process.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/g0-02-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "持久导入第一份副本",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-01-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-01-green.txt",
+        "summary": "副本、索引与终态同事务提交。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-01-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "幂等提交和重复副本移除",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-02-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-02-green.txt",
+        "summary": "相同请求返回原结果，冲突和BUSY被拒绝，历史仍可发现。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-02-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "持久取消和中断恢复",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-03-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-03-green.txt",
+        "summary": "取消后不能提交，未完成任务恢复为interrupted。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-03-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "Unicode字面搜索",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-04-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-04-green.txt",
+        "summary": "中文、emoji、标点、组合字符与查询取消通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-04-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "arm64安装包真实服务入口",
+      "red": {
+        "command": "node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier",
+        "exitCode": 1,
+        "evidence": "evidence/g0-package-red.txt",
+        "summary": "规格预期未实现，见真实失败断言。"
+      },
+      "green": {
+        "command": "node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier",
+        "exitCode": 0,
+        "evidence": "evidence/g0-package-green.txt",
+        "summary": "ASAR内独立服务启动，真实SQLite/WAL/FTS5通过。"
+      },
+      "refactor": {
+        "command": "node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier",
+        "exitCode": 0,
+        "evidence": "evidence/g0-package-green.txt",
+        "summary": "本切片为最小实现，无额外重构，沿用同次GREEN。"
+      }
+    },
+    {
+      "scenario": "库配额、重复项与稳定 cursor",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-05-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-05-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-05-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "128 个原始码点在 lowercase 展开后仍合法",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-06-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-06-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-06-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "任务历史按字节预算分页且不漏任务",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-07-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-07-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-07-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "拒绝未配对 surrogate 查询",
+      "red": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/repository-08-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-08-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-repository.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/repository-08-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "混合选择保留合法文件并逐项失败",
+      "red": {
+        "command": "npm test -- tests/material-files.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/files-02-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-02-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-02-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "每次读块均可累计预算并中止",
+      "red": {
+        "command": "npm test -- tests/material-files.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/files-03-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-03-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-03-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "选择授权绑定 lease 且不可换 request 重用",
+      "red": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/host-02-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-02-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-02-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "拒绝未知操作和越界公开输入",
+      "red": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/host-03-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-03-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-03-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "旧服务关闭期间不绑定已被替代的账号",
+      "red": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/host-04-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-04-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-04-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "慢观察者只保留一个已发送和一个最新待发进度",
+      "red": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/host-05-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-05-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-05-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "取消无法持久化时返回待核实并允许重试",
+      "red": {
+        "command": "npm test -- tests/material-service.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/service-02-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-service.test.ts tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/service-02-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-service.test.ts tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/service-02-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "读取中可观察且持久取消后不提交",
+      "red": {
+        "command": "npm test -- tests/material-service.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/service-03-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/service-03-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/service-03-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "超长查询在界面阻止发 RPC",
+      "red": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-02-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-02-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-02-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "切换账号时释放导入忙状态",
+      "red": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-03-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-03-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-03-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "切换账号清除旧搜索文本",
+      "red": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/ui-04-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-04-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-library.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/ui-04-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "仅真实输入在后续绘制机会后记录无内容样本",
+      "red": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/paint-01-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/paint-01-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/paint-01-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "绘制机会代理包含事件排队延迟",
+      "red": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/paint-02-red.txt",
+        "summary": "真实断言失败，具体预期和实际见日志。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/paint-02-green.txt",
+        "summary": "受影响公开边界测试通过。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-paint-trace.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/paint-02-green.txt",
+        "summary": "本切片保留最小修复，无额外结构调整，沿用同次 GREEN。"
+      }
+    },
+    {
+      "scenario": "真实服务启动保留高版本 schema 错误",
+      "red": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 1,
+        "evidence": "evidence/startup-01-red.txt",
+        "summary": "真实进程断言失败，见日志。"
+      },
+      "green": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/startup-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      },
+      "refactor": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/startup-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      }
+    },
+    {
+      "scenario": "控制面饱和时为心跳保留一格",
+      "red": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 1,
+        "evidence": "evidence/control-01-red.txt",
+        "summary": "真实进程断言失败，见日志。"
+      },
+      "green": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/control-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      },
+      "refactor": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/control-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      }
+    },
+    {
+      "scenario": "真实服务卡住后 5 秒内检测并恢复",
+      "red": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 1,
+        "evidence": "evidence/unresponsive-01-red.txt",
+        "summary": "真实进程断言失败，见日志。"
+      },
+      "green": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/unresponsive-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      },
+      "refactor": {
+        "command": "npm run test:materials:electron",
+        "exitCode": 0,
+        "evidence": "evidence/unresponsive-01-green.txt",
+        "summary": "真实 Electron 进程集成通过；没有额外重构。"
+      }
+    },
+    {
+      "scenario": "受控 32 MiB 镜像磁盘满时保留 DISK_FULL 原因、旧资料和源文件",
+      "red": {
+        "command": "bash tests/materials/storage-faults/reproduce.sh /Users/gongchenyu/code/xier-worktrees/local-material-design",
+        "exitCode": 1,
+        "evidence": "evidence/storage-01-red.txt",
+        "summary": "原始 SQLITE_FULL 被多余 ROLLBACK 错误覆盖。"
+      },
+      "green": {
+        "command": "bash tests/materials/storage-faults/reproduce.sh /Users/gongchenyu/code/xier-worktrees/local-material-design",
+        "exitCode": 0,
+        "evidence": "evidence/storage-01-green.txt",
+        "summary": "保留原错误；物理磁盘不足、只读和损坏均可行动且文件保留。系统 Node 测试，不替代 Electron。"
+      },
+      "refactor": {
+        "command": "bash tests/materials/storage-faults/reproduce.sh /Users/gongchenyu/code/xier-worktrees/local-material-design",
+        "exitCode": 0,
+        "evidence": "evidence/storage-01-green.txt",
+        "summary": "保留原错误；物理磁盘不足、只读和损坏均可行动且文件保留。系统 Node 测试，不替代 Electron。"
+      }
+    },
+    {
+      "scenario": "500份100MiB真实包内搜索预算从315ms优化到134ms",
+      "red": {
+        "command": "XIER_BENCH_TIMEOUT=180000 node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier benchmark",
+        "exitCode": 1,
+        "evidence": "evidence/benchmark-01-failed-budget.txt",
+        "summary": "正确性通过但冷/暖搜索预算超限。"
+      },
+      "green": {
+        "command": "XIER_BENCH_TIMEOUT=180000 node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier benchmark",
+        "exitCode": 0,
+        "evidence": "evidence/benchmark-02-optimized.txt",
+        "summary": "SQL 分批精确复核后搜索预算通过；refactor 证据还覆盖30次新内容取消竞争。"
+      },
+      "refactor": {
+        "command": "XIER_BENCH_TIMEOUT=180000 node tests/packaged/material-service.mjs out/Xier-darwin-arm64/Xier.app/Contents/MacOS/Xier benchmark",
+        "exitCode": 0,
+        "evidence": "evidence/benchmark-03-stages.txt",
+        "summary": "SQL 分批精确复核后搜索预算通过；refactor 证据还覆盖30次新内容取消竞争。"
+      }
+    },
+    {
+      "scenario": "拒绝额外请求字段及不合法任务历史请求",
+      "red": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/host-06-red.txt",
+        "summary": "额外字段被转发导致断言失败。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-06-green.txt",
+        "summary": "公开请求严格字段白名单通过；无需额外重构。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-host.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/host-06-green.txt",
+        "summary": "公开请求严格字段白名单通过；无需额外重构。"
+      }
+    },
+    {
+      "scenario": "源文件在系统选择后删除或换为symlink时返回正确源错误",
+      "red": {
+        "command": "npm test -- tests/material-files.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/files-04-red.txt",
+        "summary": "删除后收到原始ENOENT，未返回FILE_UNREADABLE，真实断言失败。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-04-green.txt",
+        "summary": "open失败分类为源错误，成功读取路径未改变；受影响文件与服务7项通过，无额外重构。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-04-green.txt",
+        "summary": "open失败分类为源错误，成功读取路径未改变；受影响文件与服务7项通过，无额外重构。"
+      }
+    }
+  ],
+  "limitations": [
+    "host/files/service/ui-01-red 和 paint-bootstrap 是缺失模块/收集失败，未作为行为 TDD cycle。supervision-01-red/green 都是脚本解析失败，未作为 GREEN。",
+    "repository-01/03/04 的 RED 为公开方法缺失，不能证明其中全部语义分别先失败；后续语义断言与独立 oracle 提供当前行为证据，不能追溯证明初始实现全程遵守 TDD。",
+    "g0-package-red 是缺少 packaged QA 入口导致超时，仅证明端到端 smoke 未可用，不证明某条数据语义失败。",
+    "历史日志保留真实顺序和失败原因；不可把当前回归全部通过等同于每行代码均严格 TDD。"
+  ],
+  "postImplementationChecks": [
+    {
+      "command": "XIER_MATERIAL_RECOVERY_EVIDENCE=openspec/changes/add-local-material-service/evidence/recovery-boundaries.json npm run test:materials:electron",
+      "exitCode": 0,
+      "evidence": "evidence/recovery-boundaries-full.txt",
+      "summary": "实现后的真实Electron故障边界回归，8项通过；5份副本全文和5个源文件hash已核对，详见recovery-boundaries.json。没有为已正确实现的行为伪造RED。"
+    },
+    {
+      "command": "npm test -- tests/material-host.test.ts",
+      "exitCode": 0,
+      "evidence": "evidence/feature-off-verify.txt",
+      "summary": "实现后的功能关闭无存储启动回归；不是先行TDD。"
+    }
+  ]
+}

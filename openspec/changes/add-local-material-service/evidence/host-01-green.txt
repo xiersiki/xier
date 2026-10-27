@@ -1,0 +1,13 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-host.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:08:06
+   Duration  171ms (setup 44%, transform 25%, import 24%, worker 4%, tests 3%)
+

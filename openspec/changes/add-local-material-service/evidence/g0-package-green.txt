@@ -1,0 +1,10 @@
+{
+  "protocolVersion": 1,
+  "process": "utility",
+  "electron": "45.0.0",
+  "node": "24.22.0",
+  "sqlite": "3.53.4",
+  "journal": "wal",
+  "fts5": true,
+  "schemaVersion": 1
+}

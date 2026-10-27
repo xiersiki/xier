@@ -1,0 +1,37 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-library.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-library.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-library.test.ts [ tests/material-library.test.ts ]
+Error: Failed to resolve import "../renderer/views/materials.vue" from "tests/material-library.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/gongchenyu/code/xier-worktrees/local-material-design/tests/material-library.test.ts:3:28
+  1  |  import { mount, flushPromises } from "@vue/test-utils";
+  2  |  import { expect, it, vi } from "vitest";
+  3  |  import MaterialLibrary from "../renderer/views/materials.vue";
+     |                               ^
+  4  |  it("lets the user preview inert text, import files, confirm cancellation and release the observer on leaving", async ...
+  5  |    const unsubscribe = vi.fn();
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/config.js:29250:43
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/config.js:29247:14
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/config.js:27370:18
+ ❯ node_modules/vite/dist/node/chunks/config.js:27428:32
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/config.js:27396:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/config.js:29048:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/config.js:22914:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  20:21:26
+   Duration  2.98s (environment 97%, setup 1%, transform 1%)
+

@@ -1,0 +1,13 @@
+
+> xier@1.0.0 site:build
+> npm --prefix site run build
+
+
+> xier-site@1.0.0 build
+> vue-tsc --noEmit && vitepress build && node scripts/preserve-redirect.mjs
+
+.vitepress/config.ts(1,30): error TS2307: Cannot find module 'vitepress' or its corresponding type declarations.
+.vitepress/theme/index.ts(1,26): error TS2307: Cannot find module 'vitepress/theme' or its corresponding type declarations.
+.vitepress/theme/index.ts(2,28): error TS2307: Cannot find module 'vitepress' or its corresponding type declarations.
+.vitepress/theme/index.ts(8,16): error TS7031: Binding element 'app' implicitly has an 'any' type.
+.vitepress/theme/XierHome.vue(2,26): error TS2307: Cannot find module 'vitepress' or its corresponding type declarations.

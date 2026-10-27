@@ -37,6 +37,7 @@ module.exports = {
         // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
         // If you are familiar with Vite configuration, it will look really familiar.
         build: [
+          { entry: "main/materials/entry.ts", config: "vite.materials.config.ts", target: "main" },
           {
             // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
             entry: "main/index.ts",

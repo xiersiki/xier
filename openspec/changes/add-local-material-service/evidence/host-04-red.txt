@@ -1,0 +1,37 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-host.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-host.test.ts (4 tests | 1 failed) 11ms
+   × does not bind a superseded account while an old service is still closing 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-host.test.ts > does not bind a superseded account while an old service is still closing
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/material-host.test.ts:60:65
+     58|   const second=host.bindAuth(true,'B');
+     59|   let bound=false;void second.then(()=>bound=true);
+     60|   await Promise.resolve();await Promise.resolve();expect(bound).toBe(f…
+       |                                                                 ^
+     61|   finishClose();expect(await firstResult).toContain('STALE_LEASE');
+     62|   const lease=await second;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  20:26:42
+   Duration  218ms (import 37%, transform 29%, setup 24%, tests 8%, worker 2%)
+

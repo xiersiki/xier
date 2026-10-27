@@ -3,10 +3,47 @@
 
 import { contextBridge, ipcRenderer } from 'electron';
 import { IPC_EVENTS, WINDOW_NAMES } from '@common/constants';
+import { observeMaterialPaint } from './common/materialPaintTrace';
+
+void ipcRenderer.invoke('materials:trace-enabled').then(enabled => {
+  if (!enabled) return;
+  const stop = observeMaterialPaint(window, sample => ipcRenderer.send('materials:trace', sample),
+    requestAnimationFrame.bind(window), () => performance.now());
+  window.addEventListener('unload', stop, { once: true });
+}).catch(() => {});
 
 let eventId = 0;
+let materialLease:string|null=null;
+let materialObservers=0;
+const materialCall=(method:string,input?:unknown)=>ipcRenderer.invoke('materials:request',materialLease,method,input);
+
 
 const api: WindowApi = {
+  materials: {
+    isEnabled:()=>ipcRenderer.invoke('materials:enabled'),
+    bindAuth:async accountId=>{materialLease=null;const lease=await ipcRenderer.invoke('materials:auth',accountId);materialLease=lease;return lease;},
+    chooseFiles:()=>materialCall('chooseFiles'),
+    startImport:input=>materialCall('startImport',input),
+    getImport:requestId=>materialCall('getImport',requestId),
+    listImports:input=>materialCall('listImports',input),
+    cancelImport:requestId=>materialCall('cancelImport',requestId),
+    search:input=>materialCall('search',input),
+    cancelSearch:queryId=>materialCall('cancelSearch',queryId),
+    readText:input=>materialCall('readText',input),
+    copyText:documentId=>materialCall('copyText',documentId),
+    removeMaterial:documentId=>materialCall('removeMaterial',documentId),
+    restartService:()=>materialCall('restartService'),
+    observeImports:callback=>{
+      if(materialObservers++===0)ipcRenderer.send('materials:watch',materialLease,true);
+      const listener=(_:Electron.IpcRendererEvent,event:import('./common/materials').MaterialEvent)=>{
+        if(event.type==='scope'){materialLease=event.lease;if(event.lease&&materialObservers>0)ipcRenderer.send('materials:watch',event.lease,true);callback(event);}
+        else if(event.lease===materialLease){try{callback(event);}finally{if(event.type==='job')ipcRenderer.send('materials:ack',materialLease,event.sequence);}}
+      };
+      ipcRenderer.on('materials:event',listener);
+      let stopped=false;
+      return ()=>{if(stopped)return;stopped=true;ipcRenderer.removeListener('materials:event',listener);if(--materialObservers===0)ipcRenderer.send('materials:watch',materialLease,false);};
+    },
+  },
   listProviderModels: setting => ipcRenderer.invoke(IPC_EVENTS.LIST_PROVIDER_MODELS, setting),
   authorizeOAuth: (url: string) => ipcRenderer.invoke('oauth:authorize', url),
   cancelOAuth: () => ipcRenderer.send('oauth:cancel'),
