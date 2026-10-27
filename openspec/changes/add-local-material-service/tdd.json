@@ -39,6 +39,7 @@
     "tests/materials/control-probe.cjs",
     "tests/materials/control-runner.ts",
     "tests/materials/process-runner.cjs",
+    "tests/materials/recovery-runner.ts",
     "tests/materials/schema-runner.ts",
     "tests/materials/sqlite-probe.ts",
     "tests/materials/storage-faults/reproduce.sh",
@@ -686,5 +687,19 @@
     "repository-01/03/04 的 RED 为公开方法缺失，不能证明其中全部语义分别先失败；后续语义断言与独立 oracle 提供当前行为证据，不能追溯证明初始实现全程遵守 TDD。",
     "g0-package-red 是缺少 packaged QA 入口导致超时，仅证明端到端 smoke 未可用，不证明某条数据语义失败。",
     "历史日志保留真实顺序和失败原因；不可把当前回归全部通过等同于每行代码均严格 TDD。"
+  ],
+  "postImplementationChecks": [
+    {
+      "command": "XIER_MATERIAL_RECOVERY_EVIDENCE=openspec/changes/add-local-material-service/evidence/recovery-boundaries.json npm run test:materials:electron",
+      "exitCode": 0,
+      "evidence": "evidence/recovery-boundaries-full.txt",
+      "summary": "实现后的真实Electron故障边界回归，8项通过；5份副本全文和5个源文件hash已核对，详见recovery-boundaries.json。没有为已正确实现的行为伪造RED。"
+    },
+    {
+      "command": "npm test -- tests/material-host.test.ts",
+      "exitCode": 0,
+      "evidence": "evidence/feature-off-verify.txt",
+      "summary": "实现后的功能关闭无存储启动回归；不是先行TDD。"
+    }
   ]
 }

@@ -12,6 +12,7 @@ const nativeIt = process.env.XIER_ELECTRON_TESTS === "1" ? it : it.skip;
 async function runProcess(
   entrySource = "main/materials/entry.ts",
   evidenceFile?: string,
+  runnerSource?: string,
 ) {
   const directory = await mkdtemp(join(tmpdir(), "xier-material-process-"));
   try {
@@ -24,11 +25,23 @@ async function runProcess(
       format: "cjs",
       external: ["electron"],
     });
+    const runner = runnerSource
+      ? join(directory, "runner.cjs")
+      : resolve("tests/materials/process-runner.cjs");
+    if (runnerSource)
+      await build({
+        entryPoints: [runnerSource],
+        outfile: runner,
+        bundle: true,
+        platform: "node",
+        format: "cjs",
+        external: ["electron"],
+      });
     const result = await new Promise<Record<string, unknown>>(
       (resolveResult, reject) => {
         const child = spawn(
           createRequire(import.meta.url)("electron"),
-          [resolve("tests/materials/process-runner.cjs")],
+          [runner],
           {
             env: {
               ...process.env,
@@ -86,7 +99,7 @@ nativeIt(
   async () => {
     const result = await runProcess(
       "tests/materials/sqlite-probe.ts",
-      "openspec/changes/add-local-material-service/evidence/g0-sqlite.json",
+      process.env.XIER_MATERIAL_SQLITE_EVIDENCE,
     );
     expect(result).toMatchObject({
       journal: "wal",
@@ -98,6 +111,31 @@ nativeIt(
     expect(Number(result.controlLatencyMs)).toBeLessThan(1000);
   },
   20000,
+);
+nativeIt(
+  "recovers a real import killed before commit and after a terminal notification is dropped",
+  async () => {
+    const result = await runProcess(
+      "main/materials/entry.ts",
+      process.env.XIER_MATERIAL_RECOVERY_EVIDENCE,
+      "tests/materials/recovery-runner.ts",
+    );
+    expect(result.error).toBeUndefined();
+    expect(result).toMatchObject({
+      interrupted: true,
+      retainedBaseline: true,
+      retryLinked: true,
+      droppedTerminalRetained: true,
+      replayDeduplicated: true,
+      changedSources: 0,
+      documents: 5,
+      verifiedCopies: 5,
+      sourceFiles: 5,
+      contentLoss: 0,
+    });
+    console.log("Real import crash recovery:", result);
+  },
+  30000,
 );
 
 nativeIt(

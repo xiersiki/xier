@@ -6,7 +6,7 @@
 
 | 范围 | 结果 | 原始证据 |
 | --- | --- | --- |
-| 全量应用检查 | 类型检查、最终增量后 113 项离线测试通过；7 项真实 Electron 进程测试通过 | check-final.txt、electron-final.txt；增量后 check-review.txt |
+| 全量应用检查 | 类型检查、最终增量后 114 项离线测试通过；8 项真实 Electron 进程测试通过 | check-final.txt、electron-final.txt；增量后 recovery-boundaries-full.txt；应用 check-recovery.txt |
 | 桌面产物 | macOS arm64 Forge package；ASAR 独立 utility 入口、SQLite/WAL/FTS5 启动通过 | package-final.txt、packaged-final.txt；增量后的 package-review.txt |
 | 站点 | 首次因本 worktree 未安装 site 依赖失败，npm ci --prefix site 后成功 | site-final.txt、site-final-retry.txt |
 | 上限语料 | 500 份 / 100 MiB；冷/暖各 100 次；内容和源文件 hash 核验无损失、无源文件改动 | benchmark-final.json |
@@ -38,3 +38,9 @@ host/files/service/ui-01-red 及 paint-bootstrap 是缺失模块、没有执行�
 保留所有失败日志，包括最初超预算、网络 TLS 下载失败与无效测试启动；不把它们改写成成功证据。
 
 files-03-red.txt 为保留断言与栈的可读摘录；原始 130,045 行合成 Buffer 差异保存在同名 .txt.gz，摘录内有原文 SHA256。其他运行日志保持原始输出（含终端换行），代码空白检查对日志单独排除。
+
+## 锁屏期间的补充验证
+
+recovery-boundaries-full.txt 与 recovery-boundaries.json 验证真实 Electron utility 在 reading 阶段被 SIGKILL 后恢复 interrupted，保留此前 baseline；retryOf 重新选择后导入。再将新资料 completed 私有事件拦截、不交给 UI，立即终止服务；重开仍为 imported，再选相同文件只产生 duplicate。最终5份副本逐份全文hash均与源文件一致，含baseline的5份源文件hash无变化。这里是 Main/utility 边界的回归，不代替真实窗口的故障提示验收。feature-off-verify.txt 验证功能关闭时公共业务被拒且不启动存储。这些是在实现后补的回归，没有补造 RED。
+
+继续实际桌面验收时，工具明确检测到 Mac 再次锁屏。因此早先选择器按钮灰色的原因尚不能判定；等待人工解锁，不将其归因为产品缺陷。三平台产物、应用和站点 CI 在 1c1fda7 上通过，OpenSpec gate 的唯一失败为 tasks 未全部完成；后续测试资料提交的检查另以 PR Actions 为准。

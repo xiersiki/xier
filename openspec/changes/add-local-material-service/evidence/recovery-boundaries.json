@@ -1,0 +1,12 @@
+{
+  "interrupted": true,
+  "retainedBaseline": true,
+  "retryLinked": true,
+  "droppedTerminalRetained": true,
+  "replayDeduplicated": true,
+  "documents": 5,
+  "changedSources": 0,
+  "verifiedCopies": 5,
+  "sourceFiles": 5,
+  "contentLoss": 0
+}

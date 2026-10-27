@@ -225,3 +225,42 @@ it("rejects unknown request fields and malformed history requests instead of for
   ).rejects.toThrow("INVALID_INPUT");
   await host.close();
 });
+it("keeps existing material bytes untouched when the feature is disabled", async () => {
+  const { mkdtemp, writeFile, readFile, rm } = await import("node:fs/promises");
+  const { createHash } = await import("node:crypto");
+  const { join } = await import("node:path");
+  const { tmpdir } = await import("node:os");
+  const root = await mkdtemp(join(tmpdir(), "xier-feature-off-"));
+  try {
+    const file = join(root, "existing-materials.sqlite");
+    const before = Buffer.from("existing material fixture bytes");
+    await writeFile(file, before);
+    let starts = 0;
+    const host = new MaterialHost(
+      root,
+      async () => {
+        starts++;
+        throw new Error("Feature-off must not open storage");
+      },
+      async () => [],
+      () => {},
+      false,
+    );
+    const lease = await host.bindAuth(true, null);
+    await expect(host.invoke(true, lease, "listImports")).rejects.toThrow(
+      "FEATURE_DISABLED",
+    );
+    await expect(host.invoke(true, lease, "chooseFiles")).rejects.toThrow(
+      "FEATURE_DISABLED",
+    );
+    await host.close();
+    expect(starts).toBe(0);
+    expect(
+      createHash("sha256")
+        .update(await readFile(file))
+        .digest("hex"),
+    ).toBe(createHash("sha256").update(before).digest("hex"));
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
