@@ -1,0 +1,29 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-service.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-service.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-service.test.ts [ tests/material-service.test.ts ]
+Error: Cannot find module '../main/materials/service' imported from /Users/gongchenyu/code/xier-worktrees/local-material-design/tests/material-service.test.ts
+ ❯ tests/material-service.test.ts:8:1
+      6| import { createHash } from 'node:crypto';
+      7| import { setTimeout as delay } from 'node:timers/promises';
+      8| import { MaterialService } from '../main/materials/service';
+       | ^
+      9| import { authorizeFiles } from '../main/materials/files';
+     10| import type { ImportJob } from '../common/materials';
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  20:08:34
+   Duration  158ms (setup 84%, transform 9%, worker 7%)
+

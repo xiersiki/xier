@@ -19,7 +19,8 @@
     "spec": "openspec",
     "spec:validate": "openspec validate --all --strict --no-interactive && openspec validate --archived --strict --no-interactive",
     "spec:gate": "node scripts/check-sdd.mjs",
-    "test:workflow": "vitest run tests/spec-workflow.test.ts"
+    "test:workflow": "vitest run tests/spec-workflow.test.ts",
+    "test:materials:electron": "node scripts/test-material-electron.mjs"
   },
   "keywords": [],
   "author": {

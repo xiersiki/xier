@@ -1,0 +1,29 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-files.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-files.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-files.test.ts [ tests/material-files.test.ts ]
+Error: Cannot find module '../main/materials/files' imported from /Users/gongchenyu/code/xier-worktrees/local-material-design/tests/material-files.test.ts
+ ❯ tests/material-files.test.ts:6:1
+      4| import { tmpdir } from 'node:os';
+      5| import { join } from 'node:path';
+      6| import { authorizeFiles,readAuthorizedFile } from '../main/materials/f…
+       | ^
+      7| it('imports only unchanged ordinary UTF-8 text using a picker manifest…
+      8|   const dir=await mkdtemp(join(tmpdir(),'xier-files-'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  19:57:19
+   Duration  208ms (setup 83%, transform 9%, worker 8%)
+

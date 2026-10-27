@@ -1,0 +1,38 @@
+
+> xier@1.0.0 test:materials:electron
+> node scripts/test-material-electron.mjs
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-process.test.ts (5 tests | 1 failed) 2585ms
+   × preserves a future schema and returns an actionable startup error over the real port 192ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-process.test.ts > preserves a future schema and returns an actionable startup error over the real port
+AssertionError: expected 'MATERIAL_RESULT={"error":"Error: SERV…' to contain 'SCHEMA_TOO_NEW'
+
+- Expected
++ Received
+
+- SCHEMA_TOO_NEW
++ MATERIAL_RESULT={"error":"Error: SERVICE_EXITED","preserved":true}
++
+
+ ❯ tests/material-process.test.ts:78:20
+     76|       let output='';child.stdout.on('data',part=>output+=part);child.o…
+     77|     });
+     78|     expect(result).toContain('SCHEMA_TOO_NEW');expect(result).toContai…
+       |                    ^
+     79|   }finally{await rm(directory,{recursive:true,force:true});}
+     80| },20000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:42:05
+   Duration  2.77s (tests 96%, setup 1%, transform 1%, import 1%)
+

@@ -1,0 +1,13 @@
+
+> xier@1.0.0 test:materials:electron
+> node scripts/test-material-electron.mjs
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  20:44:42
+   Duration  2.71s (tests 98%, setup 1%)
+

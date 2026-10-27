@@ -1,0 +1,17 @@
+11:59:31.604 › Log service initialized successfully
+11:59:31.608 › Configuration file not found, using default configuration
+11:59:31.614 › Configuration service initialized
+11:59:31.633 › Shortcut service initialized
+11:59:31.648 › Theme service initialized
+11:59:31.652 › Window service initialized
+11:59:31.656 › Tray service initialized
+11:59:31.659 › Menu service initialized
+11:59:39.029 › MATERIAL_BENCH imported 10
+11:59:46.891 › MATERIAL_BENCH imported 10
+11:59:50.790 › MATERIAL_BENCH imported 100
+11:59:54.108 › MATERIAL_BENCH imported 100
+11:59:58.401 › MATERIAL_BENCH imported 100
+12:00:01.775 › MATERIAL_BENCH imported 100
+12:00:04.208 › MATERIAL_BENCH imported 80
+12:00:11.661 › MATERIAL_BENCH cold search p95 124.96700000000419
+12:00:13.260 › MATERIAL_BENCH warm search p95 123.89595900000131

@@ -1,6 +1,6 @@
 # 本地资料库 PRD：导入、搜索与恢复
 
-评审稿 v0.1 · 2026-10-26。用户已选择以桌面本地资料服务深化客户端工程。本期建议交付 TXT/Markdown 的本地副本导入、全文搜索、只读预览，以及任务取消、服务异常和重开后的可解释恢复。范围与验收门槛供评审，尚未实施。
+实施中 · 2026-10-27。用户已授权按本方案实现。TXT/Markdown 导入、离线检索、只读预览及资料服务的取消/恢复代码已接入 Draft PR #29；真实 Electron 服务、上限语料和存储故障已取得部分验证。完整 GUI、绘制性能与真实认证切换验收尚未关闭，未合并、未发布。验收事实与剩余项以 PR/change 为准。
 
 [PRD](https://pcn11w88fq9h.feishu.cn/wiki/LMW1w1n5AiSIDBkeheac4WWQnij) · [技术方案](https://pcn11w88fq9h.feishu.cn/wiki/Hf02wtW5eiXhRfkUQDec9qCpnWe) · [Issue #28](https://github.com/xiersiki/xier/issues/28) · [版本化规格与任务](https://github.com/xiersiki/xier/tree/codex/local-material-design/openspec/changes/add-local-material-service)
 
@@ -50,7 +50,7 @@ P0 缺失即不交付，P1 可以后续补充，P2 为候选方向。主验收�
 
 ## 怎样验收
 
-所有数字是拟定交付门槛，不是当前成绩。先记录设备、OS、应用版本和空闲磁盘；使用人工合成文本与隔离 profile，不读取私人文件。
+以下数字为交付门槛；当前成绩和测量边界见 PR/change，不将 Main↔utility 基准冒充完整界面验收。先记录设备、OS、应用版本和空闲磁盘；使用人工合成文本与隔离 profile，不读取私人文件。
 
 | 目标 | 测法与样本 | 配对约束 |
 | --- | --- | --- |
@@ -66,4 +66,4 @@ P0 缺失即不交付，P1 可以后续补充，P2 为候选方向。主验收�
 
 本期不做 PDF/Office/图片解析、OCR、目录扫描或监听、原文件编辑、全文改写、RAG/向量库、联网搜索、自动上传、RN、共享写入多窗口、插件系统和自动更新。它们各自有独立的产品与平台约束。
 
-下一步先评审文件范围、身份语义和指标，再验证实际 Electron 安装包中的独立服务、存储与中文查询。实施行为及逐项测试统一维护在关联 OpenSpec change；PRD 维护意图与范围，不复制开发勾选清单。
+下一步完成真实界面的完整场景、导入时绘制测量与认证切换验收，再决定是否将 Draft 转为可合并。实施行为及逐项测试统一维护在关联 OpenSpec change；PRD 维护意图与范围，不复制开发勾选清单。

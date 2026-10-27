@@ -1,0 +1,39 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-service.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:50171) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-service.test.ts (2 tests | 1 failed) 64ms
+   × reports an unavailable service when cancellation cannot be persisted, then allows a durable retry 44ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-service.test.ts > reports an unavailable service when cancellation cannot be persisted, then allows a durable retry
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/material-service.test.ts:42:86
+     40|     await expect(service.request('cancelImport','cancel-failure')).rej…
+     41|     blocker.exec('ROLLBACK');await delay(20);
+     42|     expect(events.some(event=>event.type==='service'&&event.status==='…
+       |                                                                                      ^
+     43|     expect(await service.request('cancelImport','cancel-failure')).toM…
+     44|     expect(await service.request('search',{queryId:'after-stop',text:'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:39:01
+   Duration  248ms (tests 42%, setup 20%, transform 19%, import 18%, worker 2%)
+

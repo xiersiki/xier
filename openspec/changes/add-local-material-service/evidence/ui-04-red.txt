@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-library.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-library.test.ts (3 tests | 1 failed) 323ms
+   × unlocks import when the active account changes while the picker is pending 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-library.test.ts > unlocks import when the active account changes while the picker is pending
+AssertionError: expected '旧账号查询' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ 旧账号查询
+
+ ❯ tests/material-library.test.ts:112:87
+    110|   listener({ type: "scope", lease: "new-account" });
+    111|   await flushPromises();
+    112|   expect((wrapper.get('input[aria-label="搜索资料"]').element as HTMLInput…
+       |                                                                                       ^
+    113|   expect(importButton().attributes("disabled")).toBeUndefined();
+    114|   finishPicker(null);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  11:36:32
+   Duration  1.32s (environment 38%, tests 26%, transform 19%, import 13%, setup 3%)
+

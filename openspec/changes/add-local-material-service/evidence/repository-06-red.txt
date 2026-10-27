@@ -1,0 +1,33 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-repository.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:43021) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-repository.test.ts (6 tests | 1 failed) 238ms
+   × accepts 128 original Unicode code points even when lowercase expands them 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-repository.test.ts > accepts 128 original Unicode code points even when lowercase expands them
+Error: INVALID_QUERY
+ ❯ MaterialRepository.search main/materials/repository.ts:128:43
+    126|   async search(input:SearchInput) {
+    127|     const query=normalizeMaterial(input.text.trim());
+    128|     if(Array.from(query).length>128)throw new Error('INVALID_QUERY');
+       |                                           ^
+    129|     if(this.activeQuery&&this.activeQuery!==input.queryId)this.cancelS…
+    130|     this.activeQuery=input.queryId;
+ ❯ tests/material-repository.test.ts:89:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  20:33:04
+   Duration  400ms (tests 73%, setup 11%, transform 10%, import 6%, worker 1%)
+

@@ -1,0 +1,47 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-service.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:64618) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-service.test.ts (3 tests | 1 failed) 84ms
+   × exposes the current item as reading and stops it before commit when cancellation is acknowledged 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-service.test.ts > exposes the current item as reading and stops it before commit when cancellation is acknowledged
+AssertionError: expected { requestId: 'reading', …(4) } to match object { status: 'running', …(1) }
+(5 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "items": [
+      {
+-       "status": "reading",
++       "status": "pending",
+      },
+    ],
+    "status": "running",
+  }
+
+ ❯ tests/material-service.test.ts:54:58
+     52|     await service.request('startImport',{requestId:'reading',manifestT…
+     53|     await new Promise(resolve=>setImmediate(resolve));
+     54|     expect(await service.request('getImport','reading')).toMatchObject…
+       |                                                          ^
+     55|     expect(await service.request('cancelImport','reading')).toMatchObj…
+     56|     await delay(20);expect(await service.request('search',{queryId:'ca…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  22:00:51
+   Duration  260ms (tests 46%, setup 21%, transform 18%, import 13%, worker 2%)
+

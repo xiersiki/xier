@@ -1,0 +1,6 @@
+{
+  "databaseClosed": true,
+  "sqliteBytes": 924942336,
+  "rawBytes": 104857600,
+  "notes": "Actual package run, after closing utility connections. WAL checkpointed. High-variation trigram corpus; BLOB/text/normalized text plus FTS index ~8.82 \u00d7 raw size. Not a disk usage bound."
+}

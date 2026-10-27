@@ -51,7 +51,7 @@ The system SHALL 分别搜索标题及完整正文，查询 trim 后为 1–128 
 - **THEN** 返回规范化后标题或正文包含该完整子串的资料，不因索引分词漏检，也不跨标题与正文拼接制造命中
 
 #### Scenario: Query boundaries
-- **WHEN** trim 后查询超过 128 code points
+- **WHEN** 查询含未配对 UTF-16 surrogate，或 trim 后原始查询超过 128 code points
 - **THEN** 页面解释上限且不发送该查询；空查询按最近资料处理
 
 #### Scenario: Stable result pages

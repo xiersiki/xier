@@ -1,0 +1,32 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-repository.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:85261) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-repository.test.ts (3 tests | 1 failed) 19ms
+   × confirms cancellation durably and recovers only unfinished work after reopening 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-repository.test.ts > confirms cancellation durably and recovers only unfinished work after reopening
+TypeError: r.cancelImport is not a function
+ ❯ tests/material-repository.test.ts:46:12
+     44|   r.startImport('stop','stop',[{name:'a.txt',size:3},{name:'b.txt',siz…
+     45|   r.completeItem('stop',0,Buffer.from('abc'),'abc');
+     46|   expect(r.cancelImport('stop').status).toBe('cancelled');
+       |            ^
+     47|   expect(()=>r.completeItem('stop',1,Buffer.from('def'),'def')).toThro…
+     48|   expect(r.usage().documents).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  19:49:29
+   Duration  176ms (setup 31%, transform 28%, tests 20%, import 18%, worker 3%)
+

@@ -48,6 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
     transitions = transitions.catch(() => {}).then(async () => {
       const nextId = next?.user.id ?? null;
       if (activeUser === nextId) { session.value = next; return; }
+      await window.api.materials?.bindAuth(nextId).catch(() => { notify.warning('资料库暂时不可用', '可稍后在资料库重启服务'); });
       const [{ useProvidersStore }, { useConversationsStore }, { useMessagesStore }] = await Promise.all([
         import('./providers'), import('./conversations'), import('./messages'),
       ]);

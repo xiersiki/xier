@@ -1,0 +1,39 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-repository.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+(node:6896) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/material-repository.test.ts (5 tests | 1 failed) 446ms
+   × enforces the document quota while allowing duplicates and keeps pagination stable until a mutation 412ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-repository.test.ts > enforces the document quota while allowing duplicates and keeps pagination stable until a mutation
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/material-repository.test.ts:81:79
+     79|   expect(r.getImport('duplicate')!.items[0].status).toBe('duplicate');
+     80|   r.startImport('overflow','o',[{name:'overflow.txt',size:8}]);
+     81|   expect(()=>r.completeItem('overflow',0,Buffer.from('overflow'),'over…
+       |                                                                               ^
+     82|   expect(r.usage().documents).toBe(500);
+     83|   r.removeMaterial(first.items[0].id);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:20:40
+   Duration  646ms (tests 79%, transform 7%, import 7%, setup 6%, worker 1%)
+

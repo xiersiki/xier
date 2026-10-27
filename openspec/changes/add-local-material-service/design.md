@@ -102,16 +102,17 @@ type MaterialApi = {
 };
 ```
 
-listImports 在重开/重新绑定后按时间列出当前分区任务，每页最多 20 条，返回 requestId、状态和计数；页面据此发现活动/中断任务再 getImport，不依赖保留内存 ID。主窗口 clipboard 业务通过受控 Host 调用完成，全文复制在 Host 内进行，不把原始 BLOB 一次性送进 renderer。分段预览 offset 按 Unicode code points 定义，固定段上限 20,000；文件最大 2 MiB 使一次复制仍有上限。UI 返回 DTO 不携带来源路径或原始字节，单次 UI 响应最多 256 KiB。全文复制使用仅 Host 可发起的内部方法，正文传输上限 2 MiB UTF-8 字节；不受 20,000 字符预览段限制。
+listImports 在重开/重新绑定后按时间列出当前分区任务，每页最多 20 条且序列化结果约 200 KiB，返回含逐项结果的任务快照；页面据此发现活动/中断任务再 getImport，不依赖保留内存 ID。主窗口 clipboard 业务通过受控 Host 调用完成，全文复制在 Host 内进行，不把原始 BLOB 一次性送进 renderer。分段预览 offset 按 Unicode code points 定义，固定段上限 20,000；文件最大 2 MiB 使一次复制仍有上限。UI 返回 DTO 不携带来源路径或原始字节，单次 UI 响应最多 256 KiB。全文复制使用仅 Host 可发起的内部方法，正文传输上限 2 MiB UTF-8 字节；不受 20,000 字符预览段限制。
 
 | 封套/结果 | 必要字段 | 语义 |
 | --- | --- | --- |
-| 请求 | protocolVersion、commandId、method、lease/epoch、payload | method/版本白名单；UI 请求及一般消息最大 64 KiB，拒绝未知字段与越界内容 |
-| 响应 | commandId、ok、result 或 code/message | 超时不自动重发写命令；写结果用 requestId 查询 |
-| 快照 | serviceEpoch、jobId、revision、status、counts、items | 仅接受当前 epoch、更新 revision；中间快照不是持久成功 |
+| UI 请求 | method、lease、input | Host 校验来源、当前 lease、method 与字段白名单；最大 64 KiB |
+| 私有请求 | id、method、input | 同一安装包的 Main/utility 固定协议；请求 id 关联响应，scope/generation 在 Host/Connection 校验，不接受调用方传入分区 |
+| 私有响应 | id、result 或 error | 超时不自动重发写命令；写结果用 requestId 查询 |
+| UI 事件 | type、lease、job/service status、sequence | 当前 lease 隔离；job 以 sequence 做消费 ACK；持久任务快照为权威 |
 | 错误 | code、可行动说明、requestId | 不包含密钥、正文、完整路径或底层 SQL |
 
-Host 数据面允许最多 16 个在途命令，超出返回 BUSY；同分区最多一个导入批次，服务 RPC 命令队列最多 32 项（100个批次文件条目独立持久化，不计入RPC队列），用户侧不能无界排队。导入 progress 最多每秒 4 次发送最新快照；每观察者最多保留一个待发送中间快照。终态优先发送且永远可 getImport 回读。cancel、scope revoke、restart 和 liveness 走独立控制面，不占数据面配额，Host 最多4个控制在途且按job/操作合并重复控制；服务在每个可让出点先处理控制队列，不能因数据队列满而拒绝取消。控制优先级也不能抢占同步 SQL，仍需 G0 证明单次阻塞上限。MessagePort 本身不提供本方案的背压保证，上述限额与合并是应用层协议。
+Host 数据面允许最多 16 个在途命令，超出返回 BUSY；同分区最多一个导入批次，服务 RPC 命令队列最多 32 项（100个批次文件条目独立持久化，不计入RPC队列），用户侧不能无界排队。导入 progress 最多每秒 4 次发送最新快照；Host relay 只允许一个已发送未 ACK 的 job 事件和一个最新待发快照；preload 消费后 ACK，离页解绑释放 relay。终态优先发送且永远可 getImport 回读。cancel、scope revoke、restart 和 liveness 走独立控制面，不占数据面配额，Host 最多 3 个业务控制在途，Connection 另为心跳保留 1 格；手动 restart 单飞；服务在每个可让出点先处理控制队列，不能因数据队列满而拒绝取消。控制优先级也不能抢占同步 SQL，仍需 G0 证明单次阻塞上限。MessagePort 本身不提供本方案的背压保证，上述限额与合并是应用层协议。
 
 选区能力和 requestId 的重放只用于原输入；ACK 丢失时查询持久 requestId。页面销毁或导航仅解除观察；窗口销毁释放该窗口 RPC 和订阅，任务按应用关闭/身份切换规则处置。取消 observe 不等于 cancelImport。
 
@@ -139,13 +140,13 @@ G0 必须测最坏单文件 FTS 写入及短词查询期间的取消/心跳延�
 
 ### 7. 搜索和预览的准确性
 
-检索规范化函数固定为 NFC → toLowerCase() → NFC；先 trim 查询，再以 Array.from 的 code points 检查 1–128。显示保留解码正文，UTF-8 BOM 不显示但保留在 rawBytes。标题与正文分别匹配，避免跨字段拼接的假命中。英文大小写是产品承诺，不扩成语言相关排序或词干检索。
+检索规范化函数固定为 NFC → toLowerCase() → NFC；先拒绝未配对 UTF-16 surrogate（防止 SQLite UTF-8 绑定替换为 U+FFFD），再 trim 查询并以 Array.from 检查原始 code points 的 1–128 上限，然后规范化；lowercase 展开不重新缩小合法输入范围。显示保留解码正文，UTF-8 BOM 不显示但保留在 rawBytes。标题与正文分别匹配，避免跨字段拼接的假命中。英文大小写是产品承诺，不扩成语言相关排序或词干检索。
 
 优先 FTS5 trigram，case_sensitive=1 对规范化列建索引；查询作为转义后的一个 quoted literal、用绑定参数送入 MATCH，再以 includes/instr 精确验证候选。中文一字/二字及不能证明召回完整的类别，走分批字面扫描。不得暴露 FTS 运算符或以索引分词替代产品的子串语义；G0 用 100 个固定 oracle 查询逐项核对标点、组合字符和 emoji。
 
-短词扫描按稳定 keyset 分页读取，每小批最多 8 行、尽量不超过 4 MiB 规范化正文，批间 yield 并检查 queryId/epoch；单行仍可能接近上限，因此预算要实测。旧查询被新查询替代时，服务取消旧扫描、UI 同时丢弃旧 queryId 响应，不能只丢回包而继续跑大量旧工作。首版一时仅一个活动搜索，导入与搜索在小批次之间公平调度。
+短词扫描先按稳定顺序读取元数据，在 SQLite 内使用绑定参数 instr 复核标题与正文，不把整个库正文复制到 JS；每小批最多 8 行、尽量不超过 4 MiB 规范化正文，批间 yield 并检查 queryId/epoch；单行仍可能接近上限，因此预算要实测。旧查询被新查询替代时，服务取消旧扫描、UI 同时丢弃旧 queryId 响应，不能只丢回包而继续跑大量旧工作。首版一时仅一个活动搜索，导入与搜索在小批次之间公平调度。
 
-排序采用 createdAt DESC、id ASC，最多 50 项。cursor 绑定 queryHash、libraryRevision 和排序边界；库变化时旧 cursor 返回 CURSOR_STALE 并重载，不拼接不同快照。空查询列最近资料。snippet 为有界纯文本，不直接将规范化字符串 offset 当原文位置；首版不做精确高亮，防止大小写/规范化长度变化错位。
+排序采用 createdAt DESC、id ASC，最多 50 项。cursor 绑定 queryHash、libraryRevision 和排序边界；库变化时旧 cursor 返回 CURSOR_STALE 并重载，不拼接不同快照。空查询列最近资料。列表返回名称、原始大小和导入时间，首版不做 snippet 或精确高亮；预览直接读取保留的正文，避免将规范化 offset 当原文位置。
 
 ### 8. 监督、恢复和退出
 
@@ -190,3 +191,11 @@ G0 是首个实施切片：实际 Electron utilityProcess 打开数据库，核�
 来源核验日期 2026-10-26：[Electron utilityProcess](https://www.electronjs.org/docs/latest/api/utility-process)、[MessagePorts](https://www.electronjs.org/docs/latest/tutorial/message-ports)、[Electron 45](https://www.electronjs.org/blog/electron-45-0)、[Node 24.22 SQLite](https://nodejs.org/download/release/v24.22.0/docs/api/sqlite.html)、[better-sqlite3 13](https://github.com/WiseLibs/better-sqlite3/releases/tag/v13.0.0)、[SQLite FTS5](https://www.sqlite.org/fts5.html)、[SQLite WAL](https://www.sqlite.org/wal.html)。具体版本、二进制和预算须 G0 验证，这些资料本身不是 Xier 实测证据。
 
 评审需确认文件范围、上限、账号信任边界和性能预算。服务与存储的替代路线已明确，当前没有以开放问题隐藏会改变行为契约的决策；实现中的库微版本选择由 G0 证据锁定。
+
+## 实施核验与尚未关闭的验收（2026-10-27）
+
+实现落在 PR #29，尚未合并/发布。Electron 45 的 node:sqlite/FTS5/WAL 及独立 ASAR entry 已实际运行；采用内置 SQLite，无新增 native addon。接口的准确类型以 common/materials.ts 为准（增加 isEnabled；观察返回 scope/job/service 事件；restartService 返回 void），上表是从设计封套到实际固定私有协议的细化，不是可供第三方协商的通用 RPC。
+
+上限语料的最新原始结果见 evidence/benchmark-final.json：500 份、100 MiB，冷/暖各 100 次、取消 30 次、退出故障 10 次，正确性与源文件 hash 核验无损失。冷指每次重新打开 utility/SQLite 连接，不清 OS 文件缓存；测量边界为 Main 到 utility，不含界面 debounce/渲染。高变化 trigram 语料关闭后的数据库约 882 MiB（约原字节的 8.82 倍），不能把 100 MiB 配额理解为磁盘占用上限。
+
+交互 QA 仅在显式 --material-ui-trace 与任务隔离 --user-data-dir 下记录 event.type 与耗时，不采集内容。以原始 DOM event.timeStamp 到双 requestAnimationFrame 衡量输入排队及后续绘制机会，这是绘制代理，需与可见 UI 检查配对，不能单独证明实际目标已绘制。要求隔离目录是运行约束，参数存在校验不能验证该目录为空。GUI 12 场景、导入时三类各 30 次交互及真实认证切换仍须单独完成；不因服务基准通过就下调或勾掉这些验收。

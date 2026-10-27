@@ -1,3 +1,4 @@
+import { bindMaterialWindow } from '../materials/register';
 import { type BrowserWindow } from 'electron';
 import { WINDOW_NAMES, MAIN_WIN_SIZE, MENU_IDS, IPC_EVENTS, CONFIG_KEYS, CONVERSATION_ITEM_MENU_IDS, CONVERSATION_LIST_MENU_IDS, MESSAGE_ITEM_MENU_IDS, SHORTCUT_KEYS } from '@common/constants';
 import { registerDialogueHandlers } from '../service/DialogueService';
@@ -113,6 +114,7 @@ export async function setupMainWindow() {
   if (initialized) { windowManager.create(WINDOW_NAMES.MAIN, MAIN_WIN_SIZE); return; }
   initialized = true;
   windowManager.onWindowCreate(WINDOW_NAMES.MAIN, (mainWindow) => {
+    bindMaterialWindow(mainWindow);
 
     let minimizeToTray = configManager.get(CONFIG_KEYS.MINIMIZE_TO_TRAY);
     const unsubscribe = configManager.onConfigChange((config) => {

@@ -1,0 +1,10 @@
+file:///Users/gongchenyu/code/xier-worktrees/local-material-design/tests/packaged/material-service.mjs:12
+    const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('Packaged material smoke timed out')); }, Number(process.env.XIER_BENCH_TIMEOUT??12000));
+                                                                   ^
+
+Error: Packaged material smoke timed out
+    at Timeout.<anonymous> (file:///Users/gongchenyu/code/xier-worktrees/local-material-design/tests/packaged/material-service.mjs:12:68)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
+
+Node.js v22.23.1

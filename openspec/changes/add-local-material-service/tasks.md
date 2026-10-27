@@ -1,28 +1,28 @@
 # Tasks
 
-设计评审阶段，以下实施与验收均未执行。每个行为切片按公开边界逐场景 RED → GREEN → REFACTOR；日志和实际路径随实施写入 tdd.json/evidence，不在方案期编造结果。
+实施中。已运行的证据见 evidence/README.md 与 tdd.json；初始模块收集失败等不能算行为 RED，历史限制如实保留。未勾选项仍有验收缺口，不代表相关代码完全未实现。
 
 ## 1. G0：实际运行时与产物验证
 
-- [ ] 1.1 用最小公开进程协议测试建立 utilityProcess/MessagePort 的 ready、请求、退出与清理，保存真实红绿证据及 Electron runtime 版本。
-- [ ] 1.2 在相同 Electron 服务内验证 node:sqlite/FTS5/trigram/WAL 与 2 MiB 单项事务，记录 compile_options、取消/心跳最长阻塞和 100 个查询 oracle；未通过时比较固定 better-sqlite3 备选并更新设计。
-- [ ] 1.3 增加独立 Forge/Vite 服务 entry 并完成 arm64 packaged 启动 smoke；记录 ASAR 入口路径、SQLite 加载与服务退出结果，锁定实际可用依赖及方案，不用系统 Node 结果替代。
+- [x] 1.1 用最小公开进程协议测试建立 utilityProcess/MessagePort 的 ready、请求、退出与清理，保存真实红绿证据及 Electron runtime 版本。
+- [x] 1.2 在相同 Electron 服务内验证 node:sqlite/FTS5/trigram/WAL 与 2 MiB 单项事务，记录 compile_options、取消/心跳最长阻塞和 100 个查询 oracle；未通过时比较固定 better-sqlite3 备选并更新设计。
+- [x] 1.3 增加独立 Forge/Vite 服务 entry 并完成 arm64 packaged 启动 smoke；记录 ASAR 入口路径、SQLite 加载与服务退出结果，锁定实际可用依赖及方案，不用系统 Node 结果替代。
 
 ## 2. 分区和第一份资料
 
-- [ ] 2.1 通过 Host 公共 API 的失败测试实现 unbound、主窗口来源、lease/epoch、同账号 refresh 及切分区，核验未授权来源/旧 lease 均不能操作资料，并补接口说明。
-- [ ] 2.2 实现选择器授权和逐块 UTF-8 读取的最小切片，测试取消选择、非法文件、实际字节超限与可检测源文件变化；确认原文件不变、授权不能跨 lease 重用。
-- [ ] 2.3 通过 Repository 公共行为测试实现原始 BLOB/正文/FTS/逐项结果同事务提交；覆盖重复哈希、同名不同内容、配额临界、提交失败与移除原子性，并记录磁盘占用取舍。
+- [x] 2.1 通过 Host 公共 API 的失败测试实现 unbound、主窗口来源、lease/epoch、同账号 refresh 及切分区，核验未授权来源/旧 lease 均不能操作资料，并补接口说明。
+- [x] 2.2 实现选择器授权和逐块 UTF-8 读取的最小切片，测试取消选择、非法文件、实际字节超限与可检测源文件变化；确认原文件不变、授权不能跨 lease 重用。
+- [x] 2.3 通过 Repository 公共行为测试实现原始 BLOB/正文/FTS/逐项结果同事务提交；覆盖重复哈希、同名不同内容、配额临界、提交失败与移除原子性，并记录磁盘占用取舍。
 
 ## 3. 持久批次与取消
 
-- [ ] 3.1 实现持久 requestId/inputDigest、单批次和 retryOf；测试重复提交、ACK 丢失、同 ID 不同输入与 BUSY，核验相同任务不产生重复资料、重开可通过listImports发现任务，最后一项duplicate/failed也与batch完成同事务。
-- [ ] 3.2 实现逐项处理、进度快照和观察解绑；通过慢消费、队列溢出、离页返回测试核验限额/每秒4次合并及最终 getImport 正确，并补协议文档。
-- [ ] 3.3 分别为取消先处理、提交先完成、完成后取消、取消期间故障写失败测试；最小实现后验证 cancelled 确认后无新增提交，失败记录不可写时显示待核实。
+- [x] 3.1 实现持久 requestId/inputDigest、单批次和 retryOf；测试重复提交、ACK 丢失、同 ID 不同输入与 BUSY，核验相同任务不产生重复资料、重开可通过listImports发现任务，最后一项duplicate/failed也与batch完成同事务。
+- [x] 3.2 实现逐项处理、进度快照和观察解绑；通过慢消费、队列溢出、离页返回测试核验限额/每秒4次合并及最终 getImport 正确，并补协议文档。
+- [x] 3.3 分别为取消先处理、提交先完成、完成后取消、取消期间故障写失败测试；最小实现后验证 cancelled 确认后无新增提交，失败记录不可写时显示待核实。
 
 ## 4. 搜索、预览与界面
 
-- [ ] 4.1 实现规范化、FTS 候选复核与短词分批扫描，逐个公开查询场景 TDD；验证中文/emoji/标点、查询替代、标题正文不拼接、cursor 版本失效与稳定分页，并补搜索语义文档。
+- [x] 4.1 实现规范化、FTS 候选复核与短词分批扫描，逐个公开查询场景 TDD；验证中文/emoji/标点、查询替代、标题正文不拼接、cursor 版本失效与稳定分页，并补搜索语义文档。
 - [ ] 4.2 完成纯文本分段预览、选区/全文复制与确认移除；组件/Host 测试覆盖20,000字符段、复制全文、HTML惰性显示、移除后旧详情失效与原文件保留。
 - [ ] 4.3 接入资料页/ImportPanel/MaterialList/MaterialPreview 和导航；通过用户边界测试与实际键盘操作核验状态、焦点、错误提示和离页观察释放，原聊天及一期入口保持可用。
 

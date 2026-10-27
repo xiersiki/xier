@@ -1,0 +1,184 @@
+created: /tmp/xier-material-storage-review-repro-dO8kN7/storage.sparseimage
+/dev/disk4          	GUID_partition_scheme          	
+/dev/disk4s1        	Apple_HFS                      	/private/tmp/xier-material-storage-review-repro-dO8kN7/volume
+Independent review evidence: /tmp/xier-material-storage-review-repro-dO8kN7
+(node:70818) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "timestamp": "2026-10-27T03:38:52.441Z",
+  "root": "/private/tmp/xier-material-storage-review-repro-dO8kN7",
+  "repo": "/Users/gongchenyu/code/xier-worktrees/local-material-design",
+  "runtime": {
+    "node": "v22.23.1",
+    "platform": "darwin",
+    "arch": "arm64",
+    "uid": 502,
+    "distinction": "System Node 22 + actual bundled utility entry with an in-process fake parentPort adapter; this is not an Electron/package verification.",
+    "sqlite": "3.51.3"
+  },
+  "sourceHashes": {
+    "repository.ts": "c73b2ed00c3f59bbf58853550a447d14e62d9424471743c91f89ffc078a2f6b1",
+    "service.ts": "19ff61e2b0a645d47e5c35f1d96b7d6d27f850c4815fd6c64fea7b00755a3403",
+    "entry.ts": "9450aade19a7f2964340e13afd35a1b3bc72e2f0d2f48632e6338eeb9df7b286",
+    "files.ts": "e1f9f4b22077cf58145e7cdd0b08545ecc5b5e1b92443f16a542ac0c9889b24d"
+  },
+  "scenarios": {
+    "readonly": {
+      "startup": {
+        "type": "startup-error",
+        "error": "READ_ONLY"
+      },
+      "preserved": true,
+      "before": {
+        "materials.sqlite": {
+          "bytes": 57344,
+          "sha256": "bbd6bf2012be63db2a63207549f3ec547ea2b6fe9862f4af0058a589f944283b"
+        }
+      },
+      "after": {
+        "materials.sqlite": {
+          "bytes": 57344,
+          "sha256": "bbd6bf2012be63db2a63207549f3ec547ea2b6fe9862f4af0058a589f944283b"
+        }
+      }
+    },
+    "corrupt": {
+      "startup": {
+        "type": "startup-error",
+        "error": "DATABASE_CORRUPT"
+      },
+      "preserved": true,
+      "before": {
+        "materials.sqlite": {
+          "bytes": 57344,
+          "sha256": "75186c84eb523b9f79eb0fe03c7d45e4723d70a33217276624f4bf3f09a86996"
+        }
+      },
+      "after": {
+        "materials.sqlite": {
+          "bytes": 57344,
+          "sha256": "75186c84eb523b9f79eb0fe03c7d45e4723d70a33217276624f4bf3f09a86996"
+        }
+      }
+    },
+    "diskFull": {
+      "physicalVolume": "self-created 32 MiB HFS+ sparse disk image",
+      "initialFree": 32632832,
+      "remainingFree": 262144,
+      "fillerBytes": 32370688,
+      "failedDuring": {
+        "requestId": "disk-full",
+        "digest": "2ad40f312fc5ce1e9583b5b5bfcf9b0ec75652f8ef5f7341a1a16644c360005c",
+        "status": "completed",
+        "createdAt": 1793072336605,
+        "items": [
+          {
+            "name": "disk-full-source.txt",
+            "size": 2097152,
+            "status": "failed",
+            "error": "STORAGE_UNAVAILABLE"
+          }
+        ]
+      },
+      "searchDuring": {
+        "items": [
+          {
+            "id": "f8298453-4572-46f2-b0a5-2a4374ebb8e1",
+            "name": "sentinel.txt",
+            "bytes": 38,
+            "createdAt": 1793072336543
+          }
+        ],
+        "cursor": null,
+        "usage": {
+          "documents": 1,
+          "bytes": 38
+        }
+      },
+      "events": [
+        {
+          "type": "job",
+          "lease": "",
+          "job": {
+            "requestId": "disk-full",
+            "digest": "2ad40f312fc5ce1e9583b5b5bfcf9b0ec75652f8ef5f7341a1a16644c360005c",
+            "status": "running",
+            "createdAt": 1793072336605,
+            "items": [
+              {
+                "name": "disk-full-source.txt",
+                "size": 2097152,
+                "status": "pending"
+              }
+            ]
+          }
+        },
+        {
+          "type": "job",
+          "lease": "",
+          "job": {
+            "requestId": "disk-full",
+            "digest": "2ad40f312fc5ce1e9583b5b5bfcf9b0ec75652f8ef5f7341a1a16644c360005c",
+            "status": "completed",
+            "createdAt": 1793072336605,
+            "items": [
+              {
+                "name": "disk-full-source.txt",
+                "size": 2097152,
+                "status": "failed",
+                "error": "STORAGE_UNAVAILABLE"
+              }
+            ]
+          }
+        }
+      ],
+      "preserved": {
+        "materials.sqlite": {
+          "bytes": 57344,
+          "sha256": "35b3d3b35bb26927c7387230df64f09c4a3add4861f723e8eea0d3a6dd188cfe"
+        }
+      },
+      "afterRecovery": {
+        "originalContentIntact": true,
+        "sourceUnchanged": true,
+        "count": 1,
+        "job": {
+          "requestId": "disk-full",
+          "digest": "2ad40f312fc5ce1e9583b5b5bfcf9b0ec75652f8ef5f7341a1a16644c360005c",
+          "status": "completed",
+          "createdAt": 1793072336605,
+          "items": [
+            {
+              "name": "disk-full-source.txt",
+              "size": 2097152,
+              "status": "failed",
+              "error": "STORAGE_UNAVAILABLE"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+DETACHED_SELF_CREATED_VOLUME
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The public failed item must retain the physical disk-full diagnosis instead of a rollback error
++ actual - expected
+
++ 'STORAGE_UNAVAILABLE'
+- 'DISK_FULL'
+
+    at file:///private/tmp/xier-material-storage-review-repro-dO8kN7/storage-faults.mjs:156:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'STORAGE_UNAVAILABLE',
+  expected: 'DISK_FULL',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.1

@@ -1,0 +1,39 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-host.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-host.test.ts (3 tests | 1 failed) 11ms
+   × rejects unknown operations, malformed public inputs and payloads above the IPC limit 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-host.test.ts > rejects unknown operations, malformed public inputs and payloads above the IPC limit
+AssertionError: promise resolved "null" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+null
+
+ ❯ tests/material-host.test.ts:46:81
+     44|   const host=new MaterialHost('/tmp/xier-host-validation',async()=>({c…
+     45|   const lease=await host.bindAuth(true,null);
+     46|   await expect(host.invoke(true,lease,'executeSql',{sql:'DROP TABLE do…
+       |                                                                                 ^
+     47|   await expect(host.invoke(true,lease,'readText',{documentId:'doc',off…
+     48|   await expect(host.invoke(true,lease,'search',{queryId:'q',text:'x'.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  20:19:39
+   Duration  606ms (setup 64%, transform 24%, worker 4%, import 4%, tests 3%)
+

@@ -1,0 +1,36 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-paint-trace.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-paint-trace.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-paint-trace.test.ts [ tests/material-paint-trace.test.ts ]
+Error: Failed to resolve import "../common/materialPaintTrace" from "tests/material-paint-trace.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/gongchenyu/code/xier-worktrees/local-material-design/tests/material-paint-trace.test.ts:2:37
+  1  |  import { expect, it, vi } from "vitest";
+  2  |  import { observeMaterialPaint } from "../common/materialPaintTrace";
+     |                                        ^
+  3  |  it("reports a trusted interaction only after a paint opportunity and releases listeners", () => {
+  4  |    const frames = [];
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/config.js:29250:43
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/config.js:29247:14
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/config.js:27370:18
+ ❯ node_modules/vite/dist/node/chunks/config.js:27428:32
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/config.js:27396:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/config.js:29048:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/config.js:22914:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  11:53:13
+   Duration  2.64s (environment 98%, setup 1%)
+

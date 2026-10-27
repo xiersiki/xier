@@ -1,0 +1,25 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-host.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-host.test.ts (5 tests | 1 failed) 12ms
+   × keeps only one delivered progress event and one latest pending snapshot for a slow observer 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-host.test.ts > keeps only one delivered progress event and one latest pending snapshot for a slow observer
+TypeError: host.watch is not a function
+ ❯ tests/material-host.test.ts:70:8
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:40:39
+   Duration  185ms (setup 37%, transform 28%, import 22%, tests 11%, worker 3%)
+

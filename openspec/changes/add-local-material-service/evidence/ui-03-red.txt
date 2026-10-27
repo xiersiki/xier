@@ -1,0 +1,37 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-library.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-library.test.ts (3 tests | 1 failed) 301ms
+   × unlocks import when the active account changes while the picker is pending 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-library.test.ts > unlocks import when the active account changes while the picker is pending
+AssertionError: expected '' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+""
+
+ ❯ tests/material-library.test.ts:43:49
+     41|   await importButton().trigger('click');await flushPromises();expect(i…
+     42|   listener({type:'scope',lease:null});listener({type:'scope',lease:'ne…
+     43|   expect(importButton().attributes('disabled')).toBeUndefined();
+       |                                                 ^
+     44|   finishPicker(null);await flushPromises();wrapper.unmount();
+     45| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  20:38:12
+   Duration  928ms (environment 47%, tests 36%, import 9%, transform 4%, setup 4%)
+
