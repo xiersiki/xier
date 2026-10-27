@@ -55,10 +55,21 @@ export async function readAuthorizedFile(
 ) {
   if (cancelled()) throw new Error("CANCELLED");
   if (file.error) throw new Error(file.error);
-  const handle = await open(
-    file.path,
-    constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0),
-  );
+  let handle: Awaited<ReturnType<typeof open>>;
+  try {
+    handle = await open(
+      file.path,
+      constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0),
+    );
+  } catch (error) {
+    // A picker-authorized source may disappear or become a symlink before open.
+    // Keep source diagnostics distinct from failures writing the library database.
+    throw new Error(
+      (error as NodeJS.ErrnoException).code === "ELOOP"
+        ? "SOURCE_CHANGED"
+        : "FILE_UNREADABLE",
+    );
+  }
   try {
     const before = await handle.stat();
     if (!before.isFile() || fingerprint(before) !== file.fingerprint)

@@ -1,0 +1,34 @@
+
+> xier@1.0.0 test
+> vitest run tests/material-files.test.ts
+
+
+ RUN  v5.0.5 /Users/gongchenyu/code/xier-worktrees/local-material-design
+
+ ❯ tests/material-files.test.ts (4 tests | 1 failed) 44ms
+   × explains a source removed or replaced by a symlink after selection as a source failure 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/material-files.test.ts > explains a source removed or replaced by a symlink after selection as a source failure
+AssertionError: expected [Function] to throw error including 'FILE_UNREADABLE' but got 'ENOENT: no such file or directory, op…'
+
+Expected: "FILE_UNREADABLE"
+Received: "ENOENT: no such file or directory, open '/var/folders/8n/f5ctwn2d51z2d1ffby80qhk80000gp/T/xier-source-after-pick-J9ef5r/picked.md'"
+
+ ❯ tests/material-files.test.ts:95:52
+     93|     const [file]=await authorizeFiles([source]);
+     94|     await unlink(source);
+     95|     await expect(readAuthorizedFile(file,()=>false)).rejects.toThrow('…
+       |                                                    ^
+     96|     await symlink(replacement,source);
+     97|     await expect(readAuthorizedFile(file,()=>false)).rejects.toThrow('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  12:33:21
+   Duration  222ms (tests 31%, setup 29%, transform 22%, import 13%, worker 5%)
+

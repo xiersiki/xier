@@ -680,6 +680,27 @@
         "evidence": "evidence/host-06-green.txt",
         "summary": "公开请求严格字段白名单通过；无需额外重构。"
       }
+    },
+    {
+      "scenario": "源文件在系统选择后删除或换为symlink时返回正确源错误",
+      "red": {
+        "command": "npm test -- tests/material-files.test.ts",
+        "exitCode": 1,
+        "evidence": "evidence/files-04-red.txt",
+        "summary": "删除后收到原始ENOENT，未返回FILE_UNREADABLE，真实断言失败。"
+      },
+      "green": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-04-green.txt",
+        "summary": "open失败分类为源错误，成功读取路径未改变；受影响文件与服务7项通过，无额外重构。"
+      },
+      "refactor": {
+        "command": "npm test -- tests/material-files.test.ts tests/material-service.test.ts",
+        "exitCode": 0,
+        "evidence": "evidence/files-04-green.txt",
+        "summary": "open失败分类为源错误，成功读取路径未改变；受影响文件与服务7项通过，无额外重构。"
+      }
     }
   ],
   "limitations": [

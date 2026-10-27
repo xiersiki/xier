@@ -84,3 +84,24 @@ it("accounts for every read chunk before decoding so a batch budget can abort un
     await rm(dir, { recursive: true, force: true });
   }
 });
+it("explains a source removed or replaced by a symlink after selection as a source failure", async () => {
+  const { unlink } = await import("node:fs/promises");
+  const dir = await mkdtemp(join(tmpdir(), "xier-source-after-pick-"));
+  try {
+    const source = join(dir, "picked.md"),
+      replacement = join(dir, "replacement.md");
+    await writeFile(source, "picked content");
+    await writeFile(replacement, "replacement content");
+    const [file] = await authorizeFiles([source]);
+    await unlink(source);
+    await expect(readAuthorizedFile(file, () => false)).rejects.toThrow(
+      "FILE_UNREADABLE",
+    );
+    await symlink(replacement, source);
+    await expect(readAuthorizedFile(file, () => false)).rejects.toThrow(
+      "SOURCE_CHANGED",
+    );
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});

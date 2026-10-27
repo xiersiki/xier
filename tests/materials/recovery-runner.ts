@@ -73,7 +73,12 @@ app.whenReady().then(async () => {
     }
     const paths: string[] = [],
       hashes = new Map<string, string>();
-    hashes.set(baseline, createHash("sha256").update(await readFile(baseline)).digest("hex"));
+    hashes.set(
+      baseline,
+      createHash("sha256")
+        .update(await readFile(baseline))
+        .digest("hex"),
+    );
     for (let i = 0; i < 3; i++) {
       const raw = Buffer.from(`source-${i}\n${entropy}`),
         path = join(root, `large-${i}.txt`);
@@ -141,9 +146,15 @@ app.whenReady().then(async () => {
     });
     let contentLoss = 0;
     for (const item of page.items) {
-      const source = [...hashes.keys()].find(path => basename(path) === item.name);
-      const saved = await call<string>('copyText', item.id);
-      if (!source || createHash('sha256').update(saved).digest('hex') !== hashes.get(source)) contentLoss++;
+      const source = [...hashes.keys()].find(
+        (path) => basename(path) === item.name,
+      );
+      const saved = await call<string>("copyText", item.id);
+      if (
+        !source ||
+        createHash("sha256").update(saved).digest("hex") !== hashes.get(source)
+      )
+        contentLoss++;
     }
     let changedSources = 0;
     for (const [path, hash] of hashes)
@@ -165,9 +176,9 @@ app.whenReady().then(async () => {
           replayDeduplicated: replay.items[0].status === "duplicate",
           documents: page.usage.documents,
           changedSources,
-        verifiedCopies: page.items.length,
-        sourceFiles: hashes.size,
-        contentLoss,
+          verifiedCopies: page.items.length,
+          sourceFiles: hashes.size,
+          contentLoss,
         }),
     );
   } catch (error) {

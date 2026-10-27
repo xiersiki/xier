@@ -11,3 +11,5 @@
 评审明确保留 TDD 历史缺口，详见 README.md。没有把 missing-module 或脚本失败当有效行为 RED/GREEN，没有构造追溯性全程 TDD 结论。GUI、真实认证切换和交互计量尚未完成，不能给整体交付通过结论。
 
 锁屏期间补充的真实恢复验证经独立只读复核：读取中退出与终态私有事件不转发两个边界均成立，5份副本全文及含baseline的5个源hash核对无变化（recovery-boundaries-full.txt/.json，8/8通过）。这些是实现后补充回归，不补造RED；没有真实renderer或IPC ACK丢失注入。feature-off仅覆盖Host拒绝、未启动存储与合成文件保持，不等于完整应用开关/版本回退验收；5.4仍未勾。最终增量只读复核未发现新增问题。
+
+选择后源文件删除/替换的小修经最后只读复核通过：open失败安全映射FILE_UNREADABLE，ELOOP映射SOURCE_CHANGED；指纹、正常读取、关闭逻辑不变，RED为真实断言，GREEN覆盖删除和换symlink。未发现新增P1/P2，评审未重复运行native/smoke；这些另以electron-source-fix与packaged-source-fix日志为准。
